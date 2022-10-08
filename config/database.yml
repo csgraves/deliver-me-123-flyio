@@ -29,5 +29,5 @@ production:
   <<: *default
   database: RailsTest_production
   username: postgres
-  password: postgres1234
+  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
   #database: db/production.sqlite3
