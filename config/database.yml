@@ -7,8 +7,6 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: postgres
-  password: postgres1234
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
@@ -28,6 +26,6 @@ test:
 production:
   <<: *default
   database: RailsTest_production
-  username: postgres
+  username: RailsTest
   password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
   #database: db/production.sqlite3
