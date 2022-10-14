@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\app",
+    "\\app\\controllers",
+    "\\config",
+    "\\config\\environments"
+  ],
+  "SelectedNode": "\\config\\environments\\production.rb",
+  "PreviewInSolutionExplorer": false
+}
