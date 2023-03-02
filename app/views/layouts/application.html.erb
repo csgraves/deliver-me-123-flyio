@@ -8,9 +8,20 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <!--<script>function initMap() { console.log(google)}</script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEGdiuu6KZ7h0MiR2M_yEQ_dhA3aBVqQc&callback=fireMapsLoadedEvent"></script>
+    -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.dig(:mapsAPI) %>&callback=initMap&v=weekly"
+    defer></script>
+    
   </head>
 
   <body>
     <%= yield %>
+    <p>Test Words</p>
+    <div id="map"></div>
+    <p> Test Words 2</p>
+    <p> <%= Rails.application.credentials.dig(:mapsAPI) %> </p>
+
   </body>
 </html>

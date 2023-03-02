@@ -1,6 +1,22 @@
+<style>
+	html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+</style>
+
+
 <p style="color: green"><%= notice %></p>
 
 <h1>Articles</h1>
+
+<div class="c-map"
+	data-action="mapsLoaded@document->maps#renderMap"
+	data-controller="maps"
+	data-target="coordinates">
+</div>
+
 
 <div id="articles">
   <% @articles.each do |article| %>
