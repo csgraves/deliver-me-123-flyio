@@ -76,3 +76,6 @@ gem "dockerfile-rails", ">= 1.0", :group => :development
 gem "redis", "~> 5.0"
 
 gem "ffi"
+
+gem "bootstrap", "~> 5.1.3"
+gem "modernizr-rails"
