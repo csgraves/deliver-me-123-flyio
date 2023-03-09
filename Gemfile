@@ -79,3 +79,5 @@ gem "ffi"
 
 gem "bootstrap", "~> 5.1.3"
 gem "modernizr-rails"
+gem 'carrierwave', '>= 3.0.0.beta', '< 4.0' #mount_uploader :photo
+gem 'amoeba'

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :users
+  resources :accounts
   resources :schedules
   resources :clients
   resources :trainers
