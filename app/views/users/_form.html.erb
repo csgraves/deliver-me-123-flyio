@@ -32,6 +32,11 @@
   </div>
 
   <div>
+    <%= form.label :time_zone, style: "display: block" %>
+    <%= form.time_zone_select :time_zone %>
+  </div>
+
+  <div>
     <%= form.submit %>
   </div>
 <% end %>

@@ -2,3 +2,6 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import "bootstrap"
+//import "helpers/local-time"
+import LocalTime from "local-time"
+LocalTime.start()
