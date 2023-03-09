@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @trainer %>
+
+<div>
+  <%= link_to "Edit this trainer", edit_trainer_path(@trainer) %> |
+  <%= link_to "Back to trainers", trainers_path %>
+
+  <%= button_to "Destroy this trainer", @trainer, method: :delete %>
+</div>
