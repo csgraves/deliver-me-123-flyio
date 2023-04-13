@@ -83,3 +83,4 @@ gem 'carrierwave', '>= 3.0.0.beta', '< 4.0' #mount_uploader :photo
 gem 'amoeba'
 gem 'timezone', '~> 1.0'
 gem 'local_time'
+gem "will_paginate"

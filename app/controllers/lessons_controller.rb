@@ -1,15 +1,16 @@
 class LessonsController < ApplicationController
   before_action :set_lesson, only: %i[ show edit update destroy ]
+  before_action :set_lesson, only: [:show]
 
   # GET /lessons or /lessons.json
   def index
-    @lessons = Lesson.paginate(:page => params[:page], :per_page => 6).order('sort ASC')
+    @lessons = Lesson.paginate(:page => params[:page], :per_page => 6).order('id ASC')
     #@lessons = Lesson.all
   end
 
   # GET /lessons/1 or /lessons/1.json
   def show
-    @others = Lesson.paginate(:page => params[:page], :per_page => 4).order('sort ASC')
+    @others = Lesson.paginate(:page => params[:page], :per_page => 4).order('id ASC')
   end
 
   # GET /lessons/new
