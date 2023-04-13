@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_time: 2023-04-13 21:03:37
+  end_time: 2023-04-13 21:03:37
+  day_of_week: MyString
+  branch: one
+
+two:
+  start_time: 2023-04-13 21:03:37
+  end_time: 2023-04-13 21:03:37
+  day_of_week: MyString
+  branch: two
