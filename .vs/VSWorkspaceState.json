@@ -2,16 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\app\\assets",
-    "\\app\\assets\\stylesheets",
-    "\\app\\javascript",
-    "\\app\\javascript\\controllers",
+    "\\app\\controllers",
+    "\\app\\models",
     "\\app\\views",
-    "\\app\\views\\articles",
     "\\app\\views\\layouts",
     "\\config",
-    "\\config\\environments"
+    "\\config\\environments",
+    "\\db",
+    "\\db\\migrate"
   ],
-  "SelectedNode": "\\app\\javascript\\controllers\\application.js",
+  "SelectedNode": "\\config\\database.yml",
   "PreviewInSolutionExplorer": false
 }
