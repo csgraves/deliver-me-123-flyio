@@ -35,7 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_201107) do
 
   create_table "branches", force: :cascade do |t|
     t.string "name"
-    t.string "branch_id"
+    t.string "branch_iden"
     t.bigint "company_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -44,7 +44,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_201107) do
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
-    t.string "company_id"
+    t.string "company_iden"
+    t.bigint "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
