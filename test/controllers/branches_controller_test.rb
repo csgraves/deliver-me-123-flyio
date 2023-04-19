@@ -17,7 +17,7 @@ class BranchesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create branch" do
     assert_difference("Branch.count") do
-      post branches_url, params: { branch: { branch_id: @branch.branch_id, company_id: @branch.company_id, name: @branch.name } }
+      post branches_url, params: { branch: { branch_iden: @branch.branch_iden, company_iden: @branch.company_iden, name: @branch.name } }
     end
 
     assert_redirected_to branch_url(Branch.last)
@@ -34,7 +34,7 @@ class BranchesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update branch" do
-    patch branch_url(@branch), params: { branch: { branch_id: @branch.branch_id, company_id: @branch.company_id, name: @branch.name } }
+    patch branch_url(@branch), params: { branch: { branch_iden: @branch.branch_iden, company_iden: @branch.company_iden, name: @branch.name } }
     assert_redirected_to branch_url(@branch)
   end
 

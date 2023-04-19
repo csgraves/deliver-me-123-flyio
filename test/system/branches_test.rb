@@ -15,7 +15,7 @@ class BranchesTest < ApplicationSystemTestCase
     click_on "New branch"
 
     fill_in "Branch", with: @branch.branch_id
-    fill_in "Company", with: @branch.company_id
+    fill_in "Company", with: @branch.company_iden
     fill_in "Name", with: @branch.name
     click_on "Create Branch"
 
@@ -28,7 +28,7 @@ class BranchesTest < ApplicationSystemTestCase
     click_on "Edit this branch", match: :first
 
     fill_in "Branch", with: @branch.branch_id
-    fill_in "Company", with: @branch.company_id
+    fill_in "Company", with: @branch.company_iden
     fill_in "Name", with: @branch.name
     click_on "Update Branch"
 

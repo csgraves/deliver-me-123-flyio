@@ -2,10 +2,14 @@
 
 one:
   name: MyString
-  branch_id: MyString
+  branch_iden: MyString
+  company_iden: MyString
   company: one
+  company_id: 1
 
 two:
   name: MyString
-  branch_id: MyString
+  branch_iden: MyString
+  company_iden: MyString
   company: two
+  company_id: 2

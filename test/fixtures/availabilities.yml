@@ -4,10 +4,12 @@ one:
   start_time: 2023-04-13 21:04:09
   end_time: 2023-04-13 21:04:09
   day_of_week: MyString
-  driver: one
+  user: one
+  user_id: 1
 
 two:
   start_time: 2023-04-13 21:04:09
   end_time: 2023-04-13 21:04:09
   day_of_week: MyString
-  driver: two
+  user: two
+  user_id: 2

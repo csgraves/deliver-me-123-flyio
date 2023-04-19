@@ -22,11 +22,9 @@ class BranchesController < ApplicationController
   # POST /branches or /branches.json
   def create
     
-    company = Company.find_by(company_iden: params[:company_iden])
-    #@branch.company_id = company.id if company
-    #@branch = Branch.new(params.merge(company_iden: @branch.company.id))
-
-    @branch = company.branches.build(branch_params)
+    @branch = Branch.new(branch_params)
+    company = Company.find_by(company_iden: params[:branch][:company_iden])
+    @branch.company = company
 
     respond_to do |format|
       if @branch.save
