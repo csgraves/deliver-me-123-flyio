@@ -2,15 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\app\\controllers",
-    "\\app\\models",
+    "\\app\\helpers",
     "\\app\\views",
-    "\\app\\views\\layouts",
-    "\\config",
-    "\\config\\environments",
-    "\\db",
-    "\\db\\migrate"
+    "\\app\\views\\branches",
+    "\\app\\views\\companies",
+    "\\test",
+    "\\test\\controllers",
+    "\\test\\fixtures",
+    "\\test\\models"
   ],
-  "SelectedNode": "\\config\\database.yml",
+  "SelectedNode": "\\db\\migrate\\20230413195800_create_branches.rb",
   "PreviewInSolutionExplorer": false
 }
