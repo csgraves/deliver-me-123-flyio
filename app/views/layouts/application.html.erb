@@ -16,8 +16,23 @@
     
   </head>
 
+  <nav>
+  <% if user_signed_in? %>
+    <%= "#{current_user.email} |" %>
+    <%= link_to t('profile'), edit_user_registration_path %>
+    |
+    <%= link_to t('logout'), destroy_user_session_path, method: 'delete' %>
+  <% else %>
+    <%= link_to t('login'), new_user_session_path %>
+    |
+    <%= link_to t('sign_up'), new_user_registration_path %>
+  <% end %>
+</nav>
+
   <body>
     <%= yield %>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <p>Test Words</p>
     <div id="map"></div>
     <p> Test Words 2</p>
