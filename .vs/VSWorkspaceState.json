@@ -2,15 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\app\\helpers",
+    "\\app\\controllers",
+    "\\app\\javascript",
     "\\app\\views",
-    "\\app\\views\\branches",
-    "\\app\\views\\companies",
-    "\\test",
-    "\\test\\controllers",
-    "\\test\\fixtures",
-    "\\test\\models"
+    "\\app\\views\\devise",
+    "\\app\\views\\devise\\registrations",
+    "\\app\\views\\devise\\shared",
+    "\\config",
+    "\\config\\initializers"
   ],
-  "SelectedNode": "\\db\\migrate\\20230413195800_create_branches.rb",
+  "SelectedNode": "\\app\\views\\devise\\shared\\_links.html.erb",
   "PreviewInSolutionExplorer": false
 }
