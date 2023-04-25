@@ -7,11 +7,11 @@ class User < ApplicationRecord
   has_many :availabilities, dependent: :destroy
   has_many :deliveries, dependent: :destroy
 
-  before_validation :set_default_role, on: :create
+  #before_validation :set_default_role, on: :create
 
-  private
+  #private
 
-  def set_default_role
-    self.role ||= :admin
-  end
+  #def set_default_role
+    #self.role ||= :admin
+  #end
 end
