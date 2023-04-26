@@ -1,0 +1,32 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Join a company</h1>
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Company_iden</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @companies.each do |company| %>
+		<tr>
+			<td>
+				<%= company.name %>
+			</td>
+			<td>
+				<%= company.company_iden %>
+			</td>
+			<td>
+				<% unless company.branches.empty? || company.branches.first.company_iden.blank? %>
+					<%= link_to "Request to join", join_request_path(company_id: company.id), class: "btn btn-secondary" %>
+				<% end %>
+			</td>
+			<td>
+				<%= link_to "Join now", join_now_path(company_id: company.id), class: "btn btn-primary" %>
+			</td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>

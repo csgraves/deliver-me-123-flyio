@@ -57,6 +57,13 @@ class CompaniesController < ApplicationController
     end
   end
 
+  def join
+    # Code to display a form for the user to enter a company code
+    @companies = Company.all
+  end
+
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_company
