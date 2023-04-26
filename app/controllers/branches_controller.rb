@@ -23,11 +23,16 @@ class BranchesController < ApplicationController
   def create
     
     @branch = Branch.new(branch_params)
-    company = Company.find_by(company_iden: params[:branch][:company_iden])
+    #company = Company.find_by(company_iden: params[:branch][:company_iden])
+    #@branch.company = company
+
+    company = Company.find_by(params[:company_id])
     @branch.company = company
+    @branch.company_iden = company.company_iden
 
     respond_to do |format|
       if @branch.save
+        current_user.update(branch_id: @branch.id) if current_user.branch_id.nil?
         format.html { redirect_to branch_url(@branch), notice: "Branch was successfully created." }
         format.json { render :show, status: :created, location: @branch }
       else
@@ -70,6 +75,7 @@ class BranchesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def branch_params
-      params.require(:branch).permit(:name, :branch_iden, :company_iden)
+      #params.require(:branch).permit(:name, :branch_iden, :company_iden)
+      params.require(:branch).permit(:name, :branch_iden)
     end
 end
