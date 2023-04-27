@@ -3,8 +3,9 @@
 <%= render @branch %>
 
 <div>
-  <%= link_to "Edit this branch", edit_branch_path(@branch) %> |
-  <%= link_to "Back to branches", branches_path %>
+	<%= link_to "Edit this branch", edit_branch_path(@branch) %> |
+	<%= link_to "Back to branches", branches_path %>
 
-  <%= button_to "Destroy this branch", @branch, method: :delete %>
+	<%= button_to "Destroy this branch", @branch, method: :delete %>
+	<p> Warning: Destroying this branch will delete all associated users!</p>
 </div>

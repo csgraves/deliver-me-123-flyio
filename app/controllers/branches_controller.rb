@@ -62,7 +62,7 @@ class BranchesController < ApplicationController
     @branch.destroy
 
     respond_to do |format|
-      format.html { redirect_to branches_url, notice: "Branch was successfully destroyed." }
+      format.html { redirect_to companies_url, notice: "Branch and associated users were successfully destroyed." }
       format.json { head :no_content }
     end
   end
