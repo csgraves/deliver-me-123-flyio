@@ -1,6 +1,8 @@
 require "test_helper"
 
 class ArticlesControllerTest < ActionDispatch::IntegrationTest
+    include Devise::Test::ControllerHelpers
+
   setup do
     @article = articles(:one)
   end

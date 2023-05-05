@@ -1,8 +1,10 @@
 require "test_helper"
 
 class BranchesControllerTest < ActionDispatch::IntegrationTest
+    include Devise::Test::IntegrationHelpers
   setup do
     @branch = branches(:one)
+    sign_in users(:one)
   end
 
   test "should get index" do
@@ -43,6 +45,6 @@ class BranchesControllerTest < ActionDispatch::IntegrationTest
       delete branch_url(@branch)
     end
 
-    assert_redirected_to branches_url
+    assert_redirected_to companies_url
   end
 end
