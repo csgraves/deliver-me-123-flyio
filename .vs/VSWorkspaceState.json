@@ -2,15 +2,16 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\app\\controllers",
+    "\\app\\assets",
     "\\app\\javascript",
+    "\\app\\javascript\\controllers",
     "\\app\\views",
+    "\\app\\views\\articles",
+    "\\app\\views\\dashboard",
     "\\app\\views\\devise",
-    "\\app\\views\\devise\\registrations",
-    "\\app\\views\\devise\\shared",
-    "\\config",
-    "\\config\\initializers"
+    "\\app\\views\\devise\\sessions",
+    "\\app\\views\\layouts"
   ],
-  "SelectedNode": "\\app\\views\\devise\\shared\\_links.html.erb",
+  "SelectedNode": "\\app\\views\\layouts\\application.html.erb",
   "PreviewInSolutionExplorer": false
 }
