@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_20_114437) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_10_175701) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,22 +53,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_114437) do
   create_table "deliveries", force: :cascade do |t|
     t.datetime "deliver"
     t.datetime "leave"
-    t.bigint "user_id", null: false
-    t.bigint "branch_id", null: false
+    t.bigint "schedule_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["branch_id"], name: "index_deliveries_on_branch_id"
-    t.index ["user_id"], name: "index_deliveries_on_user_id"
+    t.index ["schedule_id"], name: "index_deliveries_on_schedule_id"
   end
 
   create_table "schedules", force: :cascade do |t|
     t.datetime "start_time"
     t.datetime "end_time"
     t.string "day_of_week"
-    t.bigint "branch_id", null: false
+    t.bigint "branch_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "user_only"
+    t.boolean "branch_only"
     t.index ["branch_id"], name: "index_schedules_on_branch_id"
+    t.index ["user_id"], name: "index_schedules_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -90,8 +92,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_114437) do
 
   add_foreign_key "availabilities", "users"
   add_foreign_key "branches", "companies"
-  add_foreign_key "deliveries", "branches"
-  add_foreign_key "deliveries", "users"
+  add_foreign_key "deliveries", "schedules"
   add_foreign_key "schedules", "branches"
+  add_foreign_key "schedules", "users"
   add_foreign_key "users", "branches"
 end

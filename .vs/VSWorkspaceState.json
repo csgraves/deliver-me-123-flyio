@@ -2,16 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\app\\assets",
-    "\\app\\javascript",
-    "\\app\\javascript\\controllers",
+    "\\app\\models",
     "\\app\\views",
-    "\\app\\views\\articles",
-    "\\app\\views\\dashboard",
-    "\\app\\views\\devise",
-    "\\app\\views\\devise\\sessions",
-    "\\app\\views\\layouts"
+    "\\app\\views\\users",
+    "\\db",
+    "\\test",
+    "\\test\\controllers",
+    "\\test\\fixtures",
+    "\\test\\models"
   ],
-  "SelectedNode": "\\app\\views\\layouts\\application.html.erb",
+  "SelectedNode": "\\app\\models\\user.rb",
   "PreviewInSolutionExplorer": false
 }

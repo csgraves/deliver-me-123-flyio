@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   belongs_to :branch, optional: true
   has_many :availabilities, dependent: :destroy
-  has_many :deliveries, dependent: :destroy
+  has_many :schedules, dependent: :destroy
 
   #before_validation :set_default_role, on: :create
 

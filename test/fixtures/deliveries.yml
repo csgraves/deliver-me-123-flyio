@@ -3,15 +3,8 @@
 one:
   deliver: 2023-04-13 21:11:07
   leave: 2023-04-13 21:11:07
-  branch: one
-  user: one
-  branch_id: 1
-  user_id: 1
 
 two:
   deliver: 2023-04-13 21:11:07
   leave: 2023-04-13 21:11:07
-  branch: two
-  user: two
-  branch_id: 2
-  user_id: 2
+
