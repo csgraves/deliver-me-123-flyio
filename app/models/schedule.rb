@@ -2,7 +2,7 @@ class Schedule < ApplicationRecord
   belongs_to :branch, optional: true
   belongs_to :user, optional: true
 
-  has_many :deliveries
+  has_many :deliveries, dependent: :destroy
 
   # validation to ensure that a schedule belongs to either a user or a branch
   validate :user_or_branch_presence
