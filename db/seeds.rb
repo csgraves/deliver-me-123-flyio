@@ -29,8 +29,8 @@ schedule1 = Schedule.create(start_time: Time.zone.now, end_time: Time.zone.now +
 schedule2 = Schedule.create(start_time: Time.zone.now, end_time: Time.zone.now + 3.hours, day_of_week: 'Tuesday', user: user2, user_only: true)
 
 # Create availabilities
-availability1 = Availability.create(start_time: Time.zone.now, end_time: Time.zone.now + 4.hours, day_of_week: 'Monday', user: user1)
-availability2 = Availability.create(start_time: Time.zone.now, end_time: Time.zone.now + 5.hours, day_of_week: 'Tuesday', user: user2)
+availability1 = Availability.create(start_time: Time.zone.now, end_time: Time.zone.now + 4.hours, user: user1)
+availability2 = Availability.create(start_time: Time.zone.now, end_time: Time.zone.now + 5.hours, user: user2)
 
 # Create articles
 article1 = Article.create(title: 'Article 1', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', author: 'John Doe', date: Date.today)

@@ -3,7 +3,6 @@ class CreateAvailabilities < ActiveRecord::Migration[7.0]
     create_table :availabilities do |t|
       t.datetime :start_time
       t.datetime :end_time
-      t.string :day_of_week
       t.references :user, null: false, foreign_key: true
 
       t.timestamps

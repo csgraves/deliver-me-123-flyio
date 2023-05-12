@@ -26,7 +26,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_10_175701) do
   create_table "availabilities", force: :cascade do |t|
     t.datetime "start_time"
     t.datetime "end_time"
-    t.string "day_of_week"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
