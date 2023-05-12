@@ -1,8 +1,11 @@
 require "test_helper"
 
 class AvailabilitiesControllerTest < ActionDispatch::IntegrationTest
+    include Devise::Test::IntegrationHelpers
+
   setup do
     @availability = availabilities(:one)
+    sign_in users(:one)
   end
 
   test "should get index" do
