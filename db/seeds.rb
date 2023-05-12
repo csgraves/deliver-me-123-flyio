@@ -25,8 +25,8 @@ user2.password_confirmation = 'password456'
 user2.save!
 
 # Create schedules
-schedule1 = Schedule.create(start_time: Time.zone.now, end_time: Time.zone.now + 2.hours, branch: branch1, branch_only: true)
-schedule2 = Schedule.create(start_time: Time.zone.now, end_time: Time.zone.now + 3.hours, user: user2, user_only: true)
+schedule1 = Schedule.create(start_time: Time.zone.now, end_time: Time.zone.now + 2.hours, user: user1, user_only: true)
+schedule2 = Schedule.create(start_time: Time.zone.now, end_time: Time.zone.now + 3.hours, branch: branch2, branch_only: true)
 
 # Create availabilities
 availability1 = Availability.create(start_time: Time.zone.now, end_time: Time.zone.now + 4.hours, user: user1)

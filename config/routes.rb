@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :schedules
   resources :deliveries
   resources :availabilities
   devise_for :users, controllers: {
