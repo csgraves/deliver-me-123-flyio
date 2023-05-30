@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_10_175701) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_30_100033) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,6 +55,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_10_175701) do
     t.bigint "schedule_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "deliver_lat", precision: 10, scale: 6
+    t.decimal "deliver_lon", precision: 10, scale: 6
+    t.datetime "start"
+    t.decimal "start_lat", precision: 10, scale: 6
+    t.decimal "start_lon", precision: 10, scale: 6
     t.index ["schedule_id"], name: "index_deliveries_on_schedule_id"
   end
 

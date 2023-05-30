@@ -4,13 +4,13 @@
     "\\app",
     "\\app\\models",
     "\\app\\views",
-    "\\app\\views\\users",
+    "\\app\\views\\availabilities",
     "\\db",
+    "\\db\\migrate",
     "\\test",
-    "\\test\\controllers",
     "\\test\\fixtures",
     "\\test\\models"
   ],
-  "SelectedNode": "\\app\\models\\user.rb",
+  "SelectedNode": "\\app\\controllers\\deliveries_controller.rb",
   "PreviewInSolutionExplorer": false
 }
