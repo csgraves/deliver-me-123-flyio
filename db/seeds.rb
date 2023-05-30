@@ -37,5 +37,5 @@ article1 = Article.create(title: 'Article 1', content: 'Lorem ipsum dolor sit am
 article2 = Article.create(title: 'Article 2', content: 'Ut et accumsan ipsum. Sed fermentum diam felis, non porttitor nunc.', author: 'Jane Smith', date: Date.yesterday)
 
 # Create deliveries
-delivery1 = Delivery.create(deliver: Time.zone.now + 1.hour, leave: Time.zone.now, schedule: schedule1)
-delivery2 = Delivery.create(deliver: Time.zone.now + 2.hours, leave: Time.zone.now + 1.hour, schedule: schedule2)
+delivery1 = Delivery.create(origin_leave: Time.zone.now, dest_arrive: Time.zone.now + 1.hours, dest_leave: Time.zone.now + 2.hour, schedule: schedule1)
+delivery2 = Delivery.create(origin_leave: Time.zone.now + 1.minutes, dest_arrive: Time.zone.now + 1.hours, dest_leave: Time.zone.now + 2.hours, schedule: schedule2)

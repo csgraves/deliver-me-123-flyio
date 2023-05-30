@@ -2,15 +2,16 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\app\\models",
     "\\app\\views",
     "\\app\\views\\availabilities",
+    "\\config",
+    "\\config\\initializers",
     "\\db",
     "\\db\\migrate",
     "\\test",
     "\\test\\fixtures",
     "\\test\\models"
   ],
-  "SelectedNode": "\\app\\controllers\\deliveries_controller.rb",
+  "SelectedNode": "\\db\\migrate\\20230510175701_add_user_and_or_branch_to_schedules.rb",
   "PreviewInSolutionExplorer": false
 }

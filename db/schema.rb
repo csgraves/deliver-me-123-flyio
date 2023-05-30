@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_30_100033) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_30_122202) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,16 +50,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_100033) do
   end
 
   create_table "deliveries", force: :cascade do |t|
-    t.datetime "deliver"
-    t.datetime "leave"
+    t.datetime "dest_arrive"
+    t.datetime "dest_leave"
     t.bigint "schedule_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "deliver_lat", precision: 10, scale: 6
-    t.decimal "deliver_lon", precision: 10, scale: 6
-    t.datetime "start"
-    t.decimal "start_lat", precision: 10, scale: 6
-    t.decimal "start_lon", precision: 10, scale: 6
+    t.decimal "dest_lat", precision: 10, scale: 6
+    t.decimal "dest_lon", precision: 10, scale: 6
+    t.datetime "origin_leave"
+    t.decimal "origin_lat", precision: 10, scale: 6
+    t.decimal "origin_lon", precision: 10, scale: 6
+    t.string "origin_address"
+    t.string "dest_address"
     t.index ["schedule_id"], name: "index_deliveries_on_schedule_id"
   end
 

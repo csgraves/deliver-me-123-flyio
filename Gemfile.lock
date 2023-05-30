@@ -106,8 +106,14 @@ GEM
     erubi (1.11.0)
     execjs (2.8.1)
     ffi (1.15.5-x64-mingw-ucrt)
+    geocoder (1.8.1)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    google_maps_service (0.4.2)
+      hurley (~> 0.1)
+      multi_json (~> 1.11)
+      retriable (~> 2.0)
+    hurley (0.2)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.1.5)
@@ -131,6 +137,7 @@ GEM
     minitest (5.16.3)
     modernizr-rails (2.7.1)
     msgpack (1.6.0)
+    multi_json (1.15.0)
     net-imap (0.3.1)
       net-protocol
     net-pop (0.1.2)
@@ -189,6 +196,7 @@ GEM
     responders (3.1.0)
       actionpack (>= 5.2)
       railties (>= 5.2)
+    retriable (2.1.0)
     rexml (3.2.5)
     rubyzip (2.3.2)
     sassc (2.4.0)
@@ -254,6 +262,8 @@ DEPENDENCIES
   devise
   dockerfile-rails (>= 1.0)
   ffi
+  geocoder (~> 1.8, >= 1.8.1)
+  google_maps_service (~> 0.4.2)
   importmap-rails
   jbuilder
   modernizr-rails

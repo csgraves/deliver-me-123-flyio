@@ -23,6 +23,8 @@ class DeliveriesController < ApplicationController
   # POST /deliveries or /deliveries.json
   def create
     @delivery = Delivery.new(delivery_params)
+    #@delivery.dest_address = params[:delivery][:dest_address]
+    #@delivery.origin_address = params[:delivery][:origin_address]
 
     respond_to do |format|
       if @delivery.save
@@ -66,6 +68,6 @@ class DeliveriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def delivery_params
-      params.require(:delivery).permit(:deliver, :leave, :schedule_id)
+      params.require(:delivery).permit(:origin_leave, :dest_leave, :schedule_id)
     end
 end
