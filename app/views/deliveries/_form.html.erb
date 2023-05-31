@@ -26,7 +26,16 @@
     <%= form.text_field :schedule_id %>
   </div>
 
+  <input type="text" name="lat" id="lat" readonly>
+  <input type="text" name="lon" id="lon" readonly>
+  <input type="text" name="address" id="address" readonly>
+
+  <%= hidden_field_tag "origin_lat" %>
+  <%= hidden_field_tag "origin_lon" %>
+  <%= hidden_field_tag "origin_address" %>
+
   <div>
+    <%= button_tag "Set Origin", type: "button", id: "set-origin-button" %>
     <%= form.submit %>
   </div>
 <% end %>

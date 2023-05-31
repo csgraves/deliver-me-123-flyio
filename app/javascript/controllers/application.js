@@ -5,7 +5,8 @@ const application = Application.start()
 // Configure Stimulus development experience
 application.debug = false
 window.Stimulus = application
-window.initMap = initMap;
+window.initMap = initMap
+//window.deliveryMap = deliveryMap
 
 
 
@@ -19,12 +20,11 @@ window.fireMapsLoadedEvent = function () {
 }
 */
 
-//let map; 
+let map; 
 
 function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
+    /*map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: -34.397, lng: 150.644 },
         zoom: 8,
-    });
+    });*/
 }
-
