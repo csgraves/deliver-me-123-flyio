@@ -1,6 +1,7 @@
 let map;
 let searchBox;
 let marker;
+let isOriginTime = true;
 
 function deliveryMap() {
     map = new google.maps.Map(document.getElementById("map"), {
@@ -84,13 +85,82 @@ function deliveryMap() {
             });
         });
     });
+
+
+    // Route
+ 
 }
 
-document.addEventListener("DOMContentLoaded", function (event) {
+function calculateRoute() {
+    const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer({
+        draggable: true,
+        map,
+        panel: document.getElementById("panel"),
+    });
+
+    directionsRenderer.addListener("directions_changed", () => {
+        const directions = directionsRenderer.getDirections();
+
+        if (directions) {
+            computeTotalDistance(directions);
+        }
+    });
+    displayRoute(
+        origin_address.value,
+        dest_address.value,
+        directionsService,
+        directionsRenderer
+    );
+
+}
+
+function displayRoute(origin, destination, service, display) {
+    service
+        .route({
+            origin: origin,
+            destination: destination,
+            waypoints: [
+                //{ location: "Adelaide, SA" },
+                //{ location: "Broken Hill, NSW" },
+            ],
+            travelMode: google.maps.TravelMode.DRIVING,
+            avoidTolls: true,
+        })
+        .then((result) => {
+            display.setDirections(result);
+        })
+        .catch((e) => {
+            alert("Could not display directions due to: " + e);
+        });
+}
+
+function computeTotalDistance(result) {
+    let total = 0;
+    const myroute = result.routes[0];
+
+    if (!myroute) {
+        return;
+    }
+
+    for (let i = 0; i < myroute.legs.length; i++) {
+        total += myroute.legs[i].distance.value;
+    }
+
+    total = total / 1000;
+    document.getElementById("total").innerHTML = total + " km";
+}
+
+document.addEventListener("DOMContentLoaded", function (event) { 
     // Initialize the map when the DOM is ready
     deliveryMap();
 
     const setOriginButton = document.getElementById("set-origin-button");
+    const originFields = document.getElementById("origin-fields");
+
+    const setDestButton = document.getElementById("set-dest-button");
+    const destFields = document.getElementById("dest-fields");
+
     setOriginButton.addEventListener("click", function () {
         const origin_lat = document.getElementById("lat").value;
         const origin_lon = document.getElementById("lon").value;
@@ -100,5 +170,58 @@ document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById("origin_lat").value = origin_lat;
         document.getElementById("origin_lon").value = origin_lon;
         document.getElementById("origin_address").value = origin_address;
+
+        originFields.style.display = "block";
     });
+
+    setDestButton.addEventListener("click", function () {
+        const dest_lat = document.getElementById("lat").value;
+        const dest_lon = document.getElementById("lon").value;
+        const dest_address = document.getElementById("address").value;
+
+        // Update the hidden fields with the current values
+        document.getElementById("dest_lat").value = dest_lat;
+        document.getElementById("dest_lon").value = dest_lon;
+        document.getElementById("dest_address").value = dest_address;
+
+        destFields.style.display = "block";
+    });
+
+    // Switch Dest arrive and origin depart displays
+    var toDestArriveButton = document.getElementById('switch-to-dest-arrive-button');
+    var originLeaveField = document.getElementById('origin_leave_field');
+    var destArriveField = document.getElementById('dest_arrive_field');
+    var toOriginLeaveButton = document.getElementById('switch-to-origin-depart-button');
+
+    var originLeaveDivs = document.getElementsByClassName('origin-leave');
+    var destarriveDivs = document.getElementsByClassName('dest-arrive');
+
+
+    toDestArriveButton.addEventListener('click', function () {
+        for (var i = 0; i < originLeaveDivs.length; i++) {
+            originLeaveDivs[i].style.display = 'none';
+        }
+        for (var i = 0; i < originLeaveDivs.length; i++) {
+            destarriveDivs[i].style.display = 'block';
+        }
+        originLeaveField.value = ''
+    });
+
+    // Add a click event listener to the switch button
+    toOriginLeaveButton.addEventListener('click', function () {
+        for (var i = 0; i < originLeaveDivs.length; i++) {
+            destarriveDivs[i].style.display = 'none';
+        }
+        for (var i = 0; i < originLeaveDivs.length; i++) {
+            originLeaveDivs[i].style.display = 'block';
+        }
+        destArriveField.value = ''
+    });
+
+    const calculateRouteButton = document.getElementById("calc-route-button");
+
+    calculateRouteButton.addEventListener('click', function () {
+        calculateRoute();
+    });
+
 });

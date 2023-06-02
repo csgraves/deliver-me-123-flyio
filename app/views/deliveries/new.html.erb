@@ -1,14 +1,17 @@
-<%= javascript_include_tag 'delivery' %>
+
 <h1>New delivery</h1>
 
-<input
-  id="pac-input"
-  class="controls"
-  type="text"
-  placeholder="Search Box"
-    />
-<div id="map"></div>
 
+<div id="container">
+	<input id="pac-input" class="controls" type="text" placeholder="Search Box"/>
+	<div id="map"></div>
+	<div id="sidebar">
+		<p>Total Distance: <span id="total"></span></p>
+		<div id="panel"></div>
+	</div>
+</div>
+
+	
 <%= render "form", delivery: @delivery %>
 
 <br>
@@ -16,3 +19,5 @@
 <div>
   <%= link_to "Back to deliveries", deliveries_path %>
 </div>
+
+<%= javascript_include_tag 'delivery' %>

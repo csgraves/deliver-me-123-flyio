@@ -1,7 +1,7 @@
 class Delivery < ApplicationRecord
   belongs_to :schedule
 
-  validate :check_user_availability
+  #validate :check_user_availability
 
   #geocoded_by :dest_address, latitude: :dest_lat, longitude: :dest_lon
   #geocoded_by :origin_address, latitude: :origin_lat, longitude: :origin_lon
