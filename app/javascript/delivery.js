@@ -2,6 +2,7 @@ let map;
 let searchBox;
 let marker;
 let isOriginTime = true;
+let currentRoute = null;
 
 function deliveryMap() {
     map = new google.maps.Map(document.getElementById("map"), {
@@ -91,13 +92,28 @@ function deliveryMap() {
  
 }
 
+function clearDirections() {
+    if (currentRoute) {
+        currentRoute.setMap(null); // Remove route from the map
+        currentRoute.setPanel(null); // Remove route from the panel
+        currentRoute = null;
+    }
+}
+
 function calculateRoute() {
+    clearDirections();
+
     const directionsService = new google.maps.DirectionsService();
     const directionsRenderer = new google.maps.DirectionsRenderer({
         draggable: true,
         map,
         panel: document.getElementById("panel"),
     });
+
+    if (currentRoute) {
+        currentRoute.setMap(null);
+        currentRoute = null;
+    }
 
     directionsRenderer.addListener("directions_changed", () => {
         const directions = directionsRenderer.getDirections();
@@ -106,12 +122,11 @@ function calculateRoute() {
             computeTotalDistance(directions);
         }
     });
-    displayRoute(
-        origin_address.value,
-        dest_address.value,
-        directionsService,
-        directionsRenderer
-    );
+    const origin = document.getElementById("origin_address").value;
+    const destination = document.getElementById("dest_address").value;
+
+    displayRoute(origin, destination, directionsService, directionsRenderer);
+    //currentRoute = directionsRenderer;
 
 }
 
@@ -120,15 +135,18 @@ function displayRoute(origin, destination, service, display) {
         .route({
             origin: origin,
             destination: destination,
-            waypoints: [
-                //{ location: "Adelaide, SA" },
-                //{ location: "Broken Hill, NSW" },
-            ],
             travelMode: google.maps.TravelMode.DRIVING,
             avoidTolls: true,
         })
         .then((result) => {
+            if (currentRoute) {
+                currentRoute.setMap(null); // Remove previous route from the map
+                currentRoute.setPanel(null); // Remove previous route from the panel
+            }
+
             display.setDirections(result);
+            display.setPanel(document.getElementById("panel")); // Set the panel for the new route
+            currentRoute = display;
         })
         .catch((e) => {
             alert("Could not display directions due to: " + e);

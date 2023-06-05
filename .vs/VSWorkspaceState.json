@@ -2,16 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\app",
+    "\\app\\assets",
+    "\\app\\assets\\stylesheets",
+    "\\app\\javascript",
+    "\\app\\javascript\\controllers",
     "\\app\\views",
-    "\\app\\views\\availabilities",
+    "\\app\\views\\layouts",
     "\\config",
-    "\\config\\initializers",
-    "\\db",
-    "\\db\\migrate",
-    "\\test",
-    "\\test\\fixtures",
-    "\\test\\models"
+    "\\config\\credentials"
   ],
-  "SelectedNode": "\\db\\migrate\\20230510175701_add_user_and_or_branch_to_schedules.rb",
+  "SelectedNode": "\\app\\views\\layouts\\application.html.erb",
   "PreviewInSolutionExplorer": false
 }
