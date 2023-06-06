@@ -50,7 +50,14 @@ function deliveryMap() {
         let address = place.formatted_address;
 
         if (place.name) {
-            address = `${place.name}, ${address}`;
+            if (checkPlaceNameInAddressComponents(place)) {
+                address = `${address}`;
+            }
+            else {
+                address = `${place.name}, ${address}`;
+
+            }
+
         }
 
         document.getElementById("address").value = address;
@@ -115,27 +122,30 @@ function calculateRoute() {
         currentRoute = null;
     }
 
-    directionsRenderer.addListener("directions_changed", () => {
-        const directions = directionsRenderer.getDirections();
+    const originLat = Number(document.getElementById("origin_lat").value);
+    const originLng = Number(document.getElementById("origin_lon").value);
+    const destinationLat = Number(document.getElementById("dest_lat").value);
+    const destinationLng = Number(document.getElementById("dest_lon").value);
+    const originLeaveString = document.getElementById("origin_leave_field").value;
+    const originLeave = new Date(originLeaveString);
 
-        if (directions) {
-            computeTotalDistance(directions);
-        }
-    });
-    const origin = document.getElementById("origin_address").value;
-    const destination = document.getElementById("dest_address").value;
+    const origin = new google.maps.LatLng(originLat, originLng);
+    const destination = new google.maps.LatLng(destinationLat, destinationLng);
 
-    displayRoute(origin, destination, directionsService, directionsRenderer);
-    //currentRoute = directionsRenderer;
-
+    displayRoute(origin, destination, originLeave, directionsService, directionsRenderer);
 }
 
-function displayRoute(origin, destination, service, display) {
+function displayRoute(origin, destination, originLeave, service, display) {
     service
         .route({
             origin: origin,
             destination: destination,
+            provideRouteAlternatives: true,
             travelMode: google.maps.TravelMode.DRIVING,
+            drivingOptions: {
+                departureTime: originLeave,
+                trafficModel: 'bestguess'
+            },
             avoidTolls: true,
         })
         .then((result) => {
@@ -147,15 +157,64 @@ function displayRoute(origin, destination, service, display) {
             display.setDirections(result);
             display.setPanel(document.getElementById("panel")); // Set the panel for the new route
             currentRoute = display;
+            currentResult = result;
+
+            route = currentRoute.getDirections();            
+            route = route.routes[0];
+
+            computeTotalDistance(route);
+            routeDurations(route);
+
+            //Updates only with drag
+            display.addListener("directions_changed", () => {
+                const updatedDirections = display.getDirections();
+                const updatedRoute = updatedDirections.routes[0];
+
+                computeTotalDistance(updatedRoute);
+                routeDurations(updatedRoute);
+            });
+
+            // Update route durations when a different route is selected from the panel
+            display.addListener("routeindex_changed", () => {
+                const selectedRouteIndex = display.getRouteIndex();
+                const selectedRoute = currentResult.routes[selectedRouteIndex];
+
+                computeTotalDistance(selectedRoute);
+                routeDurations(selectedRoute);
+            });
+            
         })
         .catch((e) => {
             alert("Could not display directions due to: " + e);
         });
 }
 
-function computeTotalDistance(result) {
+function routeDurations(updatedRoute) {
+    const updatedRouteDuration = updatedRoute.legs.reduce(
+        (total, leg) => total + leg.duration.value,
+        0
+    );
+
+    const updatedRouteDurationWithTraffic = updatedRoute.legs.reduce(
+        (total, leg) => total + leg.duration_in_traffic.value,
+        0
+    );
+
+    const updatedRouteDurationMinutes = Math.round(
+        updatedRouteDuration / 60
+    );
+    const updatedRouteDurationWithTrafficMinutes = Math.round(
+        updatedRouteDurationWithTraffic / 60
+    );
+
+    document.getElementById("totalDuration").innerHTML = updatedRouteDurationMinutes + " mins";
+    document.getElementById("totalDurationTraffic").innerHTML = updatedRouteDurationWithTrafficMinutes + " mins";
+
+}
+
+function computeTotalDistance(route) {
     let total = 0;
-    const myroute = result.routes[0];
+    const myroute = route;    
 
     if (!myroute) {
         return;
@@ -166,7 +225,8 @@ function computeTotalDistance(result) {
     }
 
     total = total / 1000;
-    document.getElementById("total").innerHTML = total + " km";
+
+    document.getElementById("totalDistance").innerHTML = total + " km";
 }
 
 document.addEventListener("DOMContentLoaded", function (event) { 
@@ -242,4 +302,51 @@ document.addEventListener("DOMContentLoaded", function (event) {
         calculateRoute();
     });
 
+    originLeaveField = document.getElementById("origin_leave_field");
+    originLeaveField.value = setTimePlus10();
+
 });
+
+function setTimePlus10() {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() + 10);
+
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+
+    const defaultDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+    return defaultDateTime
+
+}
+
+function checkPlaceNameInAddressComponents(place) {
+  const placeName = place.name.toLowerCase();
+  
+  // Iterate over each address component
+  for (let i = 0; i < place.address_components.length; i++) {
+    const component = place.address_components[i];
+    
+    // Check if place name is present in the long_name or short_name of the address component
+    if (
+      component.long_name.toLowerCase().includes(placeName) ||
+      component.short_name.toLowerCase().includes(placeName)
+    ) {
+      return true;
+    }
+    
+    // Check if place name is present in any of the types of the address component
+    for (let j = 0; j < component.types.length; j++) {
+      const type = component.types[j];
+      
+      if (type.toLowerCase().includes(placeName)) {
+        return true;
+      }
+    }
+  }
+  
+  return false;
+}
