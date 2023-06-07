@@ -6,13 +6,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-    <!--<script>function initMap() { console.log(google)}</script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEGdiuu6KZ7h0MiR2M_yEQ_dhA3aBVqQc&callback=fireMapsLoadedEvent"></script>
-    -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.dig(:mapsAPI) %>&libraries=places&callback=initMap&v=weekly" defer></script>   
-    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEGdiuu6KZ7h0MiR2M_yEQ_dhA3aBVqQc&callback=initMap&v=weekly"defer></script>-->    
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>   
   </head>
 
   <nav>
@@ -32,6 +26,7 @@
     <%= yield %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+
 
   </body>
 </html>

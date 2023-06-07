@@ -1,7 +1,4 @@
-let map;
-let searchBox;
 let marker;
-let isOriginTime = true;
 let currentRoute = null;
 
 function deliveryMap() {
@@ -229,8 +226,7 @@ function computeTotalDistance(route) {
     document.getElementById("totalDistance").innerHTML = total + " km";
 }
 
-document.addEventListener("DOMContentLoaded", function (event) { 
-    // Initialize the map when the DOM is ready
+document.addEventListener("DOMContentLoaded", function (event) {
     deliveryMap();
 
     const setOriginButton = document.getElementById("set-origin-button");
@@ -305,6 +301,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     originLeaveField = document.getElementById("origin_leave_field");
     originLeaveField.value = setTimePlus10();
 
+
+
 });
 
 function setTimePlus10() {
@@ -350,3 +348,5 @@ function checkPlaceNameInAddressComponents(place) {
   
   return false;
 }
+
+window.initMap = deliveryMap;

@@ -31,7 +31,7 @@
 
   <div>
     <%= form.label :dest_leave, style: "display: block" %>
-    <%= form.datetime_field :dest_leave %>
+    <%= form.datetime_field :dest_leave, value: delivery.dest_leave&.strftime("%Y-%m-%dT%H:%M") %>
   </div>
 
   <div>
