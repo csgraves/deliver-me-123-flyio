@@ -14,15 +14,15 @@ class Delivery < ApplicationRecord
     private
 
     def time_check
-        return unless origin_leave && dest_leave # Skip validation if either value is not present
+        return unless dest_arrive && dest_leave # Skip validation if either value is not present
 
-        origin_leave_seconds = origin_leave.to_i
+        dest_arrive_seconds = dest_arrive.to_i
         #puts "Origin Leave: #{origin_leave_seconds} seconds"
 
         dest_leave_seconds = dest_leave.to_i
         #puts "Dest Leave: #{dest_leave_seconds} seconds"
 
-        if dest_leave_seconds < origin_leave_seconds
+        if dest_leave_seconds < dest_arrive_seconds
             #puts "Leaving destination before leaving origin"
             errors.add(:dest_leave, "must be greater than or equal to origin_leave")
         end

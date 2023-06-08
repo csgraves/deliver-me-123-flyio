@@ -126,6 +126,7 @@ function calculateRoute() {
     const originLeaveString = document.getElementById("origin_leave_field").value;
     const originLeave = new Date(originLeaveString);
 
+
     const origin = new google.maps.LatLng(originLat, originLng);
     const destination = new google.maps.LatLng(destinationLat, destinationLng);
 
@@ -159,8 +160,23 @@ function displayRoute(origin, destination, originLeave, service, display) {
             route = currentRoute.getDirections();            
             route = route.routes[0];
 
+            const sidebar = document.getElementById("sidebar");
+            sidebar.style.display = "block";
+
             computeTotalDistance(route);
-            routeDurations(route);
+            const [updatedRouteDurationMinutes, updatedRouteDurationWithTrafficMinutes] = routeDurations(route, inMins = true);
+            //document.getElementById("totalDuration").innerHTML = updatedRouteDurationMinutes + " mins";
+            //document.getElementById("totalDurationTraffic").innerHTML = updatedRouteDurationWithTrafficMinutes + " mins";
+
+            var [duration, durationTraffic] = routeDurations(route);
+            var arriveTime = addSecondsToDate(originLeave, duration);
+            var arriveTimeTraffic = addSecondsToDate(originLeave, durationTraffic);
+            var destLeaveTime = addSecondsToDate(arriveTimeTraffic, 600);
+            //document.getElementById("dest_arrive").value = arriveTime;
+            var destArriveField = document.getElementById("dest_arrive_field");
+            destArriveField.value = setDateTimeFormat(arriveTimeTraffic);
+            var destLeaveField = document.getElementById("dest_leave_field");
+            destLeaveField.value = setDateTimeFormat(destLeaveTime);
 
             //Updates only with drag
             display.addListener("directions_changed", () => {
@@ -168,7 +184,17 @@ function displayRoute(origin, destination, originLeave, service, display) {
                 const updatedRoute = updatedDirections.routes[0];
 
                 computeTotalDistance(updatedRoute);
-                routeDurations(updatedRoute);
+                //const [updatedRouteDurationMinutes, updatedRouteDurationWithTrafficMinutes] = routeDurations(updatedRoute, inMins = true);
+                //document.getElementById("totalDuration").innerHTML = updatedRouteDurationMinutes + " mins";
+                //document.getElementById("totalDurationTraffic").innerHTML = updatedRouteDurationWithTrafficMinutes + " mins";
+
+                [duration, durationTraffic] = routeDurations(updatedRoute);
+                arriveTime = addSecondsToDate(originLeave, duration);
+                arriveTimeTraffic = addSecondsToDate(originLeave, durationTraffic);
+                destArriveField.value = setDateTimeFormat(arriveTimeTraffic);
+
+                destLeaveTime = addSecondsToDate(arriveTimeTraffic, 600);
+                destLeaveField.value = setDateTimeFormat(destLeaveTime);
             });
 
             // Update route durations when a different route is selected from the panel
@@ -177,7 +203,17 @@ function displayRoute(origin, destination, originLeave, service, display) {
                 const selectedRoute = currentResult.routes[selectedRouteIndex];
 
                 computeTotalDistance(selectedRoute);
-                routeDurations(selectedRoute);
+                const [updatedRouteDurationMinutes, updatedRouteDurationWithTrafficMinutes] = routeDurations(selectedRoute, inMins = true);
+                //document.getElementById("totalDuration").innerHTML = updatedRouteDurationMinutes + " mins";
+                //document.getElementById("totalDurationTraffic").innerHTML = updatedRouteDurationWithTrafficMinutes + " mins";
+
+                var [duration, durationTraffic] = routeDurations(selectedRoute);
+                var arriveTime = addSecondsToDate(originLeave, duration);
+                var arriveTimeTraffic = addSecondsToDate(originLeave, durationTraffic);
+                destArriveField.value = setDateTimeFormat(arriveTimeTraffic);
+
+                destLeaveTime = addSecondsToDate(arriveTimeTraffic, 600);
+                destLeaveField.value = setDateTimeFormat(destLeaveTime);
             });
             
         })
@@ -186,26 +222,35 @@ function displayRoute(origin, destination, originLeave, service, display) {
         });
 }
 
-function routeDurations(updatedRoute) {
-    const updatedRouteDuration = updatedRoute.legs.reduce(
+function addSecondsToDate(date, seconds) {
+    var newDate = new Date(date.getTime() + ((seconds) * 1000));
+    return newDate;
+}
+
+function routeDurations(updatedRoute, inMins = false) {
+    var updatedRouteDuration = updatedRoute.legs.reduce(
         (total, leg) => total + leg.duration.value,
         0
-    );
+    ) + 30;
 
-    const updatedRouteDurationWithTraffic = updatedRoute.legs.reduce(
+    var updatedRouteDurationWithTraffic = updatedRoute.legs.reduce(
         (total, leg) => total + leg.duration_in_traffic.value,
         0
-    );
+    ) + 30;
 
-    const updatedRouteDurationMinutes = Math.round(
-        updatedRouteDuration / 60
-    );
-    const updatedRouteDurationWithTrafficMinutes = Math.round(
-        updatedRouteDurationWithTraffic / 60
-    );
+    if (inMins == true) {
+        updatedRouteDuration = Math.round(
+            updatedRouteDuration / 60
+        );
+        updatedRouteDurationWithTraffic = Math.round(
+            updatedRouteDurationWithTraffic / 60
+        );
 
-    document.getElementById("totalDuration").innerHTML = updatedRouteDurationMinutes + " mins";
-    document.getElementById("totalDurationTraffic").innerHTML = updatedRouteDurationWithTrafficMinutes + " mins";
+    }
+
+    
+
+    return [updatedRouteDuration, updatedRouteDurationWithTraffic];
 
 }
 
@@ -223,7 +268,7 @@ function computeTotalDistance(route) {
 
     total = total / 1000;
 
-    document.getElementById("totalDistance").innerHTML = total + " km";
+    //document.getElementById("totalDistance").innerHTML = total + " km";
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
@@ -261,37 +306,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         destFields.style.display = "block";
     });
 
-    // Switch Dest arrive and origin depart displays
-    var toDestArriveButton = document.getElementById('switch-to-dest-arrive-button');
-    var originLeaveField = document.getElementById('origin_leave_field');
-    var destArriveField = document.getElementById('dest_arrive_field');
-    var toOriginLeaveButton = document.getElementById('switch-to-origin-depart-button');
-
-    var originLeaveDivs = document.getElementsByClassName('origin-leave');
-    var destarriveDivs = document.getElementsByClassName('dest-arrive');
-
-
-    toDestArriveButton.addEventListener('click', function () {
-        for (var i = 0; i < originLeaveDivs.length; i++) {
-            originLeaveDivs[i].style.display = 'none';
-        }
-        for (var i = 0; i < originLeaveDivs.length; i++) {
-            destarriveDivs[i].style.display = 'block';
-        }
-        originLeaveField.value = ''
-    });
-
-    // Add a click event listener to the switch button
-    toOriginLeaveButton.addEventListener('click', function () {
-        for (var i = 0; i < originLeaveDivs.length; i++) {
-            destarriveDivs[i].style.display = 'none';
-        }
-        for (var i = 0; i < originLeaveDivs.length; i++) {
-            originLeaveDivs[i].style.display = 'block';
-        }
-        destArriveField.value = ''
-    });
-
     const calculateRouteButton = document.getElementById("calc-route-button");
 
     calculateRouteButton.addEventListener('click', function () {
@@ -299,21 +313,21 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
 
     originLeaveField = document.getElementById("origin_leave_field");
-    originLeaveField.value = setTimePlus10();
+    const now = new Date();
+    now.setMinutes(now.getMinutes() + 10);
+    originLeaveField.value = setDateTimeFormat(now);
 
 
 
 });
 
-function setTimePlus10() {
-    const now = new Date();
-    now.setMinutes(now.getMinutes() + 10);
+function setDateTimeFormat(dateTime) {
 
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-    const hours = String(now.getHours()).padStart(2, "0");
-    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const year = dateTime.getFullYear();
+    const month = String(dateTime.getMonth() + 1).padStart(2, "0");
+    const day = String(dateTime.getDate()).padStart(2, "0");
+    const hours = String(dateTime.getHours()).padStart(2, "0");
+    const minutes = String(dateTime.getMinutes()).padStart(2, "0");
 
     const defaultDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
 

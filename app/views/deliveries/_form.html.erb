@@ -16,22 +16,15 @@
     <%= form.datetime_field :origin_leave, id: "origin_leave_field" %>
   </div>
 
-  <div class="dest-arrive" style="display: none;">
+  <div class="dest-arrive" style="display: block">
     <%= form.label :dest_arrive, style: "display: block" %>
     <%= form.datetime_field :dest_arrive, id: "dest_arrive_field" %>
-  </div>
-
-  <div class="origin-leave" style="display: none;">
-    <%= button_tag "Switch to Destination Arrive", type: "button", id: "switch-to-dest-arrive-button" %>
-  </div>
-
-  <div class="dest-arrive" style="display: none;">
-    <%= button_tag "Switch to Origin Depart", type: "button", id: "switch-to-origin-depart-button" %>
+    <!--<input type="text" name="dest_arrive" id="dest_arrive" readonly>-->
   </div>
 
   <div>
     <%= form.label :dest_leave, style: "display: block" %>
-    <%= form.datetime_field :dest_leave, value: delivery.dest_leave&.strftime("%Y-%m-%dT%H:%M") %>
+    <%= form.datetime_field :dest_leave, id: "dest_leave_field", value: delivery.dest_leave&.strftime("%Y-%m-%dT%H:%M") %>
   </div>
 
   <div>
@@ -42,6 +35,7 @@
   <input type="text" name="lat" id="lat" readonly>
   <input type="text" name="lon" id="lon" readonly>
   <input type="text" name="address" id="address" readonly>
+  <!--<input type="text" name="dest_arrive" id="dest_arrive" readonly>-->
 
   <div>
     <%= button_tag "Set Origin", type: "button", id: "set-origin-button" %>
