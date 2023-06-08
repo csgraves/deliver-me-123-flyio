@@ -19,7 +19,6 @@
   <div class="dest-arrive" style="display: block">
     <%= form.label :dest_arrive, style: "display: block" %>
     <%= form.datetime_field :dest_arrive, id: "dest_arrive_field" %>
-    <!--<input type="text" name="dest_arrive" id="dest_arrive" readonly>-->
   </div>
 
   <div>
@@ -35,20 +34,19 @@
   <input type="text" name="lat" id="lat" readonly>
   <input type="text" name="lon" id="lon" readonly>
   <input type="text" name="address" id="address" readonly>
-  <!--<input type="text" name="dest_arrive" id="dest_arrive" readonly>-->
 
   <div>
     <%= button_tag "Set Origin", type: "button", id: "set-origin-button" %>
     <div id="origin-fields" style="display: none;">
 
         <div><%= label_tag "Origin Address" %>
-        <%= text_field_tag "origin_address", nil, id: "origin_address", readonly: true %></div>
+        <%= form.text_field :origin_address, id: "origin_address", readonly: true %></div>
 
         <div><%= label_tag "Origin Latitude" %>
-        <%= text_field_tag "origin_lat", nil, id: "origin_lat", readonly: true %></div>
+        <%= form.text_field :origin_lat, id: "origin_lat", readonly: true %></div>
 
         <div><%= label_tag "Origin Longitude" %>
-        <%= text_field_tag "origin_lon", nil, id: "origin_lon", readonly: true %></div>
+        <%= form.text_field :origin_lon, id: "origin_lon", readonly: true %></div>
 
     </div>
   </div>
@@ -58,13 +56,13 @@
     <div id="dest-fields" style="display: none;">
 
         <div><%= label_tag "Destination Address" %>
-        <%= text_field_tag "dest_address", nil, id: "dest_address", readonly: true %></div>
+        <%= form.text_field :dest_address, id: "dest_address", readonly: true %></div>
 
         <div><%= label_tag "Destination Latitude" %>
-        <%= text_field_tag "dest_lat", nil, id: "dest_lat", readonly: true %></div>
+        <%= form.text_field :dest_lat, id: "dest_lat", readonly: true %></div>
 
         <div><%= label_tag "Destination Longitude" %>
-        <%= text_field_tag "dest_lon", nil, id: "dest_lon", readonly: true %></div>
+        <%= form.text_field :dest_lon, id: "dest_lon", readonly: true %></div>
 
     </div>
   </div>
