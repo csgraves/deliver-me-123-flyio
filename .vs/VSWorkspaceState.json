@@ -2,15 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\app\\assets",
-    "\\app\\assets\\stylesheets",
+    "\\app\\controllers",
     "\\app\\javascript",
     "\\app\\javascript\\controllers",
+    "\\app\\models",
     "\\app\\views",
     "\\app\\views\\layouts",
     "\\config",
     "\\config\\credentials"
   ],
-  "SelectedNode": "\\app\\views\\layouts\\application.html.erb",
+  "SelectedNode": "\\app\\controllers\\deliveries_controller.rb",
   "PreviewInSolutionExplorer": false
 }

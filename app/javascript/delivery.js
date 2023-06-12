@@ -1,5 +1,5 @@
 let marker;
-let currentRoute = null;
+let currentRoute;
 
 function deliveryMap() {
     map = new google.maps.Map(document.getElementById("map"), {
@@ -98,14 +98,14 @@ function deliveryMap() {
 
 function clearDirections() {
     if (currentRoute) {
-        currentRoute.setMap(null); // Remove route from the map
-        currentRoute.setPanel(null); // Remove route from the panel
+        currentRoute.setMap(null);
+        currentRoute.setPanel(null);
         currentRoute = null;
     }
 }
 
 function calculateRoute() {
-    clearDirections();
+    clearDirections(); //Removes panel after button directions after button press
 
     const directionsService = new google.maps.DirectionsService();
     const directionsRenderer = new google.maps.DirectionsRenderer({
@@ -113,11 +113,6 @@ function calculateRoute() {
         map,
         panel: document.getElementById("panel"),
     });
-
-    if (currentRoute) {
-        currentRoute.setMap(null);
-        currentRoute = null;
-    }
 
     const originLat = Number(document.getElementById("origin_lat").value);
     const originLng = Number(document.getElementById("origin_lon").value);
@@ -147,11 +142,6 @@ function displayRoute(origin, destination, originLeave, service, display) {
             avoidTolls: true,
         })
         .then((result) => {
-            if (currentRoute) {
-                currentRoute.setMap(null); // Remove previous route from the map
-                currentRoute.setPanel(null); // Remove previous route from the panel
-            }
-
             display.setDirections(result);
             display.setPanel(document.getElementById("panel")); // Set the panel for the new route
             currentRoute = display;
