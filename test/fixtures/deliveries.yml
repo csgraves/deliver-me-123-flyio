@@ -1,11 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  deliver: 2023-05-12 12:51:02
-  leave: 2023-05-12 12:51:02
+  origin_leave: 2023-05-12 14:51:02
+  dest_arrive: 2023-05-12 15:00:02
+  dest_leave: 2023-05-12 15:51:02
   schedule: one
 
 two:
-  deliver: 2023-05-12 12:51:02
-  leave: 2023-05-12 12:51:02
+  origin_leave: 2023-05-12 14:52:02
+  dest_arrive: 2023-05-12 15:01:02
+  dest_leave: 2023-05-12 15:52:02
   schedule: two

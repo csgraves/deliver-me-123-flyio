@@ -1,15 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  start_time: 2023-05-12 13:06:29
-  end_time: 2023-05-12 13:06:29
+  start_time: 2023-05-12 07:06:29
+  end_time: 2023-05-12 23:06:29
   user: one
   user_only: true
   branch_only: false
 
 two:
-  start_time: 2023-05-12 13:06:29
-  end_time: 2023-05-12 13:06:29
+  start_time: 2023-05-12 07:06:29
+  end_time: 2023-05-12 23:06:29
   branch: two
   user_only: false
   branch_only: true

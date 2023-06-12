@@ -37,5 +37,31 @@ article1 = Article.create(title: 'Article 1', content: 'Lorem ipsum dolor sit am
 article2 = Article.create(title: 'Article 2', content: 'Ut et accumsan ipsum. Sed fermentum diam felis, non porttitor nunc.', author: 'Jane Smith', date: Date.yesterday)
 
 # Create deliveries
-delivery1 = Delivery.create(origin_leave: Time.zone.now, dest_arrive: Time.zone.now + 1.hours, dest_leave: Time.zone.now + 2.hour, schedule: schedule1)
-delivery2 = Delivery.create(origin_leave: Time.zone.now + 1.minutes, dest_arrive: Time.zone.now + 1.hours, dest_leave: Time.zone.now + 2.hours, schedule: schedule2)
+#delivery1 = Delivery.create(origin_leave: Time.zone.now, dest_arrive: Time.zone.now + 1.hours, dest_leave: Time.zone.now + 2.hour, schedule: schedule1)
+#delivery2 = Delivery.create(origin_leave: Time.zone.now + 1.minutes, dest_arrive: Time.zone.now + 1.hours, dest_leave: Time.zone.now + 2.hours, schedule: schedule2)
+
+delivery1 = Delivery.create(
+  dest_arrive: Time.zone.now + 1.hours,
+  dest_leave: Time.zone.now + 2.hour,
+  schedule: schedule1,
+  dest_lat: 37.7749,
+  dest_lon: -122.4194,
+  origin_leave: Time.zone.now,
+  origin_lat: 37.3352,
+  origin_lon: -121.8811,
+  origin_address: "Origin Address 1",
+  dest_address: "Destination Address 1"
+)
+
+delivery2 = Delivery.create(
+  dest_arrive: Time.zone.now + 1.hours,
+  dest_leave: Time.zone.now + 2.hours,
+  schedule: schedule1,
+  dest_lat: 37.3382,
+  dest_lon: -121.8863,
+  origin_leave: Time.zone.now + 1.minutes,
+  origin_lat: 37.3352,
+  origin_lon: -121.8811,
+  origin_address: "Origin Address 2",
+  dest_address: "Destination Address 2"
+)

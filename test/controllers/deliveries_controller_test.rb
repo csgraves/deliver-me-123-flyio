@@ -19,7 +19,18 @@ class DeliveriesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create delivery" do
     assert_difference("Delivery.count") do
-      post deliveries_url, params: { delivery: { deliver: @delivery.deliver, leave: @delivery.leave, schedule_id: @delivery.schedule_id } }
+      post deliveries_url, params: { delivery: { 
+        origin_leave: @delivery.origin_leave,
+        schedule_id: @delivery.schedule_id,
+        origin_address: @delivery.origin_address,
+        origin_lat: @delivery.origin_lat,
+        origin_lon: @delivery.origin_lon,
+        dest_address: @delivery.dest_address,
+        dest_lat: @delivery.dest_lat,
+        dest_lon: @delivery.dest_lon,
+        dest_arrive: @delivery.dest_arrive,
+        dest_leave: @delivery.dest_leave
+      } }
     end
 
     assert_redirected_to delivery_url(Delivery.last)
@@ -36,7 +47,18 @@ class DeliveriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update delivery" do
-    patch delivery_url(@delivery), params: { delivery: { deliver: @delivery.deliver, leave: @delivery.leave, schedule_id: @delivery.schedule_id } }
+    patch delivery_url(@delivery), params: { delivery: { 
+      origin_leave: @delivery.origin_leave,
+      schedule_id: @delivery.schedule_id,
+      origin_address: @delivery.origin_address,
+      origin_lat: @delivery.origin_lat,
+      origin_lon: @delivery.origin_lon,
+      dest_address: @delivery.dest_address,
+      dest_lat: @delivery.dest_lat,
+      dest_lon: @delivery.dest_lon,
+      dest_arrive: @delivery.dest_arrive,
+      dest_leave: @delivery.dest_leave
+    } }
     assert_redirected_to delivery_url(@delivery)
   end
 
