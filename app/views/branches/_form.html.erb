@@ -1,0 +1,32 @@
+<%= form_with(model: branch) do |form| %>
+  <% if branch.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(branch.errors.count, "error") %> prohibited this branch from being saved:</h2>
+
+      <ul>
+        <% branch.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :branch_iden, style: "display: block" %>
+    <%= form.text_field :branch_iden %>
+  </div>
+
+  <div>
+    <%= form.label :company_id, style: "display: block" %>
+    <%= text_field_tag :company_iden, form.object.company_iden, disabled: true, readonly: true %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

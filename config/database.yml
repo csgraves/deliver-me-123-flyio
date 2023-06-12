@@ -14,7 +14,7 @@ default: &default
 
 development:
   <<: *default
-  database: RailsTest_development
+  database: RailsTest_development_del
   #database: db/development.sqlite3
   username: postgres
   password: postgres1234
@@ -24,12 +24,12 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: RailsTest_test
+  database: RailsTest_test_del
   #database: db/test.sqlite3
 
 production:
   <<: *default
-  database: RailsTest_production
+  database: RailsTest_production_del
   username: RailsTest
   password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
   #database: db/production.sqlite3

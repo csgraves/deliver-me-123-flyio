@@ -1,0 +1,73 @@
+<%= form_with(model: delivery) do |form| %>    
+  <% if delivery.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(delivery.errors.count, "error") %> prohibited this delivery from being saved:</h2>
+
+      <ul>
+        <% delivery.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="origin-leave">
+    <%= form.label :origin_leave, style: "display: block" %>
+    <%= form.datetime_field :origin_leave, id: "origin_leave_field" %>
+  </div>
+
+  <div class="dest-arrive" style="display: block">
+    <%= form.label :dest_arrive, style: "display: block" %>
+    <%= form.datetime_field :dest_arrive, id: "dest_arrive_field" %>
+  </div>
+
+  <div>
+    <%= form.label :dest_leave, style: "display: block" %>
+    <%= form.datetime_field :dest_leave, id: "dest_leave_field", value: delivery.dest_leave&.strftime("%Y-%m-%dT%H:%M") %>
+  </div>
+
+  <div>
+    <%= form.label :schedule_id, style: "display: block" %>
+    <%= form.text_field :schedule_id %>
+  </div>
+
+  <input type="text" name="lat" id="lat" readonly>
+  <input type="text" name="lon" id="lon" readonly>
+  <input type="text" name="address" id="address" readonly>
+
+  <div>
+    <%= button_tag "Set Origin", type: "button", id: "set-origin-button" %>
+    <div id="origin-fields" style="display: none;">
+
+        <div><%= label_tag "Origin Address" %>
+        <%= form.text_field :origin_address, id: "origin_address", readonly: true %></div>
+
+        <div><%= label_tag "Origin Latitude" %>
+        <%= form.text_field :origin_lat, id: "origin_lat", readonly: true %></div>
+
+        <div><%= label_tag "Origin Longitude" %>
+        <%= form.text_field :origin_lon, id: "origin_lon", readonly: true %></div>
+
+    </div>
+  </div>
+
+  <div>
+    <%= button_tag "Set Destination", type: "button", id: "set-dest-button" %>
+    <div id="dest-fields" style="display: none;">
+
+        <div><%= label_tag "Destination Address" %>
+        <%= form.text_field :dest_address, id: "dest_address", readonly: true %></div>
+
+        <div><%= label_tag "Destination Latitude" %>
+        <%= form.text_field :dest_lat, id: "dest_lat", readonly: true %></div>
+
+        <div><%= label_tag "Destination Longitude" %>
+        <%= form.text_field :dest_lon, id: "dest_lon", readonly: true %></div>
+
+    </div>
+  </div>
+
+  <div><%= button_tag "Calculate Route", type: "button", id: "calc-route-button" %></div>
+  
+  <div><%= form.submit %></div>
+<% end %>

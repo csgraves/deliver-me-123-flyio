@@ -1,0 +1,13 @@
+<% if @need_join_company %>
+<div>
+	<%= link_to "Join a company", join_company_path, class: "btn btn-primary" %>
+</div>
+<div>
+	<%= link_to "Create a company", new_company_path, class: "btn btn-primary" %>
+</div>
+<% else %>
+<h1>
+	Welcome to your dashboard, <%= current_user.email %>
+</h1>
+<!-- Add any code here to display data on the dashboard -->
+<% end %>

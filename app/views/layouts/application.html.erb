@@ -6,22 +6,27 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-    <!--<script>function initMap() { console.log(google)}</script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEGdiuu6KZ7h0MiR2M_yEQ_dhA3aBVqQc&callback=fireMapsLoadedEvent"></script>
-    -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.dig(:mapsAPI) %>&callback=initMap&v=weekly"
-    defer></script>
-    
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>   
   </head>
+
+  <nav>
+  <% if user_signed_in? %>
+    <%= "#{current_user.email} |" %>
+    <%= link_to t('profile'), edit_user_registration_path %>
+    |
+    <%= button_to t('logout'), destroy_user_session_path, method: 'delete' %>
+  <% else %>
+    <%= link_to t('login'), new_user_session_path %>
+    |
+    <%= link_to t('sign_up'), new_user_registration_path %>
+  <% end %>
+</nav>
 
   <body>
     <%= yield %>
-    <p>Test Words</p>
-    <div id="map"></div>
-    <p> Test Words 2</p>
-    <p> <%= Rails.application.credentials.dig(:mapsAPI) %> </p>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
 
   </body>
 </html>

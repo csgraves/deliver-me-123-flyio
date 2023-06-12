@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_07_164330) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_30_122202) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,4 +23,82 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_07_164330) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "availabilities", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_availabilities_on_user_id"
+  end
+
+  create_table "branches", force: :cascade do |t|
+    t.string "name"
+    t.string "branch_iden"
+    t.string "company_iden"
+    t.bigint "company_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_branches_on_company_id"
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string "name"
+    t.string "company_iden"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "deliveries", force: :cascade do |t|
+    t.datetime "dest_arrive"
+    t.datetime "dest_leave"
+    t.bigint "schedule_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "dest_lat", precision: 10, scale: 6
+    t.decimal "dest_lon", precision: 10, scale: 6
+    t.datetime "origin_leave"
+    t.decimal "origin_lat", precision: 10, scale: 6
+    t.decimal "origin_lon", precision: 10, scale: 6
+    t.string "origin_address"
+    t.string "dest_address"
+    t.index ["schedule_id"], name: "index_deliveries_on_schedule_id"
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.bigint "branch_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "user_only"
+    t.boolean "branch_only"
+    t.index ["branch_id"], name: "index_schedules_on_branch_id"
+    t.index ["user_id"], name: "index_schedules_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "password_digest"
+    t.string "role"
+    t.bigint "branch_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["branch_id"], name: "index_users_on_branch_id"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  add_foreign_key "availabilities", "users"
+  add_foreign_key "branches", "companies"
+  add_foreign_key "deliveries", "schedules"
+  add_foreign_key "schedules", "branches"
+  add_foreign_key "schedules", "users"
+  add_foreign_key "users", "branches"
 end

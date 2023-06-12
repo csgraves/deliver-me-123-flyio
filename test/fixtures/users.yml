@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString1
+  email: MyString1
+  encrypted_password: nothing
+  password_digest: MyString
+  role: admin
+  branch: one
+  branch_id: 1
+
+two:
+  name: MyString2
+  email: MyString2
+  encrypted_password: nothing
+  password_digest: MyString
+  role: driver
+  branch: two
+  branch_id: 2

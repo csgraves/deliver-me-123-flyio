@@ -1,0 +1,31 @@
+<h1>New delivery</h1>
+
+
+<div id="container">
+	<input id="pac-input" class="controls" type="text" placeholder="Search Box"/>
+	<div id="map"></div>
+	<div id="sidebar" style="display: none;">
+		<!--<p>Total Distance: <span id="totalDistance"></span></p>
+		<p>Total Duration: <span id="totalDuration"></span></p>
+		<p>Total Duration (with Traffic): <span id="totalDurationTraffic"></span></p>-->
+		
+		<div id="panel"></div>
+	</div>
+</div>
+
+	
+<%= render "form", delivery: @delivery %>
+
+<br>
+
+<div>
+  <%= link_to "Back to deliveries", deliveries_path %>
+</div>
+
+<%= javascript_include_tag 'delivery' %>
+<!--<%= javascript_import_module_tag '/delivery' %>-->
+
+<% api_key = Rails.application.credentials.dig(:mapsAPI) %>
+<%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{api_key}&libraries=places&callback=initMap&v=weekly", 
+	defer: true 
+%>

@@ -79,3 +79,6 @@ gem "ffi"
 
 gem "bootstrap", "~> 5.1.3"
 gem "modernizr-rails"
+gem "devise"
+gem 'geocoder', '~> 1.8', '>= 1.8.1'
+gem 'google_maps_service', '~> 0.4.2'
