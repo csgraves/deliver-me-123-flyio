@@ -307,9 +307,25 @@ document.addEventListener("DOMContentLoaded", function (event) {
     now.setMinutes(now.getMinutes() + 10);
     originLeaveField.value = setDateTimeFormat(now);
 
-
+    //Display dest / origin fields if they've values
+    if (dest_address.value !== '' && dest_lon.value !== '' && dest_lat.value !== '') {
+        // If all fields have values, show the dest-fields div
+        destFields.style.display = "block";
+    }
+    if (origin_address.value !== '' && origin_lon.value !== '' && origin_lat.value !== '') {
+        // If all fields have values, show the dest-fields div
+        originFields.style.display = "block";
+    }
 
 });
+
+function showFieldsIfNotEmpty() {
+    // Check if the destination address, longitude, and latitude fields have values
+    if ($('#dest_address').val() && $('#dest_lon').val() && $('#dest_lat').val()) {
+        // If all fields have values, show the dest-fields div
+        $('#dest-fields').show();
+    }
+}
 
 function setDateTimeFormat(dateTime) {
 
