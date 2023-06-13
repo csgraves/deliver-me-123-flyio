@@ -25,7 +25,7 @@ FROM base as build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential libpq-dev redis
+    apt-get install --no-install-recommends -y build-essential libpq-dev redis nodejs
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -52,7 +52,7 @@ FROM base
 
 # Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y postgresql-client redis && \
+    apt-get install --no-install-recommends -y postgresql-client redis nodejs && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built application from previous stage

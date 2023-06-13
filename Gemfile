@@ -82,3 +82,4 @@ gem "modernizr-rails"
 gem "devise"
 gem 'geocoder', '~> 1.8', '>= 1.8.1'
 gem 'google_maps_service', '~> 0.4.2'
+gem 'execjs', '~> 2.8', '>= 2.8.1' #not sure needed for deploy

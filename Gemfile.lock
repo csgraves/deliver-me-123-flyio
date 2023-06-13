@@ -261,6 +261,7 @@ DEPENDENCIES
   debug
   devise
   dockerfile-rails (>= 1.0)
+  execjs (~> 2.8, >= 2.8.1)
   ffi
   geocoder (~> 1.8, >= 1.8.1)
   google_maps_service (~> 0.4.2)

@@ -2,16 +2,14 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\app\\views",
-    "\\app\\views\\deliveries",
+    "\\app\\javascript",
+    "\\app\\javascript\\controllers",
     "\\config",
     "\\config\\credentials",
     "\\db",
-    "\\test",
     "\\test\\controllers",
     "\\test\\fixtures",
     "\\test\\models"
   ],
-  "SelectedNode": "\\fly.toml",
   "PreviewInSolutionExplorer": false
 }
