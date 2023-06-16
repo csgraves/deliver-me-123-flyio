@@ -85,3 +85,4 @@ gem 'google_maps_service', '~> 0.4.2'
 gem 'execjs', '~> 2.8', '>= 2.8.1' #not sure needed for deploy
 
 gem 'jsbundling-rails', '~> 1.1', '>= 1.1.1'
+gem 'cssbundling-rails', '~> 1.1', '>= 1.1.2'
