@@ -1,9 +1,7 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
 import "./controllers"
-// import "bootstrap"
 import * as bootstrap from "bootstrap"
-//import * as ec from '@event-calendar/'
 
 // Import calendar and its dependencies
 import Calendar from '@event-calendar/core';
@@ -20,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     function convertDeliveriesToEvents(deliveriesData) {
         return deliveriesData.map(delivery => ({
-            title: `Delivery ID: ${delivery.id}`,
+            title: `Destination: ${delivery.dest_address}`,
             start: delivery.origin_leave,
             end: delivery.dest_leave,
             extendedProps: {
@@ -41,10 +39,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 view: 'timeGridWeek',
                 events: events,
                 editable: true,
+                headerToolbar: {
+                    start: 'title',
+                    center: '',
+                    end: 'today prev,next dayGridMonth,timeGridWeek,timeGridDay'
+                },
                 eventDrop: function (info) {
                     console.log('Event dropped:', info.event);
                     // Update your deliveriesArray or perform other actions based on the new event data
                 }
+
             }
         }
     });
