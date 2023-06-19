@@ -9,6 +9,13 @@ class SchedulesController < ApplicationController
 
   # GET /schedules/1 or /schedules/1.json
   def show
+      @schedule = Schedule.find(params[:id])
+        @deliveries = @schedule.deliveries
+
+        respond_to do |format|
+            format.html # Render the HTML view as usual
+            format.json { render json: @deliveries } # Include deliveries in the JSON response
+        end
   end
 
   # GET /schedules/new
