@@ -25,7 +25,12 @@ FROM base as build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential libpq-dev redis nodejs
+    apt-get install --no-install-recommends -y build-essential libpq-dev redis nodejs curl gnupg
+
+# Install yarn
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install --global yarn
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./

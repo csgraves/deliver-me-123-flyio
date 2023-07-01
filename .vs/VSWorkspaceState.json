@@ -2,14 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\app\\javascript",
-    "\\app\\javascript\\controllers",
+    "\\app\\assets",
+    "\\app\\assets\\stylesheets",
+    "\\app\\controllers",
+    "\\app\\controllers\\users",
+    "\\app\\views",
+    "\\app\\views\\articles",
     "\\config",
-    "\\config\\credentials",
-    "\\db",
-    "\\test\\controllers",
-    "\\test\\fixtures",
-    "\\test\\models"
+    "\\config\\locales"
   ],
+  "SelectedNode": "\\config\\locales\\devise.en.yml",
   "PreviewInSolutionExplorer": false
 }
