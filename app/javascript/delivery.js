@@ -1,5 +1,9 @@
-let marker;
-let currentRoute;
+//let marker;
+//let currentRoute;
+
+if (!window.currentRoute) {
+    window.currentRoute = null; // Initialize currentRoute if it doesn't exist
+}
 
 function deliveryMap() {
     map = new google.maps.Map(document.getElementById("map"), {
@@ -34,7 +38,7 @@ function deliveryMap() {
             return;
         }
 
-        marker = new google.maps.Marker({
+        var marker = new google.maps.Marker({
             map,
             position: place.geometry.location,
             draggable: true,
@@ -144,7 +148,7 @@ function displayRoute(origin, destination, originLeave, service, display) {
         .then((result) => {
             display.setDirections(result);
             display.setPanel(document.getElementById("panel")); // Set the panel for the new route
-            currentRoute = display;
+            var currentRoute = display;
             currentResult = result;
 
             route = currentRoute.getDirections();            
