@@ -297,9 +297,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
 
     const calculateRouteButton = document.getElementById("calc-route-button");
+    const destArriveField = document.getElementById("dest_arrive_field");
+    const destArriveDiv = document.getElementById("dest_arrive");
 
     calculateRouteButton.addEventListener('click', function () {
         calculateRoute();
+        destArriveDiv.style.display = "block";
     });
 
     originLeaveField = document.getElementById("origin_leave_field");
@@ -316,16 +319,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
         // If all fields have values, show the dest-fields div
         originFields.style.display = "block";
     }
+    if (destArriveField.value !== '') {
+        destArriveDiv.style.display = "block";
+    }
+
 
 });
-
-function showFieldsIfNotEmpty() {
-    // Check if the destination address, longitude, and latitude fields have values
-    if ($('#dest_address').val() && $('#dest_lon').val() && $('#dest_lat').val()) {
-        // If all fields have values, show the dest-fields div
-        $('#dest-fields').show();
-    }
-}
 
 function setDateTimeFormat(dateTime) {
 

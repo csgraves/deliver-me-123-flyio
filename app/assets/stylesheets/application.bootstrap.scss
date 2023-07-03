@@ -104,11 +104,11 @@ html, body {
 }
 
 #map_container {
-    height: 30%;
+    height: 400px;
     display: flex;
 }
 
-#map_sidebar {
+#sidebar {
     flex-basis: 15rem;
     flex-grow: 1;
     padding: 1rem;
@@ -118,7 +118,7 @@ html, body {
     overflow: auto;
 }
 
-.sidebar {
+.app_sidebar {
     min-width: 60px;
     max-width: 85px;
     background-color: #f8f9fa; /* Set the background color */
