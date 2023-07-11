@@ -58,6 +58,28 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users/fetch_users
+  def fetch_users
+    origin_leave = params[:origin_leave]
+    dest_arrive = params[:dest_arrive]
+
+    # Fetch users based on the conditions mentioned
+    users = User.joins(:availabilities)
+                .joins(branch: :company)
+                .joins(:schedules)
+                .where('availabilities.start_time <= ?', origin_leave)
+                .where('availabilities.end_time >= ?', dest_arrive)
+                .where(branch_id: current_user.branch_id)
+                .distinct
+
+    # Print name, email, and schedule_id to console
+    users.each do |user|
+        puts "Name: #{user.name}, Email: #{user.email}, Schedule ID: #{user.schedules.first.id}"
+    end
+
+    render json: users, only: [:name, :email], include: { schedules: { only: :id } }
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

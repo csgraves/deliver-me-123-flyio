@@ -122,10 +122,13 @@ function calculateRoute() {
     const originLeave = new Date(originLeaveString);
 
 
+
     const origin = new google.maps.LatLng(originLat, originLng);
     const destination = new google.maps.LatLng(destinationLat, destinationLng);
 
     displayRoute(origin, destination, originLeave, directionsService, directionsRenderer);
+
+    
 }
 
 function displayRoute(origin, destination, originLeave, service, display) {
@@ -163,10 +166,12 @@ function displayRoute(origin, destination, originLeave, service, display) {
             var arriveTimeTraffic = addSecondsToDate(originLeave, durationTraffic);
             var destLeaveTime = addSecondsToDate(arriveTimeTraffic, 600);
             //document.getElementById("dest_arrive").value = arriveTime;
-            var destArriveField = document.getElementById("dest_arrive_field");
-            destArriveField.value = setDateTimeFormat(arriveTimeTraffic);
+            destArriveField = document.getElementById("dest_arrive_field");
+            destArriveField.value = setDateTimeFormat(arriveTimeTraffic);            
             var destLeaveField = document.getElementById("dest_leave_field");
             destLeaveField.value = setDateTimeFormat(destLeaveTime);
+
+            fetchUsers();
 
             //Updates only with drag
             display.addListener("directions_changed", () => {
@@ -185,6 +190,8 @@ function displayRoute(origin, destination, originLeave, service, display) {
 
                 destLeaveTime = addSecondsToDate(arriveTimeTraffic, 600);
                 destLeaveField.value = setDateTimeFormat(destLeaveTime);
+
+                fetchUsers();
             });
 
             // Update route durations when a different route is selected from the panel
@@ -204,6 +211,8 @@ function displayRoute(origin, destination, originLeave, service, display) {
 
                 destLeaveTime = addSecondsToDate(arriveTimeTraffic, 600);
                 destLeaveField.value = setDateTimeFormat(destLeaveTime);
+
+                fetchUsers();
             });
             
         })
@@ -264,6 +273,9 @@ function computeTotalDistance(route) {
 document.addEventListener("DOMContentLoaded", function (event) {
     deliveryMap();
 
+    const table = document.querySelector('#users-table');
+    table.style.display = 'none';
+
     const setOriginButton = document.getElementById("set-origin-button");
     const originFields = document.getElementById("origin-fields");
 
@@ -280,7 +292,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById("origin_lon").value = origin_lon;
         document.getElementById("origin_address").value = origin_address;
 
-        originFields.style.display = "block";
+        if (origin_address !== '') {
+            originFields.style.display = "block";
+        }
+        else {
+            alert("Use the map to search for a location and then set the origin");
+        }
+
     });
 
     setDestButton.addEventListener("click", function () {
@@ -297,15 +315,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
 
     const calculateRouteButton = document.getElementById("calc-route-button");
-    const destArriveField = document.getElementById("dest_arrive_field");
+    var destArriveField = document.getElementById("dest_arrive_field");
+    
     const destArriveDiv = document.getElementById("dest_arrive");
+    const destLeaveField = document.getElementById("dest_leave_field");
+    const destLeaveDiv = document.getElementById("dest_leave");
+    const createDelDiv = document.getElementById("create_delivery");
+    var originLeaveField = document.getElementById("origin_leave_field");
 
     calculateRouteButton.addEventListener('click', function () {
         calculateRoute();
         destArriveDiv.style.display = "block";
+        destLeaveDiv.style.display = "block";
+        createDelDiv.style.display = "block";
     });
 
-    originLeaveField = document.getElementById("origin_leave_field");
+    
     const now = new Date();
     now.setMinutes(now.getMinutes() + 10);
     originLeaveField.value = setDateTimeFormat(now);
@@ -322,7 +347,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
     if (destArriveField.value !== '') {
         destArriveDiv.style.display = "block";
     }
-
+    if (destLeaveField.value !== '') {
+        destLeaveDiv.style.display = "block";
+    }
 
 });
 
@@ -366,6 +393,87 @@ function checkPlaceNameInAddressComponents(place) {
   }
   
   return false;
+}
+
+// Fetch users based on origin_leave and dest_arrive fields
+function fetchUsers() {
+    //console.log("Fetched Users Called");
+
+    originLeaveField = document.getElementById("origin_leave_field");
+    destArriveField = document.getElementById("dest_arrive_field");
+    const scheduleIdFieldStart = document.getElementById("schedule_id_field");
+    const originLeaveValue = originLeaveField.value;
+    const destArriveValue = destArriveField.value;
+    scheduleIdFieldStart.value = '';
+    //console.log("Origin Leave: ", originLeaveValue);
+    //console.log("Dest Arrive: ", destArriveValue);
+
+
+    // Make an AJAX request to the backend to fetch users
+    const url = `/users/fetch_users?origin_leave=${originLeaveValue}&dest_arrive=${destArriveValue}`;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            const table = document.querySelector('#users-table');
+
+            // Clear the existing table rows
+            const tableBody = document.querySelector('#users-table tbody');
+            tableBody.innerHTML = '';
+
+            if (data.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="4">No drivers available during this period</td>`;
+                tableBody.appendChild(row);
+            } else { 
+
+                // Add new rows for each user
+                data.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                              <td>${user.name}</td>
+                              <td>${user.email}</td>
+                              <td><button onclick="viewSchedule(${user.schedules[0].id})" class="btn btn-outline-success">View Schedule</button></td>
+                              <td><button type="button" onclick="updateScheduleId(${user.schedules[0].id})" class="btn btn-outline-success btn-outline-primary">Select Schedule</button></td>
+                              `;
+                    tableBody.appendChild(row);
+                });
+                // Attach click event listener to "Select Schedule" buttons
+                const selectButtons = document.querySelectorAll('.btn-outline-primary');
+                selectButtons.forEach(button => {
+                    button.addEventListener('click', highlightRow);
+                });
+            }
+            // Show the table
+            table.style.display = 'table';
+        })
+        .catch(error => {
+            console.error('Error fetching users:', error);
+        });
+}
+
+function updateScheduleId(scheduleId) {
+    const scheduleIdField = document.getElementById("schedule_id_field");
+    var scheduleIdVal = scheduleId;
+    console.log(scheduleId);
+    scheduleIdField.value = scheduleId;
+}
+
+function highlightRow(event) {
+    const button = event.target;
+    const row = button.closest('tr');
+    const table = row.closest('table');
+    const tds = table.querySelectorAll('td');
+
+    // Remove the "highlighted" class from all td elements
+    tds.forEach(td => {
+        td.classList.remove('highlighted');
+    });
+
+    // Add the "highlighted" class to the td elements in the clicked row
+    const tdsInRow = row.querySelectorAll('td');
+    tdsInRow.forEach(td => {
+        td.classList.add('highlighted');
+    });
 }
 
 window.initMap = deliveryMap;

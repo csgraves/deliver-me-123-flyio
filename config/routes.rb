@@ -6,6 +6,8 @@ Rails.application.routes.draw do
         sessions: 'users/sessions',
         registrations: 'users/registrations'
       }
+
+  get '/users/fetch_users', to: 'users#fetch_users'
   resources :users
   resources :branches
   resources :companies

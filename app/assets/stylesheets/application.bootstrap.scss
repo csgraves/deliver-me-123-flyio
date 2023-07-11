@@ -131,5 +131,20 @@ html, body {
 
 .col-10 {
     flex: auto;
-    width: 70%;
+    width: 40%;
+}
+
+.dynamic-width {
+    width: 60%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.form-element {
+    padding: 5px;
+}
+
+.table .highlighted {
+    background-color: aliceblue;
 }
