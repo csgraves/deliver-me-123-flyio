@@ -88,6 +88,10 @@
       </tbody>
   </table>
 
-  <div class="container-fluid form-element" id="create_delivery" style="display: none"><%= form.submit class: "btn btn-outline-success"%></div>
+  <div class="container-fluid form-element" id="create_delivery" style="display: none">
+    <div id="create_delivery_wrapper">
+        <%= form.submit class: "btn btn-outline-success", id: "create_delivery_button"%>
+    </div>
+  </div>
 
 <% end %>

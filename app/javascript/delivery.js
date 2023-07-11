@@ -128,6 +128,7 @@ function calculateRoute() {
 
     displayRoute(origin, destination, originLeave, directionsService, directionsRenderer);
 
+    calcRouteDeliveryButton();
     
 }
 
@@ -299,6 +300,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
             alert("Use the map to search for a location and then set the origin");
         }
 
+        handleInputChange();
+
     });
 
     setDestButton.addEventListener("click", function () {
@@ -312,6 +315,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById("dest_address").value = dest_address;
 
         destFields.style.display = "block";
+
+        handleInputChange();
     });
 
     const calculateRouteButton = document.getElementById("calc-route-button");
@@ -350,6 +355,21 @@ document.addEventListener("DOMContentLoaded", function (event) {
     if (destLeaveField.value !== '') {
         destLeaveDiv.style.display = "block";
     }
+
+    // Handle Create Delivery Button
+    const originLeaveInput = document.getElementById('origin_leave_field');    
+
+    originLeaveInput.addEventListener('input', handleInputChange);
+
+    const createDeliveryWrapper = document.getElementById('create_delivery_wrapper');
+
+    createDeliveryWrapper.addEventListener('click', function (event) {
+        const createDeliveryButton = document.getElementById('create_delivery_button');
+        if (createDeliveryButton.disabled) {
+            event.preventDefault();
+            alert("Field Updated - Calculate Route Again");
+        }
+    });
 
 });
 
@@ -432,7 +452,7 @@ function fetchUsers() {
                     row.innerHTML = `
                               <td>${user.name}</td>
                               <td>${user.email}</td>
-                              <td><button onclick="viewSchedule(${user.schedules[0].id})" class="btn btn-outline-success">View Schedule</button></td>
+                              <td><button onclick="viewSchedule(event, ${user.schedules[0].id})" class="btn btn-outline-success">View Schedule</button></td>
                               <td><button type="button" onclick="updateScheduleId(${user.schedules[0].id})" class="btn btn-outline-success btn-outline-primary">Select Schedule</button></td>
                               `;
                     tableBody.appendChild(row);
@@ -474,6 +494,24 @@ function highlightRow(event) {
     tdsInRow.forEach(td => {
         td.classList.add('highlighted');
     });
+}
+
+function handleInputChange() {
+    //console.log("Handling input change")
+    const createDeliveryButton = document.getElementById('create_delivery_button');
+    createDeliveryButton.disabled = true;
+}
+
+function calcRouteDeliveryButton() {
+    //console.log("Handling input change")
+    const createDeliveryButton = document.getElementById('create_delivery_button');
+    createDeliveryButton.disabled = false;
+}
+
+function viewSchedule(event, scheduleId) {
+    event.preventDefault(); // Prevents the default action of the button click event
+    const url = `/schedules/${scheduleId}`;
+    window.open(url, '_blank');
 }
 
 window.initMap = deliveryMap;
