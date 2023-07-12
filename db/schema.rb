@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_30_122202) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_12_134225) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_122202) do
     t.string "company_iden"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "company_opening_hours", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.integer "day_of_week", null: false
+    t.time "open_time"
+    t.time "close_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_company_opening_hours_on_company_id"
   end
 
   create_table "deliveries", force: :cascade do |t|
@@ -97,6 +107,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_122202) do
 
   add_foreign_key "availabilities", "users"
   add_foreign_key "branches", "companies"
+  add_foreign_key "company_opening_hours", "companies"
   add_foreign_key "deliveries", "schedules"
   add_foreign_key "schedules", "branches"
   add_foreign_key "schedules", "users"

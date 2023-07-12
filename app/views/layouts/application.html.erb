@@ -45,7 +45,7 @@
   </nav>
 
   <body>
-  <% unless @need_join_company %>
+  <% if joined_company %>
       <div class="container-fluid">
             <div class="row">
                 <% if user_signed_in? %>
@@ -77,7 +77,7 @@
                 <% end %>
             <% end %>
 
-            <div class="<%= user_signed_in? ? 'container col-10' : 'container col-12' %>">
+            <div class="<%= user_signed_in? && joined_company ? 'container col-10' : 'container col-12' %>">
                 <%= yield %>
                 <p class="alert"><%= alert %></p>
             </div>

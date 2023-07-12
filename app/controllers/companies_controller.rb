@@ -14,6 +14,7 @@ class CompaniesController < ApplicationController
   # GET /companies/new
   def new
     @company = Company.new
+    initialize_company_opening_hours
   end
 
   # GET /companies/1/edit
@@ -73,6 +74,12 @@ class CompaniesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def company_params
-      params.require(:company).permit(:name, :company_iden)
+        params.require(:company).permit(:name, :company_iden, company_opening_hours_attributes: %i[id day_of_week open_time close_time])
+    end
+
+    def initialize_company_opening_hours
+        CompanyOpeningHour.day_of_weeks.each do |day_of_week, _index|
+            @company.company_opening_hours.build(day_of_week: day_of_week)
+        end
     end
 end

@@ -1,4 +1,11 @@
-<% if @need_join_company %>
+<% if joined_company %>
+  <div class="container mt-4">
+    <h1>
+      Welcome to your dashboard, <%= current_user.email %>
+    </h1>
+    <!-- Add any code here to display data on the dashboard -->
+  </div>
+<% else %>
   <div class="container mt-4">
     <div class="row justify-content-center">
       <div class="col-10">
@@ -11,6 +18,4 @@
       </div>
     </div>
   </div>
-<% else %>
-  <!-- Rest of your code -->
 <% end %>
