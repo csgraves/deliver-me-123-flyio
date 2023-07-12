@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
    
-  root "articles#index"
+  root "home#home"
 
    get '/dashboard', to: 'dashboard#index', as: 'user_dashboard'
    get 'join_company', to: 'companies#join'

@@ -1,13 +1,16 @@
 <% if @need_join_company %>
-<div>
-	<%= link_to "Join a company", join_company_path, class: "btn btn-primary" %>
-</div>
-<div>
-	<%= link_to "Create a company", new_company_path, class: "btn btn-primary" %>
-</div>
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-10">
+        <div class="d-flex justify-content-center">
+          <%= link_to "Create a Company", new_company_path, class: "btn btn-primary btn-md mb-2" %>
+        </div>
+        <div class="d-flex justify-content-center">
+          <%= link_to "Join a Company", join_company_path, class: "btn btn-primary btn-md mb-2" %>
+        </div>
+      </div>
+    </div>
+  </div>
 <% else %>
-<h1>
-	Welcome to your dashboard, <%= current_user.email %>
-</h1>
-<!-- Add any code here to display data on the dashboard -->
+  <!-- Rest of your code -->
 <% end %>
