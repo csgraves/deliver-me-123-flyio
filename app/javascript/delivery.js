@@ -106,6 +106,7 @@ function clearDirections() {
 
 function calculateRoute() {
     clearDirections(); //Removes panel after button directions after button press
+    scheduleIdReset();
 
     const directionsService = new google.maps.DirectionsService();
     const directionsRenderer = new google.maps.DirectionsRenderer({
@@ -127,9 +128,6 @@ function calculateRoute() {
     const destination = new google.maps.LatLng(destinationLat, destinationLng);
 
     displayRoute(origin, destination, originLeave, directionsService, directionsRenderer);
-
-    calcRouteDeliveryButton();
-    
 }
 
 function displayRoute(origin, destination, originLeave, service, display) {
@@ -365,7 +363,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     createDeliveryWrapper.addEventListener('click', function (event) {
         const createDeliveryButton = document.getElementById('create_delivery_button');
-        if (createDeliveryButton.disabled) {
+        const scheduleIdField = document.getElementById("schedule_id_field");
+
+        if (scheduleIdField.value === '') {
+            event.preventDefault();
+            alert("Select A Driver");
+        } else {
             event.preventDefault();
             alert("Field Updated - Calculate Route Again");
         }
@@ -430,7 +433,7 @@ function fetchUsers() {
 
 
     // Make an AJAX request to the backend to fetch users
-    const url = `/users/fetch_users?origin_leave=${originLeaveValue}&dest_arrive=${destArriveValue}`;
+    const url = `/users/fetch_users?pot_origin_leave=${originLeaveValue}&pot_dest_arrive=${destArriveValue}`;
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -439,6 +442,19 @@ function fetchUsers() {
             // Clear the existing table rows
             const tableBody = document.querySelector('#users-table tbody');
             tableBody.innerHTML = '';
+
+            const additionalContent = document.querySelector('#additional-content');
+            if (!additionalContent) {
+                // Add the additional content before the table
+                const newAdditionalContent = document.createElement('div');
+                newAdditionalContent.id = 'additional-content';
+                newAdditionalContent.innerHTML = `
+                  <p>Please check the driver's schedule before selecting one.</p>
+                  <p>Ensure you update your current origin address and recalculate the route if necessary.</p>
+                  <p>It's important because the driver's delivery, closest to your proposed delivery, may have a conflicting destination address compared to your current origin address.</p>
+                `;
+                table.parentNode.insertBefore(newAdditionalContent, table);
+            }
 
             if (data.length === 0) {
                 const row = document.createElement('tr');
@@ -453,7 +469,7 @@ function fetchUsers() {
                               <td>${user.name}</td>
                               <td>${user.email}</td>
                               <td><button onclick="viewSchedule(event, ${user.schedules[0].id})" class="btn btn-outline-success">View Schedule</button></td>
-                              <td><button type="button" onclick="updateScheduleId(${user.schedules[0].id})" class="btn btn-outline-success btn-outline-primary">Select Schedule</button></td>
+                              <td><button type="button" onclick="updateScheduleId(${user.schedules[0].id})" class="btn btn-outline-success btn-outline-primary">Select Driver</button></td>
                               `;
                     tableBody.appendChild(row);
                 });
@@ -494,6 +510,8 @@ function highlightRow(event) {
     tdsInRow.forEach(td => {
         td.classList.add('highlighted');
     });
+
+    deliveryButtonShow();
 }
 
 function handleInputChange() {
@@ -502,7 +520,7 @@ function handleInputChange() {
     createDeliveryButton.disabled = true;
 }
 
-function calcRouteDeliveryButton() {
+function deliveryButtonShow() {
     //console.log("Handling input change")
     const createDeliveryButton = document.getElementById('create_delivery_button');
     createDeliveryButton.disabled = false;
@@ -512,6 +530,12 @@ function viewSchedule(event, scheduleId) {
     event.preventDefault(); // Prevents the default action of the button click event
     const url = `/schedules/${scheduleId}`;
     window.open(url, '_blank');
+}
+
+function scheduleIdReset() {
+    const scheduleIdField = document.getElementById("schedule_id_field");
+    scheduleIdField.value = '';
+
 }
 
 window.initMap = deliveryMap;
