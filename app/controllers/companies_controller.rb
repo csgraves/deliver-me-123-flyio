@@ -4,7 +4,7 @@ class CompaniesController < ApplicationController
 
   # GET /companies or /companies.json
   def index
-    @companies = Company.all
+    @companies = Company.joins(:branches).where(branches: { id: current_user.branch_id })
   end
 
   # GET /companies/1 or /companies/1.json
@@ -27,6 +27,7 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.save
+        create_default_branch_and_update_user_branch
         format.html { redirect_to company_url(@company), notice: "Company was successfully created." }
         format.json { render :show, status: :created, location: @company }
       else
@@ -40,6 +41,7 @@ class CompaniesController < ApplicationController
   def update
     respond_to do |format|
       if @company.update(company_params)
+        update_user_branch
         format.html { redirect_to company_url(@company), notice: "Company was successfully updated." }
         format.json { render :show, status: :ok, location: @company }
       else
@@ -81,5 +83,14 @@ class CompaniesController < ApplicationController
         CompanyOpeningHour.day_of_weeks.each do |day_of_week, _index|
             @company.company_opening_hours.build(day_of_week: day_of_week)
         end
+    end
+
+    def create_default_branch_and_update_user_branch
+        branch = @company.branches.create(name: "New Branch")
+        current_user.update(branch_id: branch.id) if current_user
+     end
+
+    def update_user_branch
+        current_user.update(branch_id: params[:company][:branch_id]) if params[:company][:branch_id] && current_user
     end
 end

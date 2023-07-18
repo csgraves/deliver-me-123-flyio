@@ -4,7 +4,7 @@ class BranchesController < ApplicationController
 
   # GET /branches or /branches.json
   def index
-    @branches = Branch.all
+    @branches = current_user.company.branches
   end
 
   # GET /branches/1 or /branches/1.json

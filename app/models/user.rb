@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_many :availabilities, dependent: :destroy
   has_many :schedules, dependent: :destroy
 
+  has_one :company, through: :branch
+
   #before_validation :set_default_role, on: :create
 
   #private
