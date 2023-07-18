@@ -460,6 +460,7 @@ function fetchUsers() {
                 const row = document.createElement('tr');
                 row.innerHTML = `<td colspan="4">No drivers available during this period</td>`;
                 tableBody.appendChild(row);
+                handleInputChange();
             } else { 
 
                 // Add new rows for each user
