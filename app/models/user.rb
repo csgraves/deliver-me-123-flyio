@@ -5,7 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   belongs_to :branch, optional: true
   has_many :availabilities, dependent: :destroy
-  has_many :schedules, dependent: :destroy
+  has_one :schedule, dependent: :destroy
+
+  after_create :create_default_schedule
 
   has_one :company, through: :branch
 
@@ -23,4 +25,9 @@ class User < ApplicationRecord
     availabilities.where('start_time <= ? AND end_time >= ?', delivery.origin_leave, delivery.dest_leave).exists?
   end
 
+  private 
+
+  def create_default_schedule
+    create_schedule(user_id: id, user_only: true) # Create a new schedule associated with the user
+  end
 end

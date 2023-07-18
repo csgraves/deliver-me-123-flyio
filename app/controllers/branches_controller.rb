@@ -27,12 +27,14 @@ class BranchesController < ApplicationController
     #company = Company.find_by(company_iden: params[:branch][:company_iden])
     #@branch.company = company
 
-    company = Company.find_by(params[:company_id])
+    #company = Company.find_by(params[:company_id])
+    company = current_user.company
     @branch.company = company
     @branch.company_iden = company.company_iden
 
     respond_to do |format|
       if @branch.save
+        create_schedule_for_branch
         current_user.update(branch_id: @branch.id) if current_user.branch_id.nil?
         format.html { redirect_to branch_url(@branch), notice: "Branch was successfully created." }
         format.json { render :show, status: :created, location: @branch }
@@ -79,4 +81,8 @@ class BranchesController < ApplicationController
       #params.require(:branch).permit(:name, :branch_iden, :company_iden)
       params.require(:branch).permit(:name, :branch_iden)
     end
+
+    def create_schedule_for_branch
+        @branch.create_schedule(branch_id: @branch.id, branch_only: true) # Create a new schedule associated with the branch
+    end   
 end

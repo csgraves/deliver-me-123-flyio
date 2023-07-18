@@ -26,6 +26,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        create_schedule_for_user
         format.html { redirect_to user_url(@user), notice: "User was successfully created." }
         format.json { render :show, status: :created, location: @user }
       else
@@ -99,5 +100,9 @@ class UsersController < ApplicationController
 
     def update_user_branch
         @user.update(branch_id: params[:user][:branch_id]) if params[:user][:branch_id]
+    end
+
+    def create_schedule_for_user
+        @user.create_schedule(user_id: @user.id, user_only: true) # Create a new schedule associated with the user
     end
 end
