@@ -9,7 +9,9 @@ Rails.application.routes.draw do
 
   get '/users/fetch_users', to: 'users#fetch_users'
   resources :users
-  resources :branches
+  resources :branches do
+    get :join_company, on: :collection
+  end
   resources :companies
   resources :articles
 
@@ -28,4 +30,6 @@ Rails.application.routes.draw do
 
    get 'join_request/:company_id', to: 'companies#join_request', as: 'join_request'
    get 'join_now/:company_id', to: 'companies#join_now', as: 'join_now'
+
+   get 'select_branch/:branch_id', to: 'branches#select_branch', as: 'select_branch'
 end

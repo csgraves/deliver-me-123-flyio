@@ -1,0 +1,23 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Select a Branch</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @branches.each do |branch| %>
+      <tr>
+        <td>
+          <%= branch.name %>
+        </td>
+        <td>
+          <%= link_to "Select Branch", select_branch_path(branch_id: branch.id), class: "btn btn-primary" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

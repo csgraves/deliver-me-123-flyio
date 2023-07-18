@@ -70,6 +70,19 @@ class BranchesController < ApplicationController
     end
   end
 
+  def join_company
+    @company = Company.find(params[:company_id])
+    @branches = @company.branches
+    render "select_branch"
+  end
+
+  def select_branch
+      branch = Branch.find(params[:branch_id])
+      current_user.update(role: "driver", branch_id: branch.id)
+      redirect_to user_dashboard_path, notice: "Branch selected successfully."
+  end
+  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_branch
