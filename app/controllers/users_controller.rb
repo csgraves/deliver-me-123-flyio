@@ -68,22 +68,22 @@ class UsersController < ApplicationController
     # Fetch users based on the conditions mentioned
     users = User.joins(:availabilities)
                 .joins(branch: :company)
-                .joins(:schedules)
+                .joins(:schedule)  # Updated association name from `schedules` to `schedule`
                 .where('availabilities.start_time <= ?', pot_origin_leave)
                 .where('availabilities.end_time >= ?', pot_dest_arrive)
                 .where(branch_id: current_user.branch_id)
-                .where.not(id: User.joins(schedules: { deliveries: :schedule })
-                              .where('deliveries.origin_leave <= ?', pot_dest_arrive)
-                              .where('deliveries.dest_arrive >= ?', pot_origin_leave)
-                              .pluck(:id))
+                .where.not(id: User.joins(schedule: { deliveries: :schedule })  # Updated association name from `schedules` to `schedule`
+                            .where('deliveries.origin_leave <= ?', pot_dest_arrive)
+                            .where('deliveries.dest_arrive >= ?', pot_origin_leave)
+                            .pluck(:id))
                 .distinct
 
     # Print name, email, and schedule_id to console
     users.each do |user|
-        puts "Name: #{user.name}, Email: #{user.email}, Schedule ID: #{user.schedules.first.id}"
+        puts "Name: #{user.name}, Email: #{user.email}, Schedule ID: #{user.schedule.id}"
     end
 
-    render json: users, only: [:name, :email], include: { schedules: { only: :id } }
+    render json: users, only: [:name, :email], include: { schedule: { only: :id } }
   end
 
   private

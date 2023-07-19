@@ -368,9 +368,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
         if (scheduleIdField.value === '') {
             event.preventDefault();
             alert("Select A Driver");
-        } else {
+            return
+        }
+        if (createDeliveryButton.disabled) {
             event.preventDefault();
             alert("Field Updated - Calculate Route Again");
+            return
         }
     });
 
@@ -450,8 +453,8 @@ function fetchUsers() {
                 newAdditionalContent.id = 'additional-content';
                 newAdditionalContent.innerHTML = `
                   <p>Please check the driver's schedule before selecting one.</p>
+                  <p>The driver's delivery, closest to your proposed delivery, may have a conflicting destination address compared to your current origin address.</p>
                   <p>Ensure you update your current origin address and recalculate the route if necessary.</p>
-                  <p>It's important because the driver's delivery, closest to your proposed delivery, may have a conflicting destination address compared to your current origin address.</p>
                 `;
                 table.parentNode.insertBefore(newAdditionalContent, table);
             }
@@ -460,7 +463,7 @@ function fetchUsers() {
                 const row = document.createElement('tr');
                 row.innerHTML = `<td colspan="4">No drivers available during this period</td>`;
                 tableBody.appendChild(row);
-                handleInputChange();
+                //handleInputChange();
             } else { 
 
                 // Add new rows for each user
@@ -469,8 +472,8 @@ function fetchUsers() {
                     row.innerHTML = `
                               <td>${user.name}</td>
                               <td>${user.email}</td>
-                              <td><button onclick="viewSchedule(event, ${user.schedules[0].id})" class="btn btn-outline-success">View Schedule</button></td>
-                              <td><button type="button" onclick="updateScheduleId(${user.schedules[0].id})" class="btn btn-outline-success btn-outline-primary">Select Driver</button></td>
+                              <td><button onclick="viewSchedule(event, ${user.schedule.id})" class="btn btn-outline-success">View Schedule</button></td>
+                              <td><button type="button" onclick="updateScheduleId(${user.schedule.id})" class="btn btn-outline-success btn-outline-primary">Select Driver</button></td>
                               `;
                     tableBody.appendChild(row);
                 });
