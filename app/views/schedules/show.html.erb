@@ -1,20 +1,10 @@
 <p style="color: green"><%= notice %></p>
-
-<%= render @schedule %>
 	
-<h2>Deliveries</h2>
-<% @deliveries.each do |delivery| %>
-	<p>Delivery Start: <%= delivery.origin_leave %></p>
-	<p>Delivery Finish: <%= delivery.dest_leave %></p>
-<!-- Display other delivery information as needed -->
-<% end %>
+<h2>Schedule of Deliveries</h2>
 <div id="schedule-data" data-deliveries="<%= @deliveries.to_json %>"></div>
 
 <div>
-  <%= link_to "Edit this schedule", edit_schedule_path(@schedule) %> |
   <%= link_to "Back to schedules", schedules_path %>
-
-  <%= button_to "Destroy this schedule", @schedule, method: :delete %>
 </div>
 	
 <div id="ec"></div>

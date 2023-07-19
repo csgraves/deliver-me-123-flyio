@@ -4,7 +4,16 @@ class SchedulesController < ApplicationController
 
   # GET /schedules or /schedules.json
   def index
-    @schedules = Schedule.all
+    if current_user.role == 'driver'
+      redirect_to schedule_path(current_user.schedule)
+    elsif current_user.role == 'admin'
+      @schedules = Schedule.where(user_id: current_user.branch.company.users.pluck(:id))
+                      .or(Schedule.where(branch_id: current_user.branch.company.branches.pluck(:id)))
+
+      @branch_schedules = Schedule.where(branch_id: current_user.branch.company.branches.pluck(:id))
+      @user_schedules = Schedule.where(user_id: current_user.branch.company.users.pluck(:id))
+    end
+    
   end
 
   # GET /schedules/1 or /schedules/1.json
@@ -65,10 +74,24 @@ class SchedulesController < ApplicationController
     end
   end
 
+  def calendar_schedule
+      # Retrieve schedules with branches for the current user's company
+      @branch_schedules = Schedule.where(branch_only: true, branch_id: current_user.branch.company.schedules.pluck(:id))
+                                  .map { |schedule| [schedule.id, schedule.branch.name] }
+
+      # Retrieve schedules with users for the current user's company
+      @user_schedules = Schedule.where(user_only: true, user_id: current_user.branch.company.users.pluck(:id))
+                                .map { |schedule| [schedule.id, schedule.branch.name] }
+
+      # Handle form submission and perform additional actions if needed
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_schedule
-      @schedule = Schedule.find(params[:id])
+      if params[:id] != "calendar_schedule"
+        @schedule = Schedule.find(params[:id])
+      end
     end
 
     # Only allow a list of trusted parameters through.
