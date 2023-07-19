@@ -1,14 +1,45 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Deliveries</h1>
+<%= link_to "New delivery", new_delivery_path %>
 
-<div id="deliveries">
-  <% @deliveries.each do |delivery| %>
-    <%= render delivery %>
-    <p>
-      <%= link_to "Show this delivery", delivery %>
-    </p>
-  <% end %>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Origin Address</th>
+				<th>Origin Departure Time</th>
+				<th>Destination Address</th>
+				<th>Destination Arrival Time</th>
+				<th>Destination Departure Time</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @deliveries.order(origin_leave: :desc).each do |delivery| %>
+			<tr>
+				<td>
+					<%= delivery.origin_address %>
+				</td>
+				<td>
+					<%= delivery.origin_leave.localtime.strftime("%d-%m-%Y @%H:%M") %>
+				</td>
+				<td>
+					<%= delivery.dest_address %>
+				</td>
+				<td>
+					<%= delivery.dest_arrive.localtime.strftime("%d-%m-%Y @%H:%M") %>
+				</td>
+				<td>
+					<%= delivery.dest_leave.localtime.strftime("%d-%m-%Y @%H:%M") %>
+				</td>
+				<td>
+					<%= link_to "Show this delivery", delivery, class: "btn btn-primary btn-sm" %>
+				</td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
 </div>
 
-<%= link_to "New delivery", new_delivery_path %>
+

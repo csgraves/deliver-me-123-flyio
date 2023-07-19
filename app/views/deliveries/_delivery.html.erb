@@ -1,32 +1,33 @@
-<div id="<%= dom_id delivery %>">
-  <p>
-    <strong>Origin Address:</strong>
-    <%= delivery.origin_address %>
-  </p>
+<div id="<%= dom_id delivery %>" class="card my-3">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Origin Address:</strong>
+      <%= delivery.origin_address %>
+    </p>
   
-  <p>
-    <strong>Origin Departure Time:</strong>
-    <%= delivery.origin_leave %>
-  </p>
+    <p class="card-text">
+      <strong>Origin Departure Time:</strong>
+      <%= delivery.origin_leave.localtime.strftime("%d-%m-%Y @%H:%M") %>
+    </p>
 
-  <p>
-    <strong>Destination Address:</strong>
-    <%= delivery.dest_address %>
-  </p>
+    <p class="card-text">
+      <strong>Destination Address:</strong>
+      <%= delivery.dest_address %>
+    </p>
 
-  <p>
-    <strong>Destination Arrival Time:</strong>
-    <%= delivery.dest_arrive %>
-  </p>
+    <p class="card-text">
+      <strong>Destination Arrival Time:</strong>
+      <%= delivery.dest_arrive.localtime.strftime("%d-%m-%Y @%H:%M") %>
+    </p>
 
-  <p>
-    <strong>Destination Departure Time:</strong>
-    <%= delivery.dest_leave %>
-  </p>
+    <p class="card-text">
+      <strong>Destination Departure Time:</strong>
+      <%= delivery.dest_leave.localtime.strftime("%d-%m-%Y @%H:%M") %>
+    </p>
 
-  <p>
-    <strong>Driver:</strong>
-    <%= delivery.schedule.user.name %>
-  </p>
-
+    <p class="card-text">
+      <strong>Driver:</strong>
+      <%= delivery.schedule.user.name %>
+    </p>
+  </div>
 </div>
