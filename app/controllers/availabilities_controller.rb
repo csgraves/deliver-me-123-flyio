@@ -4,7 +4,7 @@ class AvailabilitiesController < ApplicationController
 
   # GET /availabilities or /availabilities.json
   def index
-    @availabilities = Availability.all
+    @availabilities = current_company.users.joins(:availabilities)
   end
 
   # GET /availabilities/1 or /availabilities/1.json
@@ -68,4 +68,8 @@ class AvailabilitiesController < ApplicationController
     def availability_params
       params.require(:availability).permit(:start_time, :end_time, :user_id)
     end
+
+    def current_company
+        current_user.company
+    end   
 end
