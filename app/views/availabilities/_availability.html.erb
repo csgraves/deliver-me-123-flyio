@@ -1,17 +1,7 @@
-<div id="<%= dom_id availability %>">
-  <p>
-    <strong>Start time:</strong>
-    <%= availability.start_time %>
-  </p>
-
-  <p>
-    <strong>End time:</strong>
-    <%= availability.end_time %>
-  </p>
-
-  <p>
-    <strong>User:</strong>
-    <%= availability.user_id %>
-  </p>
-
-</div>
+<tr>
+  <td><%= availability.start_time.strftime("%Y-%m-%d %H:%M") %></td>
+  <td><%= availability.end_time.strftime("%Y-%m-%d %H:%M") %></td>
+  <td><%= availability.user.name %></td>
+  <td><%= link_to "Show", availability %></td>
+  <!-- Add additional table cells for other availability details -->
+</tr>

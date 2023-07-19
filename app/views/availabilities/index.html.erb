@@ -1,14 +1,22 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Availabilities</h1>
-
-<div id="availabilities">
-  <% @availabilities.each do |availability| %>
-    <%= render availability %>
-    <p>
-      <%= link_to "Show this availability", availability %>
-    </p>
-  <% end %>
-</div>
-
+<h1>My Availabilities</h1>
 <%= link_to "New availability", new_availability_path %>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>User</th>
+        <!-- Add additional table headers for other availability details -->
+      </tr>
+    </thead>
+    <tbody>
+      <% @availabilities.order(start_time: :asc).each do |availability| %>
+        <%= render partial: 'availability', locals: { availability: availability } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
