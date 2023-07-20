@@ -18,13 +18,14 @@ class SchedulesController < ApplicationController
 
   # GET /schedules/1 or /schedules/1.json
   def show
-      @schedule = Schedule.find(params[:id])
-        @deliveries = @schedule.deliveries
+    @schedule = Schedule.find(params[:id])
 
-        respond_to do |format|
-            format.html # Render the HTML view as usual
-            format.json { render json: @deliveries } # Include deliveries in the JSON response
-        end
+    if @schedule.user_only && @schedule.user.present?
+        @deliveries = @schedule.user.deliveries
+    elsif @schedule.branch_only && @schedule.branch.present?
+        @deliveries = Delivery.joins(schedule: :user)
+                            .where('schedules.branch_id = ? OR users.branch_id = ?', @schedule.branch_id, @schedule.branch_id)
+    end
   end
 
   # GET /schedules/new

@@ -11,6 +11,8 @@ class User < ApplicationRecord
 
   has_one :company, through: :branch
 
+  has_many :deliveries, through: :schedule
+
   #before_validation :set_default_role, on: :create
 
   #private
