@@ -375,6 +375,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
             alert("Field Updated - Calculate Route Again");
             return
         }
+        if (destArriveField.value < originLeaveField.value) {
+            event.preventDefault();
+            alert("Origin leave must be before destination arrival");
+            return
+        }
+        if (destLeaveField.value < destArriveField.value) {
+            event.preventDefault();
+            alert("Destination arrive must be before destination depart");
+            return
+        }
     });
 
 });
@@ -461,7 +471,7 @@ function fetchUsers() {
 
             if (data.length === 0) {
                 const row = document.createElement('tr');
-                row.innerHTML = `<td colspan="4">No drivers available during this period</td>`;
+                row.innerHTML = `<td colspan="3">No drivers available during this period</td>`;
                 tableBody.appendChild(row);
                 //handleInputChange();
             } else { 
@@ -470,7 +480,6 @@ function fetchUsers() {
                 data.forEach(user => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                              <td>${user.name}</td>
                               <td>${user.email}</td>
                               <td><button onclick="viewSchedule(event, ${user.schedule.id})" class="btn btn-outline-success">View Schedule</button></td>
                               <td><button type="button" onclick="updateScheduleId(${user.schedule.id})" class="btn btn-outline-success btn-outline-primary">Select Driver</button></td>

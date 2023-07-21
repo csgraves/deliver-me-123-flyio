@@ -2,6 +2,8 @@ class Branch < ApplicationRecord
   belongs_to :company
   has_many :users, dependent: :destroy
   has_one :schedule, dependent: :destroy
+  validates :name, presence: true
+
 
   after_create :create_default_schedule
 
