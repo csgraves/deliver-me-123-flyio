@@ -48,7 +48,7 @@ class CompaniesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to companies_url
   end
   
-  test "should redirect unauthorized users" do
+  test "should redirect unauthorised users" do
     sign_out users(:one)
     sign_in users(:two)
 
