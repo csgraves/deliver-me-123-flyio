@@ -1,6 +1,7 @@
 class CompaniesController < ApplicationController
   before_action :set_company, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
+  before_action :check_admin_role, only: [:new, :create, :edit, :update, :destroy]
 
   # GET /companies or /companies.json
   def index
@@ -9,6 +10,15 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1 or /companies/1.json
   def show
+    @company = Company.find(params[:id])
+
+    # Allow showing the branch if it's associated with the current user's branch_id
+    # OR if the current user is an admin and the branch is associated with the user's company_id.
+    if (@company.id == current_user.branch.company.id) || (current_user.role == "admin" && @company.id == current_user..branch.company.id)
+      render :show
+    else
+      redirect_to root_path, alert: "You do not have permission to access this page."
+    end
   end
 
   # GET /companies/new
@@ -92,5 +102,11 @@ class CompaniesController < ApplicationController
 
     def update_user_branch
         current_user.update(branch_id: params[:company][:branch_id]) if params[:company][:branch_id] && current_user
+    end
+
+    def check_admin_role
+        unless current_user.role == "admin"
+          redirect_to root_path, alert: "You do not have permission to access this page."
+        end
     end
 end
