@@ -47,4 +47,26 @@ class CompaniesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to companies_url
   end
+  
+  test "should redirect unauthorized users" do
+    sign_out users(:one)
+    sign_in users(:two)
+
+    get company_url(@company)
+    assert_redirected_to root_url
+    assert_equal "You do not have permission to access this page.", flash[:alert]
+
+    get edit_company_url(@company)
+    assert_redirected_to root_url
+    assert_equal "You do not have permission to access this page.", flash[:alert]
+
+    patch company_url(@company), params: { company: { name: "New Name" } }
+    assert_redirected_to root_url
+    assert_equal "You do not have permission to access this page.", flash[:alert]
+
+    delete company_url(@company)
+    assert_redirected_to root_url
+    assert_equal "You do not have permission to access this page.", flash[:alert]
+  end
+  
 end
