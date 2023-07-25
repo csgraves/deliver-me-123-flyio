@@ -2,14 +2,16 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\app\\controllers",
     "\\app\\views",
-    "\\app\\views\\companies",
-    "\\app\\views\\dashboard",
-    "\\app\\views\\devise",
-    "\\app\\views\\devise\\sessions",
-    "\\app\\views\\home",
-    "\\app\\views\\layouts"
+    "\\app\\views\\branches",
+    "\\config",
+    "\\config\\environments",
+    "\\db",
+    "\\test",
+    "\\test\\controllers",
+    "\\test\\fixtures",
+    "\\test\\models"
   ],
+  "SelectedNode": "\\test\\fixtures\\deliveries.yml",
   "PreviewInSolutionExplorer": false
 }
