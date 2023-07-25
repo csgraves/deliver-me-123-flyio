@@ -1,6 +1,7 @@
 class BranchesController < ApplicationController
   before_action :set_branch, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
+  before_action :check_admin_role, only: [:new, :create, :edit, :update, :destroy]
 
   # GET /branches or /branches.json
   def index
@@ -9,6 +10,15 @@ class BranchesController < ApplicationController
 
   # GET /branches/1 or /branches/1.json
   def show
+    @branch = Branch.find(params[:id])
+
+    # Allow showing the branch if it's associated with the current user's branch_id
+    # OR if the current user is an admin and the branch is associated with the user's company_id.
+    if (@branch.id == current_user.branch_id) || (current_user.role == "admin" && @branch.company_id == current_user.company.id)
+      render :show
+    else
+      redirect_to root_path, alert: "You do not have permission to access this page."
+    end
   end
 
   # GET /branches/new
@@ -98,4 +108,10 @@ class BranchesController < ApplicationController
     def create_schedule_for_branch
         @branch.create_schedule(branch_id: @branch.id, branch_only: true) # Create a new schedule associated with the branch
     end   
+
+    def check_admin_role
+        unless current_user.role == "admin"
+          redirect_to root_path, alert: "You do not have permission to access this page."
+        end
+    end
 end
