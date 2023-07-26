@@ -1,9 +1,11 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :check_admin_role, only: [:new, :create, :edit, :update, :destroy]
 
   # GET /users or /users.json
   def index
-    @users = User.all
+    @users = [current_user]
   end
 
   # GET /users/1 or /users/1.json

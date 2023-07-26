@@ -105,7 +105,7 @@ class CompaniesController < ApplicationController
     end
 
     def check_admin_role
-        unless current_user.role == "admin"
+        unless (current_user.role == "admin" && @company.id == current_user.branch.company.id)
           redirect_to root_path, alert: "You do not have permission to access this page."
         end
     end
