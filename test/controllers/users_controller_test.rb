@@ -21,6 +21,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
   end
 
+  test "should redirect to root for non-admin trying to access new user page" do
+    sign_in users(:two)
+    get new_user_url
+    assert_redirected_to root_path
+  end
+
 =begin
   test "should create user" do
     assert_difference("User.count") do
@@ -46,6 +52,15 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should not update user for non-admin" do
+    @user = users(:two)
+    sign_in users(:two)
+    patch user_url(@user), params: { user: { name: "Updated Name" } }
+    assert_redirected_to root_path
+    @user.reload
+    assert_not_equal "Updated Name", @user.name
+  end
+
 =begin
   test "should update user" do
     patch user_url(@user), params: { user: { branch_id: @user.branch_id, email: @user.email, name: @user.name, role: @user.role } }
@@ -61,5 +76,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to users_url
+  end
+
+  test "should not destroy user for non-admin" do
+    @user = users(:two)
+    sign_in users(:two)
+    assert_no_difference("User.count") do
+      delete user_url(@user)
+    end
+    assert_redirected_to root_path
   end
 end
