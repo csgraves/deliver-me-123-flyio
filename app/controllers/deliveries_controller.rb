@@ -1,6 +1,7 @@
 class DeliveriesController < ApplicationController
   before_action :set_delivery, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
+  before_action :check_admin_role, only: [:show, :edit, :update, :destroy]
 
   # GET /deliveries or /deliveries.json
   def index
@@ -13,6 +14,10 @@ class DeliveriesController < ApplicationController
 
   # GET /deliveries/new
   def new
+    unless (current_user.role == "admin")
+        redirect_to root_path, alert: "You do not have permission."
+        return
+    end
     @delivery = Delivery.new
   end
 
@@ -79,5 +84,11 @@ class DeliveriesController < ApplicationController
         :dest_lon,
         :dest_arrive,
         :dest_leave)
+    end
+
+    def check_admin_role
+        unless ((current_user.role == "admin" && @delivery.schedule.user.branch.company.id == current_user.branch.company.id) || current_user == @delivery.schedule.user)
+          redirect_to root_path, alert: "You do not have permission."
+        end
     end
 end
