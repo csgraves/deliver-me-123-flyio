@@ -5,11 +5,19 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @users = [current_user]
+    unless (current_user.role == 'admin')
+        @users = [current_user]
+    end
+    if (current_user.role == 'admin')
+        @users = User.joins(branch: :company).where(companies: { id: current_user.branch.company.id }) 
+    end
   end
 
   # GET /users/1 or /users/1.json
   def show
+      if (@user != current_user || (current_user.role != 'admin' && @user.branch.company.id != current_user.branch.company.id))
+        redirect_to root_path, alert: "You are not authorized to view this user."
+      end
   end
 
   # GET /users/new
@@ -106,5 +114,11 @@ class UsersController < ApplicationController
 
     def create_schedule_for_user
         @user.create_schedule(user_id: @user.id, user_only: true) # Create a new schedule associated with the user
+    end
+
+    def check_admin_role
+        unless (current_user.role == "admin" && @user.branch.company.id == current_user.branch.company.id)
+          redirect_to root_path, alert: "You do not have permission to access this page."
+        end
     end
 end
