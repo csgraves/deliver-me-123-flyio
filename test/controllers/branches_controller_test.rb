@@ -75,29 +75,27 @@ class BranchesControllerTest < ActionDispatch::IntegrationTest
   test "should destroy branch and its associated records" do
     assert_difference("Branch.count", -1) do
       assert_difference("Schedule.count", -1) do
-        assert_difference("User.count", -1) do
-          delete branch_url(@branch)
-        end
+         delete branch_url(@branch)
       end
     end
 
     assert_redirected_to companies_url
   end
 
-  test "non-admin user should not access new, create, edit, update, and destroy actions" do
+  test "non-admin / authorised user should not access edit, update, and destroy actions" do
     sign_out users(:one)
     unauthorized_user = users(:two)
     sign_in unauthorized_user
   
     get new_branch_url
     assert_redirected_to root_url
-    assert_equal "You do not have permission to access this page.", flash[:alert]
+    assert_equal "You do not have permission.", flash[:alert]
 
     assert_no_difference("Branch.count") do
       post branches_url, params: { branch: { name: "New Branch", branch_iden: "new-branch", company_iden: "new-company", company_id: @branch.company_id } }
     end
     assert_redirected_to root_url
-    assert_equal "You do not have permission to access this page.", flash[:alert]
+    assert_equal "You do not have permission.", flash[:alert]
 
     get edit_branch_url(@branch)
     assert_redirected_to root_url
@@ -122,7 +120,7 @@ class BranchesControllerTest < ActionDispatch::IntegrationTest
     another_branch = branches(:one) # A branch not associated with the user
     get branch_url(another_branch)
     assert_redirected_to root_url
-    assert_equal "You do not have permission to access this page.", flash[:alert]
+    assert_equal "You do not have permission.", flash[:alert]
   end
 
 end

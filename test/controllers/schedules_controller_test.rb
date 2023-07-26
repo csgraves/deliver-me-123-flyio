@@ -18,8 +18,14 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create schedule" do
-    assert_difference("Schedule.count") do
-      post schedules_url, params: { schedule: { branch_id: @schedule.branch_id, branch_only: @schedule.branch_only, end_time: @schedule.end_time, start_time: @schedule.start_time, user_id: @schedule.user_id, user_only: @schedule.user_only } }
+    user = users(:no_schedule)
+    schedule_params = { 
+      user_id: user.id,
+      user_only: true
+    }
+  
+    assert_difference("Schedule.count", 1) do
+      post schedules_url, params: { schedule: schedule_params }
     end
 
     assert_redirected_to schedule_url(Schedule.last)

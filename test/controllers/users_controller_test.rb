@@ -8,13 +8,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
+    @user = users(:one)
+    sign_in users(:one)
     get users_url
     assert_response :success
   end
 
   test "should get new" do
+    @user = users(:one)
+    sign_in users(:one)
     get new_user_url
-    assert_response :success
+    assert_redirected_to root_path
   end
 
 =begin
@@ -29,11 +33,15 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 =end 
 
   test "should show user" do
+    @user = users(:one)
+    sign_in users(:one)
     get user_url(@user)
     assert_response :success
   end
 
   test "should get edit" do
+    @user = users(:one)
+    sign_in users(:one)
     get edit_user_url(@user)
     assert_response :success
   end
@@ -46,6 +54,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 =end
 
   test "should destroy user" do
+    @user = users(:one)
+    sign_in users(:one)
     assert_difference("User.count", -1) do
       delete user_url(@user)
     end

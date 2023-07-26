@@ -13,3 +13,10 @@ two:
   company_iden: MyString
   company: two
   company_id: 2
+
+new_branch:
+  name: NewBranch
+  branch_iden: branchIden
+  company_iden: MyString
+  company: one
+  company_id: 1

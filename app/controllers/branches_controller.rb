@@ -1,7 +1,7 @@
 class BranchesController < ApplicationController
   before_action :set_branch, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
-  before_action :check_admin_role, only: [:create, :edit, :update, :destroy]
+  before_action :check_admin_role, only: [:edit, :update, :destroy]
 
   # GET /branches or /branches.json
   def index
@@ -23,7 +23,11 @@ class BranchesController < ApplicationController
 
   # GET /branches/new
   def new
-    @branch = Branch.new
+    unless (current_user.role == "admin")
+        redirect_to root_path, alert: "You do not have permission."
+        return
+    end
+    @branch = Branch.new    
   end
 
   # GET /branches/1/edit
@@ -32,7 +36,12 @@ class BranchesController < ApplicationController
 
   # POST /branches or /branches.json
   def create
-    
+    unless (current_user.role == "admin")
+        redirect_to root_path, alert: "You do not have permission."
+        return
+    end  
+
+
     @branch = Branch.new(branch_params)
     #company = Company.find_by(company_iden: params[:branch][:company_iden])
     #@branch.company = company
@@ -41,6 +50,11 @@ class BranchesController < ApplicationController
     company = current_user.company
     @branch.company = company
     @branch.company_iden = company.company_iden
+
+    unless (@branch.company.id == current_user.branch.company.id)
+        redirect_to root_path, alert: "You do not have permission."
+        return
+    end
 
     respond_to do |format|
       if @branch.save

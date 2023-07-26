@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
-  before_action :check_admin_role, only: [:new, :create, :edit, :update, :destroy]
+  before_action :check_admin_role, only: [:edit, :update, :destroy]
 
   # GET /users or /users.json
   def index
@@ -22,6 +22,7 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    redirect_to root_path, alert: "You do not have permission."
     @user = User.new
   end
 

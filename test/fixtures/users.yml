@@ -17,3 +17,11 @@ two:
   role: driver
   branch: two
   branch_id: 2
+
+no_schedule:
+  name: AdminName3
+  email: AdminUser3@fixtures.com
+  encrypted_password: nothing
+  role: admin
+  branch: one
+  branch_id: 1
