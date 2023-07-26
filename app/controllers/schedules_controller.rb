@@ -1,6 +1,7 @@
 class SchedulesController < ApplicationController
   before_action :set_schedule, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
+  before_action :check_admin_role, only: [:show, :edit, :update, :destroy]
 
   # GET /schedules or /schedules.json
   def index
@@ -31,6 +32,11 @@ class SchedulesController < ApplicationController
   # GET /schedules/new
   def new
     @schedule = Schedule.new
+
+    unless (current_user.role == "admin")
+        redirect_to root_path, alert: "You do not have permission."
+        return
+    end
   end
 
   # GET /schedules/1/edit
@@ -39,6 +45,22 @@ class SchedulesController < ApplicationController
 
   # POST /schedules or /schedules.json
   def create
+    if schedule_params[:user_id].present? # Check if a user is associated with the schedule
+      user = User.find(schedule_params[:user_id])
+      if user.schedule.present?
+        redirect_to new_schedule_path, alert: "User already has an existing schedule."
+        return
+      end
+    end
+    
+    if schedule_params[:branch_id].present? # Check if a user is associated with the schedule
+      branch = Branch.find(schedule_params[:branch_id])
+      if branch.schedule.present?
+        redirect_to new_schedule_path, alert: "Branch already has an existing schedule."
+        return
+      end
+    end
+
     @schedule = Schedule.new(schedule_params)
 
     respond_to do |format|
@@ -98,5 +120,20 @@ class SchedulesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def schedule_params
       params.require(:schedule).permit(:start_time, :end_time, :branch_id, :user_id, :user_only, :branch_only)
+    end
+
+    def check_admin_role
+        if(@schedule.user_only == true)
+            unless ((current_user.role == "admin" && @schedule.user.branch.company.id == current_user.branch.company.id) || current_user == @schedule.user)
+              redirect_to root_path, alert: "You do not have permission."
+              return
+            end
+        end
+        if(@schedule.branch_only == true)
+            unless ((current_user.role == "admin" && @schedule.branch.company.id == current_user.branch.company.id))
+              redirect_to root_path, alert: "You do not have permission."
+              return
+            end
+        end
     end
 end
