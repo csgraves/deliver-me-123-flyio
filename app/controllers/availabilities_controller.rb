@@ -1,6 +1,7 @@
 class AvailabilitiesController < ApplicationController
     before_action :authenticate_user!
     before_action :set_availability, only: %i[ show edit update destroy ]
+    before_action :check_admin_role, only: [:show, :edit, :update, :destroy]
 
   # GET /availabilities or /availabilities.json
   def index
@@ -23,6 +24,8 @@ class AvailabilitiesController < ApplicationController
   # POST /availabilities or /availabilities.json
   def create
     @availability = Availability.new(availability_params)
+
+    check_admin_role
 
     respond_to do |format|
       if @availability.save
@@ -67,5 +70,11 @@ class AvailabilitiesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def availability_params
       params.require(:availability).permit(:start_time, :end_time, :user_id)
+    end
+
+    def check_admin_role
+        unless ((current_user.role == "admin" && @availability.user.branch.company.id == current_user.branch.company.id) || current_user == @availability.user)
+          redirect_to root_path, alert: "You do not have permission."
+        end
     end
 end

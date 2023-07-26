@@ -1,7 +1,7 @@
 class BranchesController < ApplicationController
   before_action :set_branch, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
-  before_action :check_admin_role, only: [:new, :create, :edit, :update, :destroy]
+  before_action :check_admin_role, only: [:create, :edit, :update, :destroy]
 
   # GET /branches or /branches.json
   def index
@@ -17,7 +17,7 @@ class BranchesController < ApplicationController
     if (@branch.id == current_user.branch_id) || (current_user.role == "admin" && @branch.company_id == current_user.company.id)
       render :show
     else
-      redirect_to root_path, alert: "You do not have permission to access this page."
+      redirect_to root_path, alert: "You do not have permission."
     end
   end
 

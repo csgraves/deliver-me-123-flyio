@@ -1,7 +1,7 @@
 class CompaniesController < ApplicationController
   before_action :set_company, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
-  before_action :check_admin_role, only: [:new, :create, :edit, :update, :destroy]
+  before_action :check_admin_role, only: [:edit, :update, :destroy]
 
   # GET /companies or /companies.json
   def index
@@ -34,6 +34,10 @@ class CompaniesController < ApplicationController
   # POST /companies or /companies.json
   def create
     @company = Company.new(company_params)
+
+    unless (current_user.role == "admin")
+        redirect_to root_path, alert: "You do not have permission to access this page."
+    end
 
     respond_to do |format|
       if @company.save
