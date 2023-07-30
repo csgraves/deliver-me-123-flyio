@@ -4,7 +4,7 @@
 <div id="schedule-data" data-deliveries="<%= @deliveries.to_json %>"></div>
 
 <div>
-  <%= link_to "Back to schedules", schedules_path %>
+  <%= link_to "Back to schedules", schedules_path if current_user.role == "admin"%>
 </div>
 	
 <div id="ec"></div>

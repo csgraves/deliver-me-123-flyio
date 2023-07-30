@@ -22,10 +22,11 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.find(params[:id])
 
     if @schedule.user_only && @schedule.user.present?
-        @deliveries = @schedule.user.deliveries
+        @deliveries = @schedule.user.deliveries.joins(schedule: :user).select('deliveries.*, users.email as driver_email')
     elsif @schedule.branch_only && @schedule.branch.present?
         @deliveries = Delivery.joins(schedule: :user)
-                            .where('schedules.branch_id = ? OR users.branch_id = ?', @schedule.branch_id, @schedule.branch_id)
+                          .where('schedules.branch_id = ? OR users.branch_id = ?', @schedule.branch_id, @schedule.branch_id)
+                          .select('deliveries.*, users.email as driver_email')
     end
   end
 
