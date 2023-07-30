@@ -53,11 +53,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     end: 'today prev,next dayGridMonth,timeGridWeek,timeGridDay'
                 },
                 eventDrop: function (info) {
-                    console.log('Event dropped:', info.event);
+                    //console.log('Event dropped:', info.event);
                     
                 },
                 eventClick: function (info) {
-                    console.log("Event Clicked");
+                    //console.log("Event Clicked");
                     var deliveryId = info.event.extendedProps.deliveryId;
                     window.location.href = '/deliveries/' + deliveryId;
                 },
