@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_12_134225) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_30_114658) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -72,6 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_134225) do
     t.decimal "origin_lon", precision: 10, scale: 6
     t.string "origin_address"
     t.string "dest_address"
+    t.string "customer_contact"
     t.index ["schedule_id"], name: "index_deliveries_on_schedule_id"
   end
 

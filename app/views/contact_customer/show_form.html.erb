@@ -1,0 +1,36 @@
+<%= form_with(url: '/contact', method: :post, html: { class: "form-horizontal" }) do |form| %>
+  <div class="form-group" style="padding: 5px;">
+    <label class="col-sm-2 control-label">From:</label>
+    <div class="col-sm-10">
+      <%= form.text_field :name, class: "form-control", value: current_user.email, readonly: true %>
+    </div>
+  </div>
+
+
+
+  <div class="form-group" style="padding: 5px;">
+      <label class="col-sm-2 control-label">To:</label>
+      <div class="col-sm-10">
+        <%= form.email_field :recipient_email, value: @recipient_email, class: "form-control", readonly: true %>
+      </div>
+    </div>
+
+  <div class="form-group" style="padding: 5px;">
+    <%= form.label :message_type, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= form.select :message_type, options_for_select([
+        "We are pleased to inform you that your delivery is on track and should be with you as per our agreed time.", 
+        "Unfortunately your delivery is running late. We are very sorry but we'll be with you ASAP. Please contact our office should you have any further questions.", 
+        "Unfortunately your delivery has been cancelled. We are very sorry for this and our office will be in contact very soon."]
+        ), { class: "form-control", id: "message-type-select" } %>
+    </div>
+  </div>
+  <%= form.hidden_field :message, value: "We are pleased to inform you that your delivery is on track and should be with you as per our agreed time.", id: "selected-message" %>
+
+  <div class="form-group" style="padding: 10px;">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= form.submit "Submit", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
+<%= javascript_include_tag 'contact' %>

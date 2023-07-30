@@ -27,7 +27,17 @@
 
     <p class="card-text">
       <strong>Driver:</strong>
-      <%= delivery.schedule.user.name %>
+      <%= delivery.schedule.user.email %>
     </p>
+
+    <% if delivery.customer_contact.present? %>
+      <p class="card-text">
+        <strong>Customer Email:</strong>
+        <%= delivery.customer_contact %>
+      </p>
+    
+
+        <%= link_to "Contact Customer", contact_form_path(delivery_id: delivery.id), class: "btn btn-primary" %>
+    <% end %>
   </div>
 </div>

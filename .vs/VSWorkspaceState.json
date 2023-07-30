@@ -2,16 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\app",
+    "\\app\\javascript",
+    "\\app\\mailers",
     "\\app\\views",
-    "\\app\\views\\branches",
+    "\\app\\views\\contact_customer",
+    "\\app\\views\\contact_mailer",
+    "\\app\\views\\deliveries",
     "\\config",
-    "\\config\\environments",
-    "\\db",
-    "\\test",
-    "\\test\\controllers",
-    "\\test\\fixtures",
-    "\\test\\models"
+    "\\config\\initializers"
   ],
-  "SelectedNode": "\\test\\fixtures\\deliveries.yml",
+  "SelectedNode": "\\app\\views\\deliveries\\_delivery.html.erb",
   "PreviewInSolutionExplorer": false
 }
