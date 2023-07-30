@@ -11,6 +11,11 @@
     </div>
   <% end %>
 
+  <div class="container-fluid form-element">
+    <%= form.label :customer_contact, "Customer Email", style: "display: block" %>
+    <%= form.email_field :customer_contact, class: "form-control", placeholder: "Enter customer's email" %>
+  </div>
+
   <div class="container-fluid origin-leave form-element">
     <%= form.label :origin_leave, "Origin Leave", style: "display: block" %>
     <%= form.datetime_field :origin_leave, id: "origin_leave_field" %>

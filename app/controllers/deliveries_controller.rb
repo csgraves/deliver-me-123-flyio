@@ -83,7 +83,8 @@ class DeliveriesController < ApplicationController
         :dest_lat,
         :dest_lon,
         :dest_arrive,
-        :dest_leave)
+        :dest_leave,
+        :customer_contact)
     end
 
     def check_admin_role

@@ -4,3 +4,4 @@
 //= link_tree ../builds
 //= link delivery.js
 //= link calendar.js
+//= link contact.js
