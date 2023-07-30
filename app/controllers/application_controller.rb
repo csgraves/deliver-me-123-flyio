@@ -1,5 +1,11 @@
 class ApplicationController < ActionController::Base
+	helper_method :joined_company
 
+	  private
+
+	  def joined_company
+		current_user && current_user.branch_id.present?
+	  end
 
 	def index 
 		#

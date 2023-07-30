@@ -3,13 +3,14 @@
     "",
     "\\app",
     "\\app\\javascript",
-    "\\app\\javascript\\controllers",
+    "\\app\\mailers",
+    "\\app\\views",
+    "\\app\\views\\contact_customer",
+    "\\app\\views\\contact_mailer",
+    "\\app\\views\\deliveries",
     "\\config",
-    "\\config\\credentials",
-    "\\db",
-    "\\test\\controllers",
-    "\\test\\fixtures",
-    "\\test\\models"
+    "\\config\\initializers"
   ],
+  "SelectedNode": "\\app\\views\\deliveries\\_delivery.html.erb",
   "PreviewInSolutionExplorer": false
 }

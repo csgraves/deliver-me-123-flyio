@@ -6,5 +6,6 @@
   <%= link_to "Edit this company", edit_company_path(@company) %> |
   <%= link_to "Back to companies", companies_path %>
 
-  <%= button_to "Destroy this company", @company, method: :delete %>
+  <%= button_to "Destroy this company", @company, method: :delete, class: "btn btn-danger" %>
+	<p> Warning: Destroying this branch will delete all associated users!</p>
 </div>

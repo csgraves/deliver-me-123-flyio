@@ -1,27 +1,53 @@
 <%= form_with(model: company) do |form| %>
-  <% if company.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(company.errors.count, "error") %> prohibited this company from being saved:</h2>
+    <% if company.errors.any? %>
+      <div class="alert alert-danger">
+        <h2><%= pluralize(company.errors.count, "error") %> prohibited this company from being saved:</h2>
 
-      <ul>
-        <% company.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <ul>
+          <% company.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :name, class: "form-label", style: "display: block" %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :company_iden, class: "form-label", style: "display: block" %>
+      <%= form.text_field :company_iden, class: "form-control" %>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Open Time</th>
+          <th>Close Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% CompanyOpeningHour.day_of_weeks.each do |day_of_week, _index| %>
+          <%= form.fields_for :company_opening_hours, company.company_opening_hours.find_or_initialize_by(day_of_week: day_of_week) do |opening_hour_form| %>
+            <%= opening_hour_form.hidden_field :day_of_week, value: day_of_week.to_s %>
+                <tr>
+                  <td><%= day_of_week.titleize %></td>
+                  <td>
+                    <%= opening_hour_form.time_select :open_time, { class: "form-control", default: Time.new(2000, 1, 1, 9, 0, 0) } %>
+                  </td>
+                  <td>
+                    <%= opening_hour_form.time_select :close_time, { class: "form-control", default: Time.new(2000, 1, 1, 17, 0, 0) } %>
+                  </td>
+                </tr>
+          <% end %>
         <% end %>
-      </ul>
+      </tbody>
+    </table>
+
+    <div class="form-group">
+      <%= form.submit class: "btn btn-primary" %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div>
-    <%= form.label :company_iden, style: "display: block" %>
-    <%= form.text_field :company_iden %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>

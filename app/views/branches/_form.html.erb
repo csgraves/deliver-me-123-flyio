@@ -16,12 +16,12 @@
     <%= form.text_field :name %>
   </div>
 
-  <div>
+  <div style="display: none;">
     <%= form.label :branch_iden, style: "display: block" %>
     <%= form.text_field :branch_iden %>
   </div>
 
-  <div>
+  <div style="display: none;">
     <%= form.label :company_id, style: "display: block" %>
     <%= text_field_tag :company_iden, form.object.company_iden, disabled: true, readonly: true %>
   </div>

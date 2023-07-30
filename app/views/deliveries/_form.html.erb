@@ -11,63 +11,91 @@
     </div>
   <% end %>
 
-  <div class="origin-leave">
-    <%= form.label :origin_leave, style: "display: block" %>
+  <div class="container-fluid form-element">
+    <%= form.label :customer_contact, "Customer Email", style: "display: block" %>
+    <%= form.email_field :customer_contact, class: "form-control", placeholder: "Enter customer's email" %>
+  </div>
+
+  <div class="container-fluid origin-leave form-element">
+    <%= form.label :origin_leave, "Origin Leave", style: "display: block" %>
     <%= form.datetime_field :origin_leave, id: "origin_leave_field" %>
   </div>
 
-  <div class="dest-arrive" style="display: block">
-    <%= form.label :dest_arrive, style: "display: block" %>
+  <div id="dest_arrive" style="display: none" class="container-fluid origin-leave form-element">
+    <%= form.label :dest_arrive, "Destination Arrive", style: "display: block" %>
     <%= form.datetime_field :dest_arrive, id: "dest_arrive_field" %>
   </div>
 
-  <div>
-    <%= form.label :dest_leave, style: "display: block" %>
+  <div id="dest_leave" style="display: none" class="container-fluid origin-leave form-element">
+    <%= form.label :dest_leave, "Destination Leave", style: "display: block" %>
     <%= form.datetime_field :dest_leave, id: "dest_leave_field", value: delivery.dest_leave&.strftime("%Y-%m-%dT%H:%M") %>
   </div>
 
-  <div>
+  <div class="container-fluid form-element" style="display: none">
     <%= form.label :schedule_id, style: "display: block" %>
-    <%= form.text_field :schedule_id %>
+    <%= form.text_field :schedule_id, id: "schedule_id_field" %>
   </div>
 
-  <input type="text" name="lat" id="lat" readonly>
-  <input type="text" name="lon" id="lon" readonly>
-  <input type="text" name="address" id="address" readonly>
+  <div class="container-fluid form-element" style="display: none">
+      <input type="text" name="lat" id="lat" readonly>
+      <input type="text" name="lon" id="lon" readonly>
+      <input type="text" name="address" id="address" readonly>
+  </div>
 
-  <div>
-    <%= button_tag "Set Origin", type: "button", id: "set-origin-button" %>
+  <div class="container-fluid form-element">
+    <%= button_tag "Set Origin", type: "button", id: "set-origin-button", class: "btn btn-outline-success"%>
     <div id="origin-fields" style="display: none;">
-
+        
         <div><%= label_tag "Origin Address" %>
-        <%= form.text_field :origin_address, id: "origin_address", readonly: true %></div>
+        <%= form.text_field :origin_address, id: "origin_address", readonly: true, class: "form-control dynamic-width"%></div>
 
-        <div><%= label_tag "Origin Latitude" %>
+        <div style="display: none;"><%= label_tag "Origin Latitude" %>
         <%= form.text_field :origin_lat, id: "origin_lat", readonly: true %></div>
 
-        <div><%= label_tag "Origin Longitude" %>
+        <div style="display: none;"><%= label_tag "Origin Longitude" %>
         <%= form.text_field :origin_lon, id: "origin_lon", readonly: true %></div>
 
     </div>
   </div>
 
-  <div>
-    <%= button_tag "Set Destination", type: "button", id: "set-dest-button" %>
+  <div class="container-fluid form-element">
+    <%= button_tag "Set Destination", type: "button", id: "set-dest-button", class: "btn btn-outline-success"%>
     <div id="dest-fields" style="display: none;">
 
         <div><%= label_tag "Destination Address" %>
-        <%= form.text_field :dest_address, id: "dest_address", readonly: true %></div>
+        <%= form.text_field :dest_address, id: "dest_address", readonly: true, class: "form-control dynamic-width" %></div>
 
-        <div><%= label_tag "Destination Latitude" %>
+        <div style="display: none;"><%= label_tag "Destination Latitude" %>
         <%= form.text_field :dest_lat, id: "dest_lat", readonly: true %></div>
 
-        <div><%= label_tag "Destination Longitude" %>
+        <div style="display: none;"><%= label_tag "Destination Longitude" %>
         <%= form.text_field :dest_lon, id: "dest_lon", readonly: true %></div>
 
     </div>
   </div>
 
-  <div><%= button_tag "Calculate Route", type: "button", id: "calc-route-button" %></div>
+  <div class="container-fluid form-element"><%= button_tag "Calculate Route", type: "button", id: "calc-route-button", class: "btn btn-outline-success" %></div>
   
-  <div><%= form.submit %></div>
+  
+
+  <table id="users-table" class="table" style="display: none">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th></th>
+          <th></th>
+          <!-- Add more columns if needed -->
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Users data will be dynamically populated here -->
+      </tbody>
+  </table>
+
+  <div class="container-fluid form-element" id="create_delivery" style="display: none">
+    <div id="create_delivery_wrapper">
+        <%= form.submit class: "btn btn-outline-success", id: "create_delivery_button"%>
+    </div>
+  </div>
+
 <% end %>

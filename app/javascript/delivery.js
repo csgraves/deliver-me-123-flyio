@@ -110,6 +110,7 @@ function clearDirections() {
 
 function calculateRoute() {
     clearDirections(); //Removes panel after button directions after button press
+    scheduleIdReset();
 
     const directionsService = new google.maps.DirectionsService();
     const directionsRenderer = new google.maps.DirectionsRenderer({
@@ -124,6 +125,7 @@ function calculateRoute() {
     const destinationLng = Number(document.getElementById("dest_lon").value);
     const originLeaveString = document.getElementById("origin_leave_field").value;
     const originLeave = new Date(originLeaveString);
+
 
 
     const origin = new google.maps.LatLng(originLat, originLng);
@@ -167,10 +169,12 @@ function displayRoute(origin, destination, originLeave, service, display) {
             var arriveTimeTraffic = addSecondsToDate(originLeave, durationTraffic);
             var destLeaveTime = addSecondsToDate(arriveTimeTraffic, 600);
             //document.getElementById("dest_arrive").value = arriveTime;
-            var destArriveField = document.getElementById("dest_arrive_field");
-            destArriveField.value = setDateTimeFormat(arriveTimeTraffic);
+            destArriveField = document.getElementById("dest_arrive_field");
+            destArriveField.value = setDateTimeFormat(arriveTimeTraffic);            
             var destLeaveField = document.getElementById("dest_leave_field");
             destLeaveField.value = setDateTimeFormat(destLeaveTime);
+
+            fetchUsers();
 
             //Updates only with drag
             display.addListener("directions_changed", () => {
@@ -189,6 +193,8 @@ function displayRoute(origin, destination, originLeave, service, display) {
 
                 destLeaveTime = addSecondsToDate(arriveTimeTraffic, 600);
                 destLeaveField.value = setDateTimeFormat(destLeaveTime);
+
+                fetchUsers();
             });
 
             // Update route durations when a different route is selected from the panel
@@ -208,6 +214,8 @@ function displayRoute(origin, destination, originLeave, service, display) {
 
                 destLeaveTime = addSecondsToDate(arriveTimeTraffic, 600);
                 destLeaveField.value = setDateTimeFormat(destLeaveTime);
+
+                fetchUsers();
             });
             
         })
@@ -268,6 +276,9 @@ function computeTotalDistance(route) {
 document.addEventListener("DOMContentLoaded", function (event) {
     deliveryMap();
 
+    const table = document.querySelector('#users-table');
+    table.style.display = 'none';
+
     const setOriginButton = document.getElementById("set-origin-button");
     const originFields = document.getElementById("origin-fields");
 
@@ -284,7 +295,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById("origin_lon").value = origin_lon;
         document.getElementById("origin_address").value = origin_address;
 
-        originFields.style.display = "block";
+        if (origin_address !== '') {
+            originFields.style.display = "block";
+        }
+        else {
+            alert("Use the map to search for a location and then set the origin");
+        }
+
+        handleInputChange();
+
     });
 
     setDestButton.addEventListener("click", function () {
@@ -298,15 +317,27 @@ document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById("dest_address").value = dest_address;
 
         destFields.style.display = "block";
+
+        handleInputChange();
     });
 
     const calculateRouteButton = document.getElementById("calc-route-button");
+    var destArriveField = document.getElementById("dest_arrive_field");
+    
+    const destArriveDiv = document.getElementById("dest_arrive");
+    const destLeaveField = document.getElementById("dest_leave_field");
+    const destLeaveDiv = document.getElementById("dest_leave");
+    const createDelDiv = document.getElementById("create_delivery");
+    var originLeaveField = document.getElementById("origin_leave_field");
 
     calculateRouteButton.addEventListener('click', function () {
         calculateRoute();
+        destArriveDiv.style.display = "block";
+        destLeaveDiv.style.display = "block";
+        createDelDiv.style.display = "block";
     });
 
-    originLeaveField = document.getElementById("origin_leave_field");
+    
     const now = new Date();
     now.setMinutes(now.getMinutes() + 10);
     originLeaveField.value = setDateTimeFormat(now);
@@ -320,15 +351,75 @@ document.addEventListener("DOMContentLoaded", function (event) {
         // If all fields have values, show the dest-fields div
         originFields.style.display = "block";
     }
+    if (destArriveField.value !== '') {
+        destArriveDiv.style.display = "block";
+    }
+    if (destLeaveField.value !== '') {
+        destLeaveDiv.style.display = "block";
+    }
 
+    // Handle Create Delivery Button
+    const originLeaveInput = document.getElementById('origin_leave_field');    
+
+    originLeaveInput.addEventListener('input', handleInputChange);
+
+    const createDeliveryWrapper = document.getElementById('create_delivery_wrapper');
+
+    createDeliveryWrapper.addEventListener('click', function (event) {
+        const createDeliveryButton = document.getElementById('create_delivery_button');
+        const scheduleIdField = document.getElementById("schedule_id_field");
+
+        if (scheduleIdField.value === '') {
+            event.preventDefault();
+            alert("Select A Driver");
+            return
+        }
+        if (createDeliveryButton.disabled) {
+            event.preventDefault();
+            alert("Field Updated - Calculate Route Again");
+            return
+        }
+        if (destArriveField.value < originLeaveField.value) {
+            event.preventDefault();
+            alert("Origin leave must be before destination arrival");
+            return
+        }
+        if (destLeaveField.value < destArriveField.value) {
+            event.preventDefault();
+            alert("Destination arrive must be before destination depart");
+            return
+        }
+    });
+    // Customer Email Check
+    const form = document.getElementById('new_delivery'); // Use the form ID 'new_delivery' generated by form_with
+    const emailInput = document.getElementById('delivery_customer_contact');
+
+    const submitButton = document.getElementById('create_delivery_button');
+
+    submitButton.addEventListener('click', function (event) {
+        const email = emailInput.value.trim();
+
+        if (!isValidEmail(email)) {
+            event.preventDefault(); // Prevent form submission if email is invalid
+            if (email !== '') {
+                alert('Please enter a valid email address.');
+                emailInput.focus();
+            }
+        } else {
+            // If email is valid, allow form submission
+            // The form will be submitted by default since it's a regular submit button
+        }
+    });
 });
 
-function showFieldsIfNotEmpty() {
-    // Check if the destination address, longitude, and latitude fields have values
-    if ($('#dest_address').val() && $('#dest_lon').val() && $('#dest_lat').val()) {
-        // If all fields have values, show the dest-fields div
-        $('#dest-fields').show();
+function isValidEmail(email) {
+    // If the email is empty, consider it as valid (optional field)
+    if (email === '') {
+        return true;
     }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
 }
 
 function setDateTimeFormat(dateTime) {
@@ -371,6 +462,126 @@ function checkPlaceNameInAddressComponents(place) {
   }
   
   return false;
+}
+
+// Fetch users based on origin_leave and dest_arrive fields
+function fetchUsers() {
+    //console.log("Fetched Users Called");
+
+    originLeaveField = document.getElementById("origin_leave_field");
+    destArriveField = document.getElementById("dest_arrive_field");
+    const scheduleIdFieldStart = document.getElementById("schedule_id_field");
+    const originLeaveValue = originLeaveField.value;
+    const destArriveValue = destArriveField.value;
+    scheduleIdFieldStart.value = '';
+    //console.log("Origin Leave: ", originLeaveValue);
+    //console.log("Dest Arrive: ", destArriveValue);
+
+
+    // Make an AJAX request to the backend to fetch users
+    const url = `/users/fetch_users?pot_origin_leave=${originLeaveValue}&pot_dest_arrive=${destArriveValue}`;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            const table = document.querySelector('#users-table');
+
+            // Clear the existing table rows
+            const tableBody = document.querySelector('#users-table tbody');
+            tableBody.innerHTML = '';
+
+            const additionalContent = document.querySelector('#additional-content');
+            if (!additionalContent) {
+                // Add the additional content before the table
+                const newAdditionalContent = document.createElement('div');
+                newAdditionalContent.id = 'additional-content';
+                newAdditionalContent.innerHTML = `
+                  <p>Please check the driver's schedule before selecting one.</p>
+                  <p>The driver's delivery, closest to your proposed delivery, may have a conflicting destination address compared to your current origin address.</p>
+                  <p>Ensure you update your current origin address and recalculate the route if necessary.</p>
+                `;
+                table.parentNode.insertBefore(newAdditionalContent, table);
+            }
+
+            if (data.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="3">No drivers available during this period</td>`;
+                tableBody.appendChild(row);
+                //handleInputChange();
+            } else { 
+
+                // Add new rows for each user
+                data.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                              <td>${user.email}</td>
+                              <td><button onclick="viewSchedule(event, ${user.schedule.id})" class="btn btn-outline-success">View Schedule</button></td>
+                              <td><button type="button" onclick="updateScheduleId(${user.schedule.id})" class="btn btn-outline-success btn-outline-primary">Select Driver</button></td>
+                              `;
+                    tableBody.appendChild(row);
+                });
+                // Attach click event listener to "Select Schedule" buttons
+                const selectButtons = document.querySelectorAll('.btn-outline-primary');
+                selectButtons.forEach(button => {
+                    button.addEventListener('click', highlightRow);
+                });
+            }
+            // Show the table
+            table.style.display = 'table';
+        })
+        .catch(error => {
+            console.error('Error fetching users:', error);
+        });
+}
+
+function updateScheduleId(scheduleId) {
+    const scheduleIdField = document.getElementById("schedule_id_field");
+    var scheduleIdVal = scheduleId;
+    console.log(scheduleId);
+    scheduleIdField.value = scheduleId;
+}
+
+function highlightRow(event) {
+    const button = event.target;
+    const row = button.closest('tr');
+    const table = row.closest('table');
+    const tds = table.querySelectorAll('td');
+
+    // Remove the "highlighted" class from all td elements
+    tds.forEach(td => {
+        td.classList.remove('highlighted');
+    });
+
+    // Add the "highlighted" class to the td elements in the clicked row
+    const tdsInRow = row.querySelectorAll('td');
+    tdsInRow.forEach(td => {
+        td.classList.add('highlighted');
+    });
+
+    deliveryButtonShow();
+}
+
+function handleInputChange() {
+    //console.log("Handling input change")
+    const createDeliveryButton = document.getElementById('create_delivery_button');
+    createDeliveryButton.disabled = true;
+}
+
+function deliveryButtonShow() {
+    //console.log("Handling input change")
+    const createDeliveryButton = document.getElementById('create_delivery_button');
+    createDeliveryButton.disabled = false;
+}
+
+function viewSchedule(event, scheduleId) {
+    event.preventDefault(); // Prevents the default action of the button click event
+    const url = `/schedules/${scheduleId}`;
+    window.open(url, '_blank');
+}
+
+function scheduleIdReset() {
+    const scheduleIdField = document.getElementById("schedule_id_field");
+    scheduleIdField.value = '';
+
 }
 
 window.initMap = deliveryMap;

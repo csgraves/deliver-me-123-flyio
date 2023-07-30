@@ -10,24 +10,93 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>   
   </head>
 
-  <nav>
-  <% if user_signed_in? %>
-    <%= "#{current_user.email} |" %>
-    <%= link_to t('profile'), edit_user_registration_path %>
-    |
-    <%= button_to t('logout'), destroy_user_session_path, method: 'delete' %>
-  <% else %>
-    <%= link_to t('login'), new_user_session_path %>
-    |
-    <%= link_to t('sign_up'), new_user_registration_path %>
-  <% end %>
-</nav>
+  <nav class="navbar navbar-expand-xsm navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">ROUTES</a>
+        <div class="navbar-collapse justify-content-between" id="navbarSupportedContent">
+			<ul class="navbar-nav">
+
+                <% if user_signed_in? %>
+                <li class="nav-item">
+					<a class="nav-link disabled" tabindex="-1" aria-disabled="true"><%= "#{current_user.email}" %></a>
+				</li>
+                <% end %>
+            </ul>
+            <ul class="navbar-nav">
+                <% if user_signed_in? %>
+                <li class="nav-item">
+                    <%= link_to t('profile'), edit_user_registration_path, class: "nav-link active", "aria-current" => "page" %>
+                </li>
+                <li class="nav-item">
+	                <%= button_to t('logout'), destroy_user_session_path, method: 'delete', class: "btn btn-outline-success" %>
+                </li>
+                
+                <% else %>
+                <li class="nav-item">
+	                <%= link_to t('login'), new_user_session_path, class: "nav-link active", "aria-current" => "page" %>
+                </li>
+                <li class="nav-item">
+                    <%= link_to t('sign_up'), new_user_registration_path, class: "nav-link active", "aria-current" => "page" %>
+                </li>
+                <% end %>
+            </ul>
+        </div>
+    </div>
+  </nav>
 
   <body>
-    <%= yield %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+  <% if joined_company %>
+      <div class="container-fluid">
+            <div class="row">
+                <% if user_signed_in? %>
+                    <div class="col-2 app_sidebar">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/dashboard" data-bs-toggle="tooltip" data-bs-placement="right" title="Home">
+                                    <i class="bi bi-house"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/schedules" data-bs-toggle="tooltip" data-bs-placement="right" title="Schedule">
+                                    <i class="bi bi-calendar-date"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/deliveries" data-bs-toggle="tooltip" data-bs-placement="right" title="My Deliveries">
+                                    <i class="bi bi-truck"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+	                            <a class="nav-link" href="/availabilities" data-bs-toggle="tooltip" data-bs-placement="right" title="My Availability">
+		                            <i class="bi bi-calendar-plus"></i>
+	                            </a>
+                            </li>
+                            <li class="nav-item">
+	                            <a class="nav-link" href="/companies" data-bs-toggle="tooltip" data-bs-placement="right" title="Company">
+		                            <i class="bi bi-c-circle"></i>
+	                            </a>
+                            </li>
+                            <li class="nav-item">
+	                            <a class="nav-link" href="/branches" data-bs-toggle="tooltip" data-bs-placement="right" title="Branches">
+		                            <i class="bi bi-building"></i>
+	                            </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/users" data-bs-toggle="tooltip" data-bs-placement="right" title="User">
+                                    <i class="bi bi-person"></i>
+                                </a>
+                            </li>
+                            <!-- Add more nav items with icons -->
+                        </ul>
+                    </div>
+                <% end %>
+            <% end %>
 
-
-  </body>
+            <div class="<%= user_signed_in? && joined_company ? 'container col-10' : 'container col-12' %>">
+                <%= yield %>
+                <p class="alert"><%= alert %></p>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

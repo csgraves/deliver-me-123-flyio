@@ -21,7 +21,7 @@
     <%= form.datetime_field :end_time %>
   </div>
 
-  <div>
+  <div style="display: none;">
     <%= form.label :user_id, style: "display: block" %>
     <%= form.text_field :user_id, readonly: true, value: current_user.id %>
   </div>

@@ -1,3 +1,8 @@
+$grid-breakpoints: ( xs: 0, xsm: 350px, sm: 576px, md: 768px, lg: 992px, xl: 1200px);
+
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 
@@ -91,11 +96,15 @@ html, body {
 #map {
     flex-basis: 0;
     flex-grow: 4;
-    height: 100%;
 }
 
 #container {
     height: 100%;
+    display: flex;
+}
+
+#map_container {
+    height: 400px;
     display: flex;
 }
 
@@ -107,4 +116,48 @@ html, body {
     height: 100%;
     box-sizing: border-box;
     overflow: auto;
+}
+
+.app_sidebar {
+    min-width: 60px;
+    max-width: 85px;
+    background-color: #f8f9fa; /* Set the background color */
+    height: 100vh;
+}
+
+.flex-column {
+    align-content: center;
+}
+
+.col-10 {
+    flex: auto;
+    width: 40%;
+}
+
+.col-12 {
+    margin-left: 10px;
+    display: contents;
+}
+
+.dynamic-width {
+    width: 60%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.form-element {
+    padding: 5px;
+}
+
+.table .highlighted {
+    background-color: aliceblue;
+}
+
+.container-fluid {
+    padding-right: 20px;
+}
+
+.form-control {
+    width: 50%;
 }

@@ -1,17 +1,43 @@
-<div id="<%= dom_id delivery %>">
-  <p>
-    <strong>origin_leave:</strong>
-    <%= delivery.origin_leave %>
-  </p>
+<div id="<%= dom_id delivery %>" class="card my-3">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Origin Address:</strong>
+      <%= delivery.origin_address %>
+    </p>
+  
+    <p class="card-text">
+      <strong>Origin Departure Time:</strong>
+      <%= delivery.origin_leave.localtime.strftime("%d-%m-%Y @%H:%M") %>
+    </p>
 
-  <p>
-    <strong>dest_leave:</strong>
-    <%= delivery.dest_leave %>
-  </p>
+    <p class="card-text">
+      <strong>Destination Address:</strong>
+      <%= delivery.dest_address %>
+    </p>
 
-  <p>
-    <strong>Schedule:</strong>
-    <%= delivery.schedule_id %>
-  </p>
+    <p class="card-text">
+      <strong>Destination Arrival Time:</strong>
+      <%= delivery.dest_arrive.localtime.strftime("%d-%m-%Y @%H:%M") %>
+    </p>
 
+    <p class="card-text">
+      <strong>Destination Departure Time:</strong>
+      <%= delivery.dest_leave.localtime.strftime("%d-%m-%Y @%H:%M") %>
+    </p>
+
+    <p class="card-text">
+      <strong>Driver:</strong>
+      <%= delivery.schedule.user.email %>
+    </p>
+
+    <% if delivery.customer_contact.present? %>
+      <p class="card-text">
+        <strong>Customer Email:</strong>
+        <%= delivery.customer_contact %>
+      </p>
+    
+
+        <%= link_to "Contact Customer", contact_form_path(delivery_id: delivery.id), class: "btn btn-primary" %>
+    <% end %>
+  </div>
 </div>

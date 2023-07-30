@@ -38,7 +38,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
             options: {
                 view: 'timeGridWeek',
                 events: events,
-                editable: true,
+                height: '700px',
+                nowIndicator: true,
+                scrollTime: '06:00:00',
+                eventStartEditable: false,
+                eventDurationEditable: false,
                 headerToolbar: {
                     start: 'title',
                     center: '',
@@ -51,5 +55,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
             }
         }
+    });
+
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 });

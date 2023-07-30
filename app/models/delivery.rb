@@ -1,6 +1,7 @@
 class Delivery < ApplicationRecord
   belongs_to :schedule
 
+  validates :origin_leave, :dest_arrive, :dest_leave, presence: true
   validate :time_check
   validate :check_user_availability
 

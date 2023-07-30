@@ -48,4 +48,27 @@ class AvailabilitiesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to availabilities_url
   end
+
+  test "should not get edit when not authorized" do
+    sign_out users(:one)
+    sign_in users(:two)
+    get edit_availability_url(@availability)
+    assert_redirected_to root_url
+  end
+
+  test "should not update availability when not authorized" do
+    sign_out users(:one)
+    sign_in users(:two)
+    patch availability_url(@availability), params: { availability: { end_time: @availability.end_time, start_time: @availability.start_time, user_id: @availability.user_id } }
+    assert_redirected_to root_url
+  end
+
+  test "should not destroy availability when not authorized" do
+    sign_out users(:one)
+    sign_in users(:two)
+    assert_no_difference("Availability.count") do
+      delete availability_url(@availability)
+    end
+    assert_redirected_to root_url
+  end
 end
