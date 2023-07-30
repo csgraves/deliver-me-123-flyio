@@ -1,7 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Deliveries</h1>
-<%= link_to "New delivery", new_delivery_path %>
+<%= link_to "New delivery", new_delivery_path if current_user.role == "admin" %>
 
 <div class="table-responsive">
 	<table class="table table-striped">

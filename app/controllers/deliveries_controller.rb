@@ -23,6 +23,9 @@ class DeliveriesController < ApplicationController
 
   # GET /deliveries/1/edit
   def edit
+    unless ((current_user.role == "admin" && @delivery.schedule.user.branch.company.id == current_user.branch.company.id))
+        redirect_to root_path, alert: "You do not have permission."
+    end
   end
 
   # POST /deliveries or /deliveries.json
