@@ -2,13 +2,29 @@
 
 <h1>Users</h1>
 
-<div id="users">
-  <% @users.each do |user| %>
-    <%= render user %>
-    <p>
-      <%= link_to "Show this user", user %>
-    </p>
-  <% end %>
+<div class="container-fluid">
+	<div id="users" class="row">
+		<% @users.each do |user| %>
+		<div class="col-sm-6 col-md-4">
+			<div id=""
+				<%= dom_id user %>" class="card my-3">
+				<div class="card-body">
+					<p class="card-text">
+						<strong>User:</strong>
+						<%= user.email %>
+					</p>
+					<p class="card-text">
+						<strong>Branch:</strong>
+						<%= user.branch.name %>
+					</p>
+					<p class="card-text">
+						<strong>Role:</strong>
+						<%= user.role %>
+					</p>
+					<%= link_to "Show this user", user, class: "btn btn-primary btn-sm" %>
+				</div>
+			</div>
+		</div>
+		<% end %>
+	</div>
 </div>
-
-<%= link_to "New user", new_user_path %>
