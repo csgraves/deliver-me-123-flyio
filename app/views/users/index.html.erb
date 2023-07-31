@@ -1,6 +1,11 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Users</h1>
+<% if current_user.role == "admin" %>
+	<h1>Users</h1>
+<% end %>
+<% if  current_user.role != "admin"%>
+	<h1>User</h1>
+<% end %>
 
 <div class="container-fluid">
 	<div id="users" class="row">
