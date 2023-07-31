@@ -1,7 +1,14 @@
-<tr>
-  <td><%= availability.start_time.strftime("%Y-%m-%d %H:%M") %></td>
-  <td><%= availability.end_time.strftime("%Y-%m-%d %H:%M") %></td>
-  <td><%= availability.user.name %></td>
-  <td><%= link_to "Show", availability %></td>
-  <!-- Add additional table cells for other availability details -->
-</tr>
+<div id="<%= dom_id availability %>" class="card my-3">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Origin Address:</strong>
+	  <%= availability.start_time.strftime("%d-%m-%Y @%H:%M") %>
+    </p>
+  
+    <p class="card-text">
+      <strong>Origin Departure Time:</strong>
+	  <%= availability.end_time.strftime("%d-%m-%Y @%H:%M") %>
+    </p>
+
+  </div>
+</div>
