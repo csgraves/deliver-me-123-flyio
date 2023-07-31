@@ -1,14 +1,27 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Branches</h1>
+<% if current_user.role == 'admin' %>
+	<%= link_to "New branch", new_branch_path%>
+	<br></br>
+<% end %>
 
-<div id="branches">
-  <% @branches.each do |branch| %>
-    <%= render branch %>
-    <p>
-      <%= link_to "Show this branch", branch %>
-    </p>
-  <% end %>
+<div class="container-fluid">
+  <div id="branches" class="row">
+    <% @branches.each do |branch| %>
+      <div class="col-sm-6 col-md-4">
+        <div id="<%= dom_id branch %>" class="card my-3">
+          <div class="card-body">
+            <p class="card-text">
+              <strong>Name:</strong>
+              <%= branch.name %>
+            </p>
+            <%= link_to "Show this branch", branch, class: "btn btn-primary btn-sm" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
 
-<%= link_to "New branch", new_branch_path %>
+

@@ -1,6 +1,6 @@
-<%= form_with(model: branch) do |form| %>
+<%= form_with(model: branch, class: "form-horizontal") do |form| %>
   <% if branch.errors.any? %>
-    <div style="color: red">
+    <div class="alert alert-danger">
       <h2><%= pluralize(branch.errors.count, "error") %> prohibited this branch from being saved:</h2>
 
       <ul>
@@ -11,22 +11,34 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label :name, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
   </div>
 
   <div style="display: none;">
-    <%= form.label :branch_iden, style: "display: block" %>
-    <%= form.text_field :branch_iden %>
+    <div class="form-group">
+      <%= form.label :branch_iden, class: "col-sm-2 control-label" %>
+      <div class="col-sm-10">
+        <%= form.text_field :branch_iden, class: "form-control" %>
+      </div>
+    </div>
   </div>
 
   <div style="display: none;">
-    <%= form.label :company_id, style: "display: block" %>
-    <%= text_field_tag :company_iden, form.object.company_iden, disabled: true, readonly: true %>
+    <div class="form-group">
+      <%= form.label :company_id, class: "col-sm-2 control-label" %>
+      <div class="col-sm-10">
+        <%= text_field_tag :company_iden, form.object.company_iden, class: "form-control", disabled: true, readonly: true %>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10 mt-3">
+      <%= form.submit "Save", class: "btn btn-primary" %>
+    </div>
   </div>
 <% end %>
