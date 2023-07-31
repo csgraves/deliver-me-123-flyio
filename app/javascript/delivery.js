@@ -1,4 +1,4 @@
-//let marker;
+let marker;
 //let currentRoute;
 
 if (!window.currentRoute) {
@@ -34,11 +34,11 @@ function deliveryMap() {
         const place = places[0];
 
         if (!place.geometry || !place.geometry.location) {
-            console.log("Returned place contains no geometry");
+            //console.log("Returned place contains no geometry");
             return;
         }
 
-        var marker = new google.maps.Marker({
+        marker = new google.maps.Marker({
             map,
             position: place.geometry.location,
             draggable: true,
@@ -101,6 +101,9 @@ function deliveryMap() {
 }
 
 function clearDirections() {
+    if (marker) {
+        marker.setMap(null); // Remove the existing marker if it exists
+    }
     if (currentRoute) {
         currentRoute.setMap(null);
         currentRoute.setPanel(null);
@@ -536,7 +539,7 @@ function fetchUsers() {
 function updateScheduleId(scheduleId) {
     const scheduleIdField = document.getElementById("schedule_id_field");
     var scheduleIdVal = scheduleId;
-    console.log(scheduleId);
+    //console.log(scheduleId);
     scheduleIdField.value = scheduleId;
 }
 

@@ -70,7 +70,7 @@ Rails.application.configure do
 
   #config.assets.debug = true
 
-  #config.assets.prefix = "/dev-assets"
+  config.assets.prefix = "/dev-assets"
     
   #config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
