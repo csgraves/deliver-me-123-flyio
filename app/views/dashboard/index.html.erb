@@ -1,10 +1,45 @@
 <% if joined_company %>
   <div class="container mt-4">
-    <h1>
+    <h1 class="text-center">
       Welcome to your dashboard, <%= current_user.email %>
     </h1>
     <!-- Add any code here to display data on the dashboard -->
-  </div>
+    <% if current_user.role == "admin" %>
+        <div class="card">
+            <div class="card-body">
+                <h3>Quick Guide</h3>
+                <p>Welcome to Routes! Here's a quick guide to get started:</p>
+                <ul>
+                    <li>Schedule: View branch and user schedules in a friendly calendar view.</li>
+                    <li>Deliveries: Create new deliveries here. Also, if you have deliveries assinged to you, they can be seen here in a table view.</li>
+                    <li>Add Availability: Add new availability to allow other branch managers to assign deliveries to you.</li>
+                    <li>Company: See your company info here.</li>
+                    <li>Branches: See the company branches and their info here.</li>
+                    <li>User: View all users within the company and info about them here.</li>
+                    <li>Profile: Update your login and account info here!</li>
+                    <!-- Add more guide points as needed -->
+                </ul>
+            </div>
+        </div>
+    <% end %>
+    <% if current_user.role == "driver" %>
+        <div class="card mt-3">
+            <div class="card-body">
+                <h3>Quick Guide</h3>
+                <p>Welcome to Routes! Here's a quick guide to get started:</p>
+                <ul>
+                    <li>Schedule: View your schedule of deliveries in a friendly calendar view.</li>
+                    <li>Deliveries: If you have deliveries assinged to you, they can also be seen here in a table view.</li>
+                    <li>Add Availability: Add new availability to allow branch managers to assign deliveries to you.</li>
+                    <li>Company: See your company info here.</li>
+                    <li>Branches: See your branches and their info here.</li>
+                    <li>User: Info about your user is displayed here.</li>
+                    <li>Profile: Update your login and account info here!</li>
+                    <!-- Add more guide points as needed -->
+                </ul>
+            </div>
+        </div>
+    <% end %>
 <% else %>
   <div class="container mt-4">
     <div class="row justify-content-center">

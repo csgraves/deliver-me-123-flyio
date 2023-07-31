@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    unless (current_user.role == 'admin' && @user.branch.company.id == current_user.branch.company.id && @user.role != 'admin')
+    unless (current_user.role == 'admin' && @user.branch.company.id == current_user.branch.company.id && (@user.role != 'admin' || @user == current_user))
         redirect_to root_path, alert: "You are not authorized to view this user."
     end
   end
