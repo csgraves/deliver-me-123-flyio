@@ -1,14 +1,17 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Company</h1>
-<%= link_to "New company", new_company_path %>
+<% if current_user.role == 'admin' %>
+	<%= link_to "New company", new_company_path if current_user.role == "admin"%>
 	<br></br>
+<% end %>
+
 
 <div id="companies">
   <% @companies.each do |company| %>
     <%= render company %>
     <p>
-		<%= link_to "Show this company", company, class: "btn btn-primary btn-sm" %>
+		<%= link_to "Show this company", company, class: "btn btn-primary btn-sm" if current_user.role == "admin"%>
 	</p>
   <% end %>
 </div>
