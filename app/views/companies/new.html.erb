@@ -1,5 +1,7 @@
 <h1>New Company</h1>
-
+<% if current_user&.branch&.company&.id %>
+	<strong>Creating a new company will remove all access and associations that exist with your current company!</strong>
+<% end %>
 <%= render "form", company: @company %>
 
 <br>

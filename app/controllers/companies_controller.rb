@@ -46,7 +46,7 @@ class CompaniesController < ApplicationController
     respond_to do |format|
       if @company.save
         create_default_branch_and_update_user_branch
-        format.html { redirect_to company_url(@company), notice: "Company was successfully created." }
+        format.html { redirect_to user_dashboard_url, notice: "Company was successfully created." }
         format.json { render :show, status: :created, location: @company }
       else
         format.html { render :new, status: :unprocessable_entity }
