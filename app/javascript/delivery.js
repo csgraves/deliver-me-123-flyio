@@ -15,7 +15,7 @@ function deliveryMap() {
     const input = document.getElementById("pac-input");
     searchBox = new google.maps.places.SearchBox(input);
 
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
     map.addListener("bounds_changed", () => {
         searchBox.setBounds(map.getBounds());
     });
@@ -160,7 +160,7 @@ function displayRoute(origin, destination, originLeave, service, display) {
             route = route.routes[0];
 
             const sidebar = document.getElementById("sidebar");
-            sidebar.style.display = "block";
+            sidebar.style.display = "flex";
 
             computeTotalDistance(route);
             const [updatedRouteDurationMinutes, updatedRouteDurationWithTrafficMinutes] = routeDurations(route, inMins = true);
