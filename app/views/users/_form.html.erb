@@ -1,6 +1,6 @@
-<%= form_with(model: user) do |form| %>
+<%= form_with(model: user, class: "form-horizontal") do |form| %>
   <% if user.errors.any? %>
-    <div style="color: red">
+    <div class="alert alert-danger">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
       <ul>
@@ -11,32 +11,39 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label :email, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= form.text_field :email, class: "form-control" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
+  <div class="form-group">
+    <%= form.label :role, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <div class="btn-group" data-toggle="buttons">
+        <% if current_user.role == "admin" %>
+          <label class="btn btn-primary">
+            <%= form.radio_button :role, "admin" %> Admin
+          </label>
+        <% end %>
+        <label class="btn btn-primary">
+          <%= form.radio_button :role, "driver" %> Driver
+        </label>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :password_digest, style: "display: block" %>
-    <%= form.text_field :password_digest %>
-  </div>
+  <div class="form-group">
+      <%= form.label :branch_id, class: "col-sm-2 control-label" %>
+      <div class="col-sm-10">
+        <%= form.collection_select :branch_id, Branch.where(company_id: current_user.branch.company.id), :id, :name, { prompt: true }, class: "form-control" %>
+      </div>
+    </div>
 
-  <div>
-    <%= form.label :role, style: "display: block" %>
-    <%= form.text_field :role %>
-  </div>
-
-  <div>
-    <%= form.label :branch_id, style: "display: block" %>
-    <%= form.text_field :branch_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10 mt-3">
+      <%= form.submit "Save", class: "btn btn-primary" %>
+    </div>
   </div>
 <% end %>

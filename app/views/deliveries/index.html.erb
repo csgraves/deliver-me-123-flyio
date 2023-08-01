@@ -1,8 +1,9 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Deliveries</h1>
-<%= link_to "New delivery", new_delivery_path %>
-
+<%= link_to "New delivery", new_delivery_path if current_user.role == "admin" %>
+</br></br>
+<h4>My Deliveries</h4>
 <div class="table-responsive">
 	<table class="table table-striped">
 		<thead>

@@ -77,7 +77,7 @@ gem "redis", "~> 5.0"
 
 gem "ffi"
 
-gem "bootstrap", "~> 5.1.3"
+gem 'bootstrap-sass', '~> 3.4', '>= 3.4.1'
 gem "modernizr-rails"
 gem "devise"
 gem 'geocoder', '~> 1.8', '>= 1.8.1'

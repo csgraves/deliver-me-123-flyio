@@ -5,3 +5,4 @@
 //= link delivery.js
 //= link calendar.js
 //= link contact.js
+//= link devise.css

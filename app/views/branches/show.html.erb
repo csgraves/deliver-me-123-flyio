@@ -2,10 +2,15 @@
 
 <%= render @branch %>
 
-<div>
-	<%= link_to "Edit this branch", edit_branch_path(@branch) %> |
-	<%= link_to "Back to branches", branches_path %>
+<div class="d-flex justify-content-between align-items-center">
+	<%= link_to "Edit this branch", edit_branch_path(@branch), class: "btn btn-primary" if current_user.role == "admin"%>
+	<%= link_to "Back to branches", branches_path, class: "btn btn-secondary" %>
+	<%= button_to "Destroy this branch", @branch, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", form: { class: "d-inline" } if current_user.role == "admin"%>
 
-	<%= button_to "Destroy this branch", @branch, method: :delete %>
-	<p> Warning: Destroying this branch will delete all associated users!</p>
+</div>
+<div class="text-center">
+	<br></br>
+	<% if current_user.role == 'admin' %>
+	<p>Warning: Destroying this branch will delete all associated users and deliveries!</p>
+	<% end %>
 </div>

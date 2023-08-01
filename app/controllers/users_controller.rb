@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
-  before_action :check_admin_role, only: [:edit, :update, :destroy]
+  before_action :check_admin_role, only: [:destroy]
 
   # GET /users or /users.json
   def index
@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
-      if (@user != current_user || (current_user.role != 'admin' && @user.branch.company.id != current_user.branch.company.id))
+      unless (@user == current_user || (current_user.role == 'admin' && @user.branch.company.id == current_user.branch.company.id && @user.role != 'admin'))
         redirect_to root_path, alert: "You are not authorized to view this user."
       end
   end
@@ -28,6 +28,9 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    unless (current_user.role == 'admin' && @user.branch.company.id == current_user.branch.company.id && (@user.role != 'admin' || @user == current_user))
+        redirect_to root_path, alert: "You are not authorized to view this user."
+    end
   end
 
   # POST /users or /users.json

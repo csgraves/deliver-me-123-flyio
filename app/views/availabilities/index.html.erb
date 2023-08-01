@@ -9,13 +9,23 @@
       <tr>
         <th>Start Time</th>
         <th>End Time</th>
-        <th>User</th>
+        <th>Show</th>
         <!-- Add additional table headers for other availability details -->
       </tr>
     </thead>
     <tbody>
       <% @availabilities.order(start_time: :asc).each do |availability| %>
-        <%= render partial: 'availability', locals: { availability: availability } %>
+		<tr>
+			<td>
+				<%= availability.start_time.strftime("%d-%m-%Y @%H:%M") %>
+				</td>
+			<td>
+				<%= availability.end_time.strftime("%d-%m-%Y @%H:%M") %>
+				</td>
+			<td>
+				<%= link_to "Show", availability, class: "btn btn-primary btn-sm" %>
+				</td>
+		</tr>
       <% end %>
     </tbody>
   </table>

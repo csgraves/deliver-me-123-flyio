@@ -11,6 +11,8 @@ import Interaction from '@event-calendar/interaction';
 
 import '@event-calendar/core/index.css';
 
+import Popover from 'bootstrap/js/dist/popover';
+
 document.addEventListener("DOMContentLoaded", function (event) {
     // Retrieve the deliveries data from the data attribute
     var scheduleDataElement = document.getElementById("schedule-data");
@@ -18,19 +20,21 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     function convertDeliveriesToEvents(deliveriesData) {
         return deliveriesData.map(delivery => ({
-            title: `Destination: ${delivery.dest_address}`,
+            title: ``,
             start: delivery.origin_leave,
             end: delivery.dest_leave,
             extendedProps: {
                 originAddress: delivery.origin_address,
-                destAddress: delivery.dest_address
+                destAddress: delivery.dest_address,
+                deliveryId: delivery.id,
+                driver: delivery.driver_email
             }
         }));
     }
 
     events = convertDeliveriesToEvents(deliveriesData);
     //console.log(events);
-
+    let popover = null;
     let ec = new Calendar({
         target: document.getElementById('ec'),
         props: {
@@ -49,10 +53,38 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     end: 'today prev,next dayGridMonth,timeGridWeek,timeGridDay'
                 },
                 eventDrop: function (info) {
-                    console.log('Event dropped:', info.event);
-                    // Update your deliveriesArray or perform other actions based on the new event data
-                }
+                    //console.log('Event dropped:', info.event);
+                    
+                },
+                eventClick: function (info) {
+                    //console.log("Event Clicked");
+                    var deliveryId = info.event.extendedProps.deliveryId;
+                    window.location.href = '/deliveries/' + deliveryId;
+                },
+                eventMouseEnter: function (info) {
+                    // Create the HTML for the popover
+                    let popoverContent = `
+                <strong>Origin:</strong> ${info.event.extendedProps.originAddress}<br/>
+                <strong>Destination:</strong> ${info.event.extendedProps.destAddress}<br/>
+                <strong>Driver:</strong> ${info.event.extendedProps.driver}<br/>
+                <br>Click for delivery details</br>
+            `;
 
+                    info.el.setAttribute('data-bs-toggle', 'popover');
+                    info.el.setAttribute('data-bs-content', popoverContent);
+                    info.el.setAttribute('data-bs-html', true);
+                    info.el.setAttribute('data-bs-trigger', 'hover');
+
+                    popover = new bootstrap.Popover(info.el, {
+                        container: 'body'
+                    });
+                },
+                eventMouseLeave: function (info) {
+                    if (popover) {
+                        popover.dispose();
+                        popover = null;
+                    }
+                }
             }
         }
     });

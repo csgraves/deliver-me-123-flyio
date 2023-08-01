@@ -1,7 +1,7 @@
 class SchedulesController < ApplicationController
   before_action :set_schedule, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
-  before_action :check_admin_role, only: [:show, :edit, :update, :destroy]
+  before_action :check_admin_role, only: [:show, :destroy]
 
   # GET /schedules or /schedules.json
   def index
@@ -22,10 +22,11 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.find(params[:id])
 
     if @schedule.user_only && @schedule.user.present?
-        @deliveries = @schedule.user.deliveries
+        @deliveries = @schedule.user.deliveries.joins(schedule: :user).select('deliveries.*, users.email as driver_email')
     elsif @schedule.branch_only && @schedule.branch.present?
         @deliveries = Delivery.joins(schedule: :user)
-                            .where('schedules.branch_id = ? OR users.branch_id = ?', @schedule.branch_id, @schedule.branch_id)
+                          .where('schedules.branch_id = ? OR users.branch_id = ?', @schedule.branch_id, @schedule.branch_id)
+                          .select('deliveries.*, users.email as driver_email')
     end
   end
 
@@ -41,6 +42,8 @@ class SchedulesController < ApplicationController
 
   # GET /schedules/1/edit
   def edit
+    redirect_to root_path, alert: "You do not have permission."
+
   end
 
   # POST /schedules or /schedules.json

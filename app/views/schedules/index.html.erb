@@ -1,6 +1,6 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Schedules</h1>
+<h1 class="text-center">Schedules</h1>
 
 <div id="schedules", style="display: none;", class="container">
   <% @schedules.each do |schedule| %>
@@ -10,8 +10,6 @@
     </p>
   <% end %>
 </div>
-
-<%= link_to "New schedule", new_schedule_path %>
 
 <div class="container">
   <div class="row">
