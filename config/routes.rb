@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     get :join_company, on: :collection
   end
   resources :companies
-  resources :articles
+  #resources :articles
 
   devise_scope :user do
     get 'choose_branch', to: 'devise/sessions#choose_branch'

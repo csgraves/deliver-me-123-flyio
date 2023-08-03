@@ -127,7 +127,7 @@ html, body {
 .app_sidebar {
     min-width: 60px;
     max-width: 85px;
-    background-color: #f8f9fa; /* Set the background color */
+    background-color: #f8f9fa;
     height: auto;
     min-height: 94vh;
 }
@@ -173,7 +173,7 @@ html, body {
     display: flex;
 }
 
-@media (max-width: 768px) { /* Change the breakpoint to the desired md value */
+@media (max-width: 768px) { 
     #map_container {
         height: 600px;
         display: flex;
