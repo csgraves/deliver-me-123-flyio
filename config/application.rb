@@ -17,6 +17,7 @@ module RailsTest
     # in config/environments, which are processed later.
     #
     config.time_zone = "UTC"
+    #config.time_zone = "London"
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.before_configuration do

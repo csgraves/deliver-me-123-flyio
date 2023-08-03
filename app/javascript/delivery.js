@@ -341,11 +341,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
 
     
-    const now = new Date();
-    now.setMinutes(now.getMinutes() + 10);
-    originLeaveField.value = setDateTimeFormat(now);
+    
 
     //Display dest / origin fields if they've values
+    if (originLeaveField.value == '') {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() + 10);
+        originLeaveField.value = setDateTimeFormat(now);
+    } 
     if (dest_address.value !== '' && dest_lon.value !== '' && dest_lat.value !== '') {
         // If all fields have values, show the dest-fields div
         destFields.style.display = "block";
@@ -480,9 +483,11 @@ function fetchUsers() {
     //console.log("Origin Leave: ", originLeaveValue);
     //console.log("Dest Arrive: ", destArriveValue);
 
+    const deliveryIdField = document.getElementById("delivery_delivery_id");
+    const deliveryId = deliveryIdField ? deliveryIdField.value : '';
 
     // Make an AJAX request to the backend to fetch users
-    const url = `/users/fetch_users?pot_origin_leave=${originLeaveValue}&pot_dest_arrive=${destArriveValue}`;
+    const url = `/users/fetch_users?pot_origin_leave=${originLeaveValue}&pot_dest_arrive=${destArriveValue}&delivery_id=${deliveryId}`;
     fetch(url)
         .then(response => response.json())
         .then(data => {

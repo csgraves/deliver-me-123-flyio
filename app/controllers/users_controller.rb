@@ -78,17 +78,18 @@ class UsersController < ApplicationController
   def fetch_users
     pot_origin_leave = params[:pot_origin_leave]
     pot_dest_arrive = params[:pot_dest_arrive]
+    delivery_id = params[:delivery_id]
 
-    # Fetch users based on the conditions mentioned
     users = User.joins(:availabilities)
                 .joins(branch: :company)
-                .joins(:schedule)  # Updated association name from `schedules` to `schedule`
+                .joins(:schedule)
                 .where('availabilities.start_time <= ?', pot_origin_leave)
                 .where('availabilities.end_time >= ?', pot_dest_arrive)
                 .where(branch_id: current_user.branch_id)
-                .where.not(id: User.joins(schedule: { deliveries: :schedule })  # Updated association name from `schedules` to `schedule`
+                .where.not(id: User.joins(schedule: { deliveries: :schedule })
                             .where('deliveries.origin_leave <= ?', pot_dest_arrive)
-                            .where('deliveries.dest_arrive >= ?', pot_origin_leave)
+                            .where('deliveries.dest_leave >= ?', pot_origin_leave)
+                            .where.not('deliveries.id': delivery_id)
                             .pluck(:id))
                 .distinct
 
