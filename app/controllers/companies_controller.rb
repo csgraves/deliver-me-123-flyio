@@ -12,8 +12,8 @@ class CompaniesController < ApplicationController
   def show
     @company = Company.find(params[:id])
 
-    # Allow showing the branch if it's associated with the current user's branch_id
-    # OR if the current user is an admin and the branch is associated with the user's company_id.
+    # Allow showing the company if it's associated with the current user's company
+    # OR if the current user is an admin and the company is associated with the user's company_id.
     if (@company.id == current_user.branch.company.id) || (current_user.role == "admin" && @company.id == current_user..branch.company.id)
       render :show
     else

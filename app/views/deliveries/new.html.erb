@@ -27,7 +27,6 @@
 </div>
 
 <%= javascript_include_tag 'delivery' %>
-<!--<%= javascript_import_module_tag '/delivery' %>-->
 
 <% api_key = Rails.application.credentials.dig(:mapsAPI) %>
 <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{api_key}&libraries=places&callback=initMap&v=weekly", 

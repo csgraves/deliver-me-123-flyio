@@ -31,8 +31,6 @@ class DeliveriesController < ApplicationController
   # POST /deliveries or /deliveries.json
   def create
     @delivery = Delivery.new(delivery_params)
-    #@delivery.dest_address = params[:delivery][:dest_address]
-    #@delivery.origin_address = params[:delivery][:origin_address]
 
     respond_to do |format|
       if @delivery.save

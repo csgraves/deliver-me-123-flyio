@@ -8,9 +8,9 @@ class Branch < ApplicationRecord
   after_create :create_default_schedule
 
   private
-
+  # Create a new schedule associated with the branch
   def create_default_schedule
-    create_schedule(branch_id: id, branch_only: true) # Create a new schedule associated with the branch
+    create_schedule(branch_id: id, branch_only: true) 
   end
 
 end

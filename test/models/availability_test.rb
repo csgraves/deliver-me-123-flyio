@@ -2,7 +2,7 @@ require "test_helper"
 
 class AvailabilityTest < ActiveSupport::TestCase
   def setup
-    @user = users(:one) # Assuming you have a fixture named 'one' in users.yml
+    @user = users(:one)
     @availability = availabilities(:one)
   end
 

@@ -19,10 +19,6 @@ Rails.application.routes.draw do
     get 'choose_branch', to: 'devise/sessions#choose_branch'
   end
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-   
   root "home#home"
 
   get '/dashboard', to: 'dashboard#index', as: 'user_dashboard'
