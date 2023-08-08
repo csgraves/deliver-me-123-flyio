@@ -17,6 +17,7 @@ This is because the hosting vm switches to standy after long periods of non use.
 This keeps costings and poweruse to a minimum.
 
 --- REPOSITORY OVERVIEW ---
+Github repository: https://github.com/csgraves/deliver-me-123-flyio
 The app/ directory contains the MVC (Model-View-Controller) pattern of the 
 application, plus styling and JavaScript.
 The config/ directory holds the application's configuration files. In particular, 
