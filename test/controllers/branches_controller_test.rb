@@ -117,7 +117,7 @@ class BranchesControllerTest < ActionDispatch::IntegrationTest
     unauthorized_user = users(:two)
     sign_in unauthorized_user
     
-    another_branch = branches(:one) # A branch not associated with the user
+    another_branch = branches(:one)
     get branch_url(another_branch)
     assert_redirected_to root_url
     assert_equal "You do not have permission.", flash[:alert]

@@ -12,8 +12,8 @@ class CompaniesController < ApplicationController
   def show
     @company = Company.find(params[:id])
 
-    # Allow showing the branch if it's associated with the current user's branch_id
-    # OR if the current user is an admin and the branch is associated with the user's company_id.
+    # Allow showing the company if it's associated with the current user's company
+    # OR if the current user is an admin and the company is associated with the user's company_id.
     if (@company.id == current_user.branch.company.id) || (current_user.role == "admin" && @company.id == current_user..branch.company.id)
       render :show
     else
@@ -46,7 +46,7 @@ class CompaniesController < ApplicationController
     respond_to do |format|
       if @company.save
         create_default_branch_and_update_user_branch
-        format.html { redirect_to company_url(@company), notice: "Company was successfully created." }
+        format.html { redirect_to user_dashboard_url, notice: "Company was successfully created." }
         format.json { render :show, status: :created, location: @company }
       else
         format.html { render :new, status: :unprocessable_entity }

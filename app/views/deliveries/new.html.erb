@@ -1,9 +1,14 @@
 <h1>New delivery</h1>
 <p> Search for a location, set your origin and destination, then hit calculate route!</p>
-<div id="map_container">
-	<input id="pac-input" class="controls" type="text" placeholder="Search Box"/>
-	<div id="map"></div>
-	<div id="sidebar" style="display: none;">
+
+<div id="search_container" class="form-group">
+	<input id="pac-input" class="form-control" type="text" placeholder="Search Box"/>
+</div>
+
+<div id="map_container" class="mt-3 row">
+	
+	<div id="map" class="map-col col-12"></div>
+	<div id="sidebar" class="map-col col-12" style="display: none;">
 		<!--<p>Total Distance: <span id="totalDistance"></span></p>
 		<p>Total Duration: <span id="totalDuration"></span></p>
 		<p>Total Duration (with Traffic): <span id="totalDurationTraffic"></span></p>-->
@@ -22,7 +27,6 @@
 </div>
 
 <%= javascript_include_tag 'delivery' %>
-<!--<%= javascript_import_module_tag '/delivery' %>-->
 
 <% api_key = Rails.application.credentials.dig(:mapsAPI) %>
 <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{api_key}&libraries=places&callback=initMap&v=weekly", 

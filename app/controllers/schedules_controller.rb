@@ -56,7 +56,7 @@ class SchedulesController < ApplicationController
       end
     end
     
-    if schedule_params[:branch_id].present? # Check if a user is associated with the schedule
+    if schedule_params[:branch_id].present? # Check if a branch is associated with the schedule
       branch = Branch.find(schedule_params[:branch_id])
       if branch.schedule.present?
         redirect_to new_schedule_path, alert: "Branch already has an existing schedule."
@@ -109,7 +109,6 @@ class SchedulesController < ApplicationController
       @user_schedules = Schedule.where(user_only: true, user_id: current_user.branch.company.users.pluck(:id))
                                 .map { |schedule| [schedule.id, schedule.branch.name] }
 
-      # Handle form submission and perform additional actions if needed
   end
 
   private

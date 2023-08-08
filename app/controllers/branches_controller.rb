@@ -115,12 +115,11 @@ class BranchesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def branch_params
-      #params.require(:branch).permit(:name, :branch_iden, :company_iden)
       params.require(:branch).permit(:name, :branch_iden)
     end
 
     def create_schedule_for_branch
-        @branch.create_schedule(branch_id: @branch.id, branch_only: true) # Create a new schedule associated with the branch
+        @branch.create_schedule(branch_id: @branch.id, branch_only: true) 
     end   
 
     def check_admin_role

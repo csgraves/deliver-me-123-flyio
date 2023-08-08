@@ -36,9 +36,9 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get edit" do
+  test "should not get edit" do
     get edit_schedule_url(@schedule)
-    assert_response :success
+    assert_redirected_to root_path
   end
 
   test "should update schedule" do

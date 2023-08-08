@@ -22,7 +22,7 @@ class CompaniesControllerTest < ActionDispatch::IntegrationTest
       post companies_url, params: { company: { company_iden: @company.company_iden, name: @company.name } }
     end
 
-    assert_redirected_to company_url(Company.last)
+    assert_redirected_to user_dashboard_url()
   end
 
   test "should show company" do

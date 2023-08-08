@@ -2,15 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\app\\javascript",
-    "\\app\\mailers",
     "\\app\\views",
     "\\app\\views\\contact_customer",
-    "\\app\\views\\contact_mailer",
-    "\\app\\views\\deliveries",
-    "\\config",
-    "\\config\\initializers"
+    "\\app\\views\\dashboard",
+    "\\app\\views\\devise",
+    "\\app\\views\\schedules",
+    "\\test",
+    "\\test\\models",
+    "\\test\\system"
   ],
-  "SelectedNode": "\\app\\views\\deliveries\\_delivery.html.erb",
+  "SelectedNode": "\\test\\system\\availabilities_test.rb",
   "PreviewInSolutionExplorer": false
 }

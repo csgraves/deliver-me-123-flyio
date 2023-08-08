@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   belongs_to :branch, optional: true
@@ -23,13 +21,12 @@ class User < ApplicationRecord
 
   def availabilities_available?(delivery)
     # Implement your logic to check if the user's availabilities are available
-    # For example, you might check if there are any availabilities within the delivery schedule
     availabilities.where('start_time <= ? AND end_time >= ?', delivery.origin_leave, delivery.dest_leave).exists?
   end
 
   private 
-
+  # Create a new schedule associated with the user
   def create_default_schedule
-    create_schedule(user_id: id, user_only: true) # Create a new schedule associated with the user
+    create_schedule(user_id: id, user_only: true) 
   end
 end

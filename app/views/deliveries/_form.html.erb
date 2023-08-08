@@ -11,6 +11,8 @@
     </div>
   <% end %>
 
+  <%= form.hidden_field :delivery_id, value: delivery.id if delivery.id.present? %>
+
   <div class="container-fluid form-element">
     <%= form.label :customer_contact, "Customer Email", style: "display: block" %>
     <%= form.email_field :customer_contact, class: "form-control", placeholder: "Enter customer's email" %>
@@ -84,7 +86,6 @@
           <th>Email</th>
           <th></th>
           <th></th>
-          <!-- Add more columns if needed -->
         </tr>
       </thead>
       <tbody>
