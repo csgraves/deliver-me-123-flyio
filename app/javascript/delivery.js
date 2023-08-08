@@ -94,15 +94,11 @@ function deliveryMap() {
             });
         });
     });
-
-
-    // Route
- 
 }
 
 function clearDirections() {
     if (marker) {
-        marker.setMap(null); // Remove the existing marker if it exists
+        marker.setMap(null);
     }
     if (currentRoute) {
         currentRoute.setMap(null);

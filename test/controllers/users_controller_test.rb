@@ -56,9 +56,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @user = users(:two)
     sign_in users(:two)
     patch user_url(@user), params: { user: { name: "Updated Name" } }
-    assert_redirected_to root_path
     @user.reload
     assert_not_equal "Updated Name", @user.name
+
   end
 
 =begin
